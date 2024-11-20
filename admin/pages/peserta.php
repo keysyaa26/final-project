@@ -5,8 +5,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/header.php';
-include '../includes/config.php';
+include '../../includes/header.php';
+include '../../includes/config.php';
 
 // Edit Peserta
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['participant_id'])) {
@@ -154,4 +154,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include '../../includes/footer.php'; ?>

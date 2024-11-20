@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'includes/config-key.php';
+include 'includes/config.php';
 require 'vendor/autoload.php';
 
 use Endroid\QrCode\QrCode;
@@ -13,14 +13,17 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-// set id acara, ini bisa diubah
-$event_id=1;
-$stmt = $pdo->prepare("SELECT * FROM acara WHERE id_acara = ?");
-$stmt->execute([$event_id]);
-$event = $stmt->fetch();
-if (!$event) {
-    echo "Event tidak ditemukan!";
-    exit;}
+$event_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+if ($event_id) {
+    $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
+    $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
+    $stmt->execute();
+    $event = $stmt->fetch();
+} else {
+    echo "Event tidak ditemukan.";
+    exit;
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // mengirim email
     $to_email = $email; 
-    $subject = 'QR code Presensi' . htmlspecialchars($event['nama_acara']);
+    $subject = 'QR code Presensi' . htmlspecialchars($event['title']);
     $body = 'Terima kasih sudah mendaftar untuk event kami! Silakan temukan QR code Anda terlampir sebagai tiket masuk.';
     $mail = new PHPMailer(true);
 
@@ -98,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrasi untuk <?= htmlspecialchars($event['nama_acara']) ?></title>
+    <title>Registrasi untuk <?= htmlspecialchars($event['title']) ?></title>
 
     <style>
         /* Reset default styles */
@@ -216,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="form-container">
-        <h2>Registrasi untuk <?= htmlspecialchars($event['nama_acara']) ?></h2>
+        <h2>Registrasi untuk <?= htmlspecialchars($event['title']) ?></h2>
         
         <!-- Formulir Pendaftaran -->
         <form method="POST">

@@ -1,3 +1,12 @@
+<?php
+include 'includes/config.php';
+
+$stmt = $pdo->prepare("SELECT * FROM events WHERE date >= CURDATE() ORDER BY date ASC LIMIT 3");
+$stmt->execute();
+$events = $stmt->fetchAll();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +42,13 @@
             gap: 20px;
             /* Menambahkan jarak antar card */
         }
+
+        .custom-card-img {
+            width: 100%;
+            height: 200px; /* Tentukan tinggi gambar agar persegi */
+            object-fit: cover; /* Gambar akan tetap terpotong untuk mengisi area */
+        }
+
     </style>
 </head>
 
@@ -75,33 +91,18 @@
 
     <!-- Card Events upcoming -->
     <div class="row m-3">
-        <div class="card col-md-3" style="width: 18rem;">
-            <img src="assets/img/logo-bprotic.png" class="card-img-top" alt="Logo">
-            <div class="card-body">
-                <h5 class="card-title">Judul Acara 1</h5>
-                <p class="card-text">Tempat: Lokasi Acara</p>
-                <p class="card-text">Waktu: Tanggal & Jam</p>
-                <a href="events.php" class="btn custom-btn">See Details</a>
+        <?php foreach ($events as $event): ?>
+            <div class="card col-md-3" style="width: 18rem;">
+                <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
+                <img src="assets/img/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?= htmlspecialchars($event['title']) ?></h5>
+                    <p class="card-text">Tempat: <?= htmlspecialchars($event['location']) ?></p>
+                    <p class="card-text">Waktu: <?= date('d M Y, H:i', strtotime($event['date'])) ?></p>
+                    <a href="event_detail.php?id=<?= $event['id'] ?>" class="btn custom-btn">See Details</a>
+                </div>
             </div>
-        </div>
-        <div class="card col-md-3" style="width: 18rem;">
-            <img src="assets/img/logo-bprotic.png" class="card-img-top" alt="Logo">
-            <div class="card-body">
-                <h5 class="card-title">Judul Acara 2</h5>
-                <p class="card-text">Tempat: Lokasi Acara</p>
-                <p class="card-text">Waktu: Tanggal & Jam</p>
-                <a href="#" class="btn custom-btn">Register</a>
-            </div>
-        </div>
-        <div class="card col-md-3" style="width: 18rem;">
-            <img src="assets/img/logo-bprotic.png" class="card-img-top" alt="Logo">
-            <div class="card-body">
-                <h5 class="card-title">Judul Acara 3</h5>
-                <p class="card-text">Tempat: Lokasi Acara</p>
-                <p class="card-text">Waktu: Tanggal & Jam</p>
-                <a href="#" class="btn custom-btn">Register</a>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 
     <!-- About and Social Media Section -->
