@@ -102,7 +102,7 @@
                 <p class="card-text"><strong>Lokasi:</strong> Lokasi Acara</p>
                 <p class="card-text"><strong>Tanggal & Waktu:</strong> <?= date('d-m-Y H:i', strtotime($event['date'])); ?></p>
                 <p class="card-text"><?= htmlspecialchars($event['description']); ?></p>
-                <a href="register.php?id=<?= $event['id'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
+                <a href="pendaftaran/register.php?id=<?= $event['id'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
             </div>
         </div>
         <?php else: ?>
