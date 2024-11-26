@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 15 Nov 2024 pada 11.45
--- Versi server: 8.0.30
--- Versi PHP: 8.3.12
+-- Generation Time: Nov 26, 2024 at 02:04 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `admin` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `attendance`
+-- Table structure for table `attendance`
 --
 
 CREATE TABLE `attendance` (
@@ -55,18 +55,17 @@ CREATE TABLE `attendance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `attendance`
+-- Dumping data for table `attendance`
 --
 
 INSERT INTO `attendance` (`id`, `registration_id`, `event_id`, `attendance_time`) VALUES
 (1, 1, 1, '2024-11-06 21:41:15'),
-(2, 25, 1, '2024-11-06 21:52:39'),
 (5, 35, 1, '2024-11-15 17:39:49');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `events`
+-- Table structure for table `events`
 --
 
 CREATE TABLE `events` (
@@ -74,21 +73,25 @@ CREATE TABLE `events` (
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `date` date NOT NULL,
-  `image` varchar(255) DEFAULT NULL
+  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `events`
+-- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`id`, `title`, `description`, `date`, `image`) VALUES
-(1, 'bprotic ', 'adadadad', '2024-11-14', NULL),
-(2, 'mobilegend', 'z', '2024-11-29', 'logo-ubp.png');
+INSERT INTO `events` (`id`, `title`, `description`, `date`, `location`, `image`, `price`) VALUES
+(1, 'BPROTIC Anniversary 7th', 'Merayakan hari jadi BPROTIC', '2024-11-30', 'Gedung A', '674421e7f218d.jpeg', 18000.00),
+(2, 'BPROTIC Run', '5K', '2024-12-01', 'Galuh Mas', '67454bc29f560.jpeg', 15.00),
+(6, 'Hackathon 2024', 'lomba ngoding', '2024-12-28', 'Lab A201', '67453bb545d7a.jpg', 4.00),
+(19, 'a', 'aa', '2024-11-27', 'a', '6745d34ebd7c0.png', 1.00);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `registrations`
+-- Table structure for table `registrations`
 --
 
 CREATE TABLE `registrations` (
@@ -101,27 +104,26 @@ CREATE TABLE `registrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `registrations`
+-- Dumping data for table `registrations`
 --
 
 INSERT INTO `registrations` (`id`, `event_id`, `name`, `email`, `phone`, `attendance_status`) VALUES
-(1, 1, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700', 'Belum Hadir'),
-(24, 1, 'adw', 'arielramo2005@gmail.com', '085771282700', 'Belum Hadir'),
-(25, 1, 'afwa', 'arielramo2005@gmail.com', '085771282700', 'Belum Hadir'),
-(35, 1, 'qqqqqqqqq', 'arielramo2005@gmail.com', '141241', 'Hadir');
+(1, 1, 'Muhammad Ariel Ramoa', 'arielramo2005@gmail.com', '085771282700', 'Belum Hadir'),
+(35, 1, 'abc', 'abc@gmail.com', '141241', 'Hadir'),
+(40, 1, 'lkj', 'arielramo2005@gmail.com', '085771282700', 'Hadir');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `attendance`
+-- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
   ADD PRIMARY KEY (`id`),
@@ -129,59 +131,59 @@ ALTER TABLE `attendance`
   ADD KEY `event_id` (`event_id`);
 
 --
--- Indeks untuk tabel `events`
+-- Indexes for table `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `registrations`
+-- Indexes for table `registrations`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `event_id` (`event_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `attendance`
+-- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `events`
+-- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT untuk tabel `registrations`
+-- AUTO_INCREMENT for table `registrations`
 --
 ALTER TABLE `registrations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `attendance`
+-- Constraints for table `attendance`
 --
 ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`registration_id`) REFERENCES `registrations` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `registrations`
+-- Constraints for table `registrations`
 --
 ALTER TABLE `registrations`
   ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;

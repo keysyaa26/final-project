@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
-include '../../includes/header.php';
-include '../../includes/config.php';
+include '../includes/header.php';
+include '../includes/config.php';
 
 // Edit Peserta
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['participant_id'])) {
@@ -14,11 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['participant_id'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $event_id = $_POST['event_id'];
 
     // Update data peserta
-    $stmt = $pdo->prepare("UPDATE registrations SET name = ?, email = ?, phone = ?, event_id = ? WHERE id = ?");
-    $stmt->execute([$name, $email, $phone, $event_id, $participant_id]);
+    $stmt = $pdo->prepare("UPDATE registrations SET name = ?, email = ?, phone = ? WHERE id = ?");
+    $stmt->execute([$name, $email, $phone, $participant_id]);
     $message = "Data peserta berhasil diperbarui.";
 }
 
@@ -82,8 +81,7 @@ $participants = $stmt->fetchAll();
                         data-id="<?= $participant['id'] ?>" 
                         data-name="<?= htmlspecialchars($participant['name']) ?>" 
                         data-email="<?= htmlspecialchars($participant['email']) ?>" 
-                        data-phone="<?= htmlspecialchars($participant['phone']) ?>" 
-                        data-event_id="<?= $participant['event_id'] ?>">
+                        data-phone="<?= htmlspecialchars($participant['phone']) ?>">
                         Edit
                     </button>
                     <a href="peserta.php?delete_id=<?= $participant['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus peserta ini?')">Hapus</a>
@@ -106,7 +104,7 @@ $participants = $stmt->fetchAll();
                 <input type="hidden" name="participant_id" id="edit-participant-id">
                 <div class="mb-3">
                     <label class="form-label">Nama Peserta</label>
-                    <input type="text" name="name" class="form-control" id="edit-participant-name" required>
+                    <input type="text" name="name" class="form-control" id="edit-participant-name" required pattern="[A-Za-z\s]+" title="Nama hanya boleh mengandung huruf dan spasi">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
@@ -114,11 +112,7 @@ $participants = $stmt->fetchAll();
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Telepon</label>
-                    <input type="text" name="phone" class="form-control" id="edit-participant-phone" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Event ID</label>
-                    <input type="number" name="event_id" class="form-control" id="edit-participant-event-id" required>
+                    <input type="text" name="phone" class="form-control" id="edit-participant-phone" required pattern="[0-9]+" title="Nomor telepon hanya boleh mengandung angka">
                 </div>
             </div>
             <div class="modal-footer">
@@ -141,17 +135,27 @@ document.addEventListener('DOMContentLoaded', function () {
             const name = this.dataset.name;
             const email = this.dataset.email;
             const phone = this.dataset.phone;
-            const event_id = this.dataset.event_id;
 
             // Isi data ke dalam form modal
             document.getElementById('edit-participant-id').value = id;
             document.getElementById('edit-participant-name').value = name;
             document.getElementById('edit-participant-email').value = email;
             document.getElementById('edit-participant-phone').value = phone;
-            document.getElementById('edit-participant-event-id').value = event_id;
         });
     });
+
+    // Validasi Input Nama (hanya huruf dan spasi)
+    const nameInput = document.getElementById('edit-participant-name');
+    nameInput.addEventListener('input', function () {
+        this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+    });
+
+    // Validasi Input Telepon (hanya angka)
+    const phoneInput = document.getElementById('edit-participant-phone');
+    phoneInput.addEventListener('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });    
 });
 </script>
 
-<?php include '../../includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
