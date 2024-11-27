@@ -5,7 +5,11 @@
     $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
     if ($event_id) {
-        $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
+        $query = "SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
+                FROM events
+                JOIN venue ON events.venue_ID = venue.venue_ID
+                WHERE event_ID = :event_id";
+        $stmt = $pdo->prepare($query);
         $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
         $stmt->execute();
         $event = $stmt->fetch();
@@ -101,11 +105,25 @@
             <div class='img-container'><img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
             <!-- -->
             <div class="card-body">
-                <h3 class="card-title"><?= htmlspecialchars($event['title']); ?></h3>
-                <p class="card-text"><strong>Lokasi:</strong> Lokasi Acara</p>
-                <p class="card-text"><strong>Tanggal & Waktu:</strong> <?= date('d-m-Y H:i', strtotime($event['date'])); ?></p>
-                <p class="card-text"><?= htmlspecialchars($event['description']); ?></p>
-                <a href="register.php?id=<?= $event['id'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
+                <h3 class="card-title">
+                    <?= htmlspecialchars($event['title']); ?>
+                </h3>
+                <p class="card-text"><strong>Lokasi:</strong>
+                    <?= htmlspecialchars($event['venue_name']) ?>
+                </p>
+                <p class="card-text"><strong>Tanggal & Waktu:</strong> 
+                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                    <?php if (!empty($event['end_date'])): ?>
+                        - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                    <?php endif; ?>
+                </p>
+
+                <!-- untuk acara berbayar, nanti diisi HTM-->
+
+                <p class="card-text">
+                    <?= htmlspecialchars($event['description']); ?>
+                </p>
+                <a href="register.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
             </div>
         </div>
         <?php else: ?>
