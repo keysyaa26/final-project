@@ -15,6 +15,7 @@ return array(
     'Picqer\\Barcode\\' => array($vendorDir . '/picqer/php-barcode-generator/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Mmaaikel\\HtmlQrcodeMaker\\' => array($vendorDir . '/mmaaikel/html-qrcode-maker/src'),
+    'Midtrans\\' => array($vendorDir . '/midtrans/midtrans-php/Midtrans'),
     'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src'),
     'DASPRiD\\Enum\\' => array($vendorDir . '/dasprid/enum/src'),
     'BaconQrCode\\' => array($vendorDir . '/bacon/bacon-qr-code/src'),

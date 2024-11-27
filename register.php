@@ -23,7 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-
+    // cek harga acara
+    $amount = $event['price'];
+    if($amount > 0) {
+        $payment = new Payment();
+    }
     $peserta = new Peserta($name, $email, $phone);
     $id_attendee = $peserta->Daftar($pdo);
     // method pembayaran

@@ -41,6 +41,7 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         'M' => 
         array (
             'Mmaaikel\\HtmlQrcodeMaker\\' => 25,
+            'Midtrans\\' => 9,
         ),
         'E' => 
         array (
@@ -96,6 +97,10 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         'Mmaaikel\\HtmlQrcodeMaker\\' => 
         array (
             0 => __DIR__ . '/..' . '/mmaaikel/html-qrcode-maker/src',
+        ),
+        'Midtrans\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans',
         ),
         'Endroid\\QrCode\\' => 
         array (

@@ -2,7 +2,8 @@
     "require": {
         "endroid/qr-code": "^6.0",
         "phpmailer/phpmailer": "^6.0",
-        "mmaaikel/html-qrcode-maker": "^0.0.9"
+        "mmaaikel/html-qrcode-maker": "^0.0.9",
+        "midtrans/midtrans-php": "^2.6"
     },
 
     "autoload": {
