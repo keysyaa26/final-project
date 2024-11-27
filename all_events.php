@@ -1,20 +1,11 @@
 <?php
 include 'includes/config.php';
 
-//Query untuk upcoming events
-$query ="
-    SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
-    FROM events
-    JOIN venue ON events.venue_ID = venue.venue_ID
-    WHERE events.start_date >= CURDATE()
-    ORDER BY events.start_date ASC
-    LIMIT 3
-";
-$stmt = $pdo->prepare($query);
+// Query untuk semua events
+$stmt = $pdo->prepare("SELECT * FROM events ORDER BY date ASC");
 $stmt->execute();
 $events = $stmt->fetchAll();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,13 +13,9 @@ $events = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Favicon -->
-    <link rel="icon" href="img/logo_bprotic.png">
-    <title>Landing Page</title>
-
+    <title>Events Page</title>
     <style>
         .custom-btn {
             background-color: #C92127;
@@ -78,13 +65,7 @@ $events = $stmt->fetchAll();
             font-weight: 700;
             /* Untuk heading bisa lebih tebal */
         }
-
-        html {
-            scroll-behavior: smooth; /* Efek scroll halus */
-        }
-
     </style>
-</head>
 
 <body>
     <!-- Navbar Section -->
@@ -106,7 +87,7 @@ $events = $stmt->fetchAll();
                             <a class="nav-link active" href="index.php">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="all_events.php">EVENTS</a>
+                            <a class="nav-link active" href="events.php">EVENTS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#social-media">CONTACT</a>
@@ -117,18 +98,16 @@ $events = $stmt->fetchAll();
         </nav>
     </div>
 
-    <!-- Welcome Section -->
-    <div class="welcome-section" style="margin-top:100px; margin-bottom:100px;">
+    <!-- Daftar Event Section -->
+    <div class="events-section" style="margin-top:100px; margin-bottom:100px;">
         <div>
-            <h1 class="text-center" style="color: #191970;">Welcome to Event Center</h1>
+            <h1 class="text-center" style="color: #191970;">Daftar Event</h1>
         </div>
     </div>
 
-    <!-- Card Events upcoming -->
     <div class="row m-3">
         <?php foreach ($events as $event): ?>
         <div class="card col-md-3" style="width: 18rem;">
-            <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
             <img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="custom-card-img card-img-top"
                 alt="<?= htmlspecialchars($event['title']) ?>">
             <div class="card-body">
@@ -136,15 +115,12 @@ $events = $stmt->fetchAll();
                     <?= htmlspecialchars($event['title']) ?>
                 </h5>
                 <p class="card-text">Tempat:
-                    <?= htmlspecialchars($event['venue_name']) ?>
+                    <?= htmlspecialchars($event['location']) ?>
                 </p>
-                <p class="card-text">Waktu: 
-                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
-                    <?php if (!empty($event['end_date'])): ?>
-                        - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
-                    <?php endif; ?>
+                <p class="card-text">Waktu:
+                    <?= date('d M Y, H:i', strtotime($event['date'])) ?>
                 </p>
-                <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
+                <a href="event_detail.php?id=<?= $event['id'] ?>" class="btn custom-btn">See Details</a>
             </div>
         </div>
         <?php endforeach; ?>
@@ -179,10 +155,10 @@ $events = $stmt->fetchAll();
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
 
+    
     <!-- Footer -->
     <footer class="text-center py-4" style="background-color: #191970; color: white;">
         <p class="mb-0">&copy; 2024 Event Center. All Rights Reserved.</p>

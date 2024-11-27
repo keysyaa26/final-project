@@ -5,58 +5,37 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
+include '../../src/Acara.php';
 include '../../includes/header.php';
 include '../../includes/config.php';
 
 // Tambah atau Edit Event
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $event_id = $_POST['event_id'] ?? null;
     $title = $_POST['title'];
     $description = $_POST['description'];
     $date = $_POST['date'];
-    $event_id = $_POST['event_id'] ?? null;
-
-    $uploadDir = '../../assets/img/poster/';
-
-    $posterFileName = null;
-    if (isset($_FILES['poster']) && $_FILES['poster']['error'] == 0) {
-        $fileTmpPath = $_FILES['poster']['tmp_name'];
-        $fileName = $_FILES['poster']['name'];
-        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-
-        $allowedExtensions = ['jpg', 'jpeg', 'png'];
-        if (!in_array($fileExtension, $allowedExtensions)) {
-            die("Ekstensi file tidak diizinkan. Harap upload file gambar (JPG, PNG, JPEG).");
-        }
-
-        if ($_FILES['poster']['size'] > 5 * 1024 * 1024) {
-            die("File terlalu besar. Maksimum ukuran file adalah 5MB.");
-        }
-        $posterFileName = "poster_" . ($event_id ?? time()) . "." . $fileExtension;
-        $uploadPath = $uploadDir . $posterFileName;
-        if (!move_uploaded_file($fileTmpPath, $uploadPath)) {
-            die("Gagal mengupload file poster.");
-        }
-    }
-
-    if ($event_id) {
-            $stmt = $pdo->prepare("UPDATE events SET title = ?, description = ?, date = ?, poster = ? WHERE id = ?");
-            $stmt->execute([$title, $description, $date, $posterFileName, $event_id]);
-            $message = "Event berhasil diperbarui.";
+    $location = $_POST['location'];
+    $status = $_POST['status'] ?? 'upcoming';  // Default status adalah 'upcoming'
+    
+    $acara = new Acara($title, $description, $date, $location);
+    $posterFileName = $acara->uploadPoster('poster');
+    $acaraWithPoster = new Acara($title, $description, $date, $location, $status, $posterFileName);
+    if($event_id) {
+        $acaraWithPoster->setDetailEvent($title, $description, $date, $location, $status, $posterFileName);
+        $acaraWithPoster->editEvent($pdo);
     } else {
-        // Insert event baru
-        $stmt = $pdo->prepare("INSERT INTO events (title, description, date, poster) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$title, $description, $date, $posterFileName]);
-
-        $message = "Event berhasil ditambahkan.";
+        $acaraWithPoster->addEvent($pdo);
     }
 }
 
+
 // Hapus Event
 if (isset($_GET['delete_id'])) {
+    // panggil method
     $delete_id = $_GET['delete_id'];
-    $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
-    $stmt->execute([$delete_id]);
-    $message = "Event berhasil dihapus.";
+    $acara = new Acara('', '', '', null, '');
+    $acara->deleteEvent($pdo, $delete_id);
 }
 
 // Pencarian Event
@@ -110,6 +89,7 @@ $events = $stmt->fetchAll();
                     <?php endif; ?>
                 </td>
                 <td>
+                    <!-- tombol edit -->
                     <button class="btn btn-sm btn-warning" 
                             data-bs-toggle="modal" 
                             data-bs-target="#editEventModal" 
@@ -120,7 +100,15 @@ $events = $stmt->fetchAll();
                             data-poster="<?= $event['poster'] ?>">
                         Edit
                     </button>
+
+                    <!-- tombol hapus -->
                     <a href="events.php?delete_id=<?= $event['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus event ini?')">Hapus</a>
+
+                    <!-- tombol peserta -->
+                     <!-- Tombol Lihat Peserta -->
+                    <a href="peserta.php?event_id=<?= $event['id'] ?>" class="btn btn-sm btn-info">
+                        Lihat Peserta
+                    </a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -151,8 +139,12 @@ $events = $stmt->fetchAll();
                     <input type="date" name="date" class="form-control" required>
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Lokasi</label>
+                    <input type="text" name="location" class="form-control">
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Poster</label>
-                    <input type="file" name="poster" class="form-control">
+                    <input type="file" name="poster" id="poster" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">
@@ -185,6 +177,10 @@ $events = $stmt->fetchAll();
                 <div class="mb-3">
                     <label class="form-label">Tanggal</label>
                     <input type="date" name="date" class="form-control" id="edit-event-date" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lokasi</label>
+                    <input type="text" name="location" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Poster</label>

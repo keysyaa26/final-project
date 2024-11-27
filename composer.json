@@ -3,5 +3,11 @@
         "endroid/qr-code": "^6.0",
         "phpmailer/phpmailer": "^6.0",
         "mmaaikel/html-qrcode-maker": "^0.0.9"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
     }
 }
