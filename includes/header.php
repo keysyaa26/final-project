@@ -1,6 +1,7 @@
 <!-- header.php -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,6 +14,7 @@
             background-color: #f8f9fa;
             padding-top: 20px;
         }
+
         .sidebar a {
             font-size: 16px;
             color: #333;
@@ -20,23 +22,26 @@
             display: block;
             text-decoration: none;
         }
+
         .sidebar a:hover {
             background-color: #e2e6ea;
             color: #007bff;
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <!-- Logo Website -->
             <a class="navbar-brand d-flex align-items-center" href="../index.php">
-                <img src="../assets/images/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
+                <img src="../assets/img/logo-bprotic.png" alt="Logo" width="25" height="25" class="me-2">
                 <span>BPROTIC</span>
             </a>
             <!-- Toggle button untuk mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Menu Navbar -->
