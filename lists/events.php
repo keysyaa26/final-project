@@ -86,17 +86,10 @@ $events = $stmt->fetchAll();
             <strong>Status:</strong>
             <?=htmlspecialchars($event['status'])?> <br>
         </p>
-    </div>
-        <div class="text-center pb-2 p-3 alert-info">
-            <?php if($_SESSION['role'] == 'admin'): ?>
-                <a href="../update/update_studio.php?studio_id=<?php echo $studio['studio_id'];?>"
-                    class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                <a href="../delete/delete_studio.php?studio_id=<?php echo $studio['studio_id'];?>"
-                    class="btn btn-warning"><i class="fa fa-trash"></i></a>
-            <?php endif;?>
+        <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
         </div>
     </div>
-    </div>
+</div>
     <?php endforeach?>
 
 

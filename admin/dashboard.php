@@ -5,8 +5,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../../includes/header.php';
-include '../../includes/config.php';
+include '../includes/header.php';
+include '../includes/config.php';
 ?>
 
 <div class="container-fluid">
@@ -18,7 +18,7 @@ include '../../includes/config.php';
                 <div class="card-body">
                     <h5 class="card-title">Acara</h5>
                     <p class="card-text">Lihat dan kelola daftar acara.</p>
-                    <a href="events.php" class="btn btn-primary">Go to Events</a>
+                    <a href="../lists/events.php" class="btn btn-primary">Go to Events</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@ include '../../includes/config.php';
                 <div class="card-body">
                     <h5 class="card-title">Peserta</h5>
                     <p class="card-text">Lihat dan kelola daftar peserta.</p>
-                    <a href="peserta.php" class="btn btn-primary">Go to Peserta</a>
+                    <a href="../lists/peserta.php" class="btn btn-primary">Go to Peserta</a>
                 </div>
             </div>
         </div>
@@ -47,4 +47,4 @@ include '../../includes/config.php';
     </div>
 </div>
 
-<?php include '../../includes/footer.php'; // Penutup halaman ?>
+<?php include '../includes/footer.php'; // Penutup halaman ?>

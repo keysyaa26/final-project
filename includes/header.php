@@ -32,7 +32,7 @@
         <div class="container-fluid">
             <!-- Logo Website -->
             <a class="navbar-brand d-flex align-items-center" href="../index.php">
-                <img src="../assets/images/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
+                <img src="../assets/img/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
                 <span>BPROTIC</span>
             </a>
             <!-- Toggle button untuk mobile -->
@@ -43,7 +43,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../admin/logout.php">Logout</a>
+                        <!-- Logout button -->
+                        <form action="../admin/logout.php" method="POST">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -55,10 +58,10 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <h5 class="text-center">Menu</h5>
-                <a href="../pages/dashboard.php">Dashboard</a>
-                <a href="../../lists/events.php">Events</a>
-                <a href="../pages/peserta.php">Peserta</a>
-                <a href="../pages/scan_qr.php">Scan QR</a>
+                <a href="dashboard.php">Dashboard</a>
+                <a href="../lists/events.php">Events</a>
+                <a href="../list/peserta.php">Peserta</a>
+                <a href="scan_qr.php">Scan QR</a>
             </div>
 
             <!-- Konten Utama -->
