@@ -1,0 +1,66 @@
+.custom-btn {
+    background-color: #C92127;
+    border-color: #C92127;
+    color: white;
+}
+
+.custom-btn:hover {
+    background-color: #a51b20;
+    border-color: #a51b20;
+}
+
+.row {
+    justify-content: center;
+    /* Agar card tetap rapi di tengah */
+    gap: 20px;
+    /* Menambahkan jarak antar card */
+}
+
+.card {
+    margin: 15px;
+}
+
+.custom-card-img {
+    width: 100%;
+    height: 200px;
+    /* Tentukan tinggi gambar agar persegi */
+    object-fit: cover;
+    /* Gambar akan tetap terpotong untuk mengisi area */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Font Poppins */
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    /* Bisa diubah sesuai kebutuhan */
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    /* Untuk heading bisa lebih tebal */
+}
+
+html {
+    scroll-behavior: smooth; /* Efek scroll halus */
+}
+
+.footer-container {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+
+@media screen and (max-width: 576px) {
+    .footer-container {
+        flex-direction: column !important;
+    }
+}

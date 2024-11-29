@@ -43,7 +43,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../logout.php">Logout</a>
+                        <a class="nav-link" href="../admin/logout.php">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -56,7 +56,7 @@
             <div class="col-md-3 col-lg-2 sidebar">
                 <h5 class="text-center">Menu</h5>
                 <a href="../pages/dashboard.php">Dashboard</a>
-                <a href="../pages/events.php">Events</a>
+                <a href="../../lists/events.php">Events</a>
                 <a href="../pages/peserta.php">Peserta</a>
                 <a href="../pages/scan_qr.php">Scan QR</a>
             </div>

@@ -1,6 +1,6 @@
 <?php
 require_once '../vendor/midtrans/midtrans-php/Midtrans.php';
-include 'includes/config.php';
+include '../includes/config.php';
 
 class Payment {
     public function __construct() {
@@ -80,16 +80,14 @@ class Payment {
     }
 }
 
-// Membuat objek Payment
 $payment = new Payment();
 
 // Proses pembayaran dan dapatkan Snap Token
 $snapToken = $payment->processPayment(1, 20000, "Keysya", "keysya@email.com", "00000", 20);
 
-// Lanjutkan dengan tampilan untuk menampilkan Snap Token
+
 echo "Snap Token: " . $snapToken;
 
-// Tangani pembayaran yang sukses
 $payment->handlePaymentSuccess();
 
 

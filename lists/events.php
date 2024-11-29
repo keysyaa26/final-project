@@ -5,9 +5,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../../src/Acara.php';
-include '../../includes/header.php';
-include '../../includes/config.php';
+include '../src/Acara.php';
+include '../includes/header.php';
+include '../includes/config.php';
 
 // Tambah atau Edit Event
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -40,11 +40,12 @@ if (isset($_GET['delete_id'])) {
 
 // Pencarian Event
 $search = $_GET['search'] ?? '';
-$query = "SELECT * FROM events WHERE title LIKE ?";
+$query = "SELECT * FROM vw_events_data WHERE title LIKE ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['%' . $search . '%']);
 $events = $stmt->fetchAll();
 ?>
+
 
 <div class="container-fluid">
     <h2 class="text-center mb-4">Manajemen Events</h2>
@@ -56,65 +57,47 @@ $events = $stmt->fetchAll();
     <!-- Form Pencarian dan Tombol Tambah -->
     <div class="d-flex justify-content-between mb-3">
         <form method="GET" class="d-flex" style="flex-grow: 1;">
-            <input type="text" name="search" class="form-control me-2" placeholder="Cari event..." value="<?= htmlspecialchars($search) ?>">
+            <input type="text" name="search" autofocus="true" class="form-control me-2" placeholder="Cari event..." value="<?= htmlspecialchars($search) ?>">
         </form>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">Tambah Event</button>
     </div>
 
-    <!-- Tabel Daftar Events -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Judul</th>
-                <th>Deskripsi</th>
-                <th>Tanggal</th>
-                <th>Poster</th> <!-- Kolom baru untuk menampilkan poster -->
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($events as $event): ?>
-            <tr>
-                <td><?= $event['id'] ?></td>
-                <td><?= htmlspecialchars($event['title']) ?></td>
-                <td><?= htmlspecialchars($event['description']) ?></td>
-                <td><?= $event['date'] ?></td>
-                <td>
-                    <!-- Menampilkan link ke poster atau gambar jika ada -->
-                    <?php if ($event['poster']): ?>
-                        <a href="../../assets/img/poster/<?= $event['poster'] ?>" target="_blank">Lihat Poster</a>
-                    <?php else: ?>
-                        Tidak ada poster
-                    <?php endif; ?>
-                </td>
-                <td>
-                    <!-- tombol edit -->
-                    <button class="btn btn-sm btn-warning" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#editEventModal" 
-                            data-id="<?= $event['id'] ?>" 
-                            data-title="<?= htmlspecialchars($event['title']) ?>" 
-                            data-description="<?= htmlspecialchars($event['description']) ?>" 
-                            data-date="<?= $event['date'] ?>"
-                            data-poster="<?= $event['poster'] ?>">
-                        Edit
-                    </button>
+    <!-- card events -->
+    <div class='row'>
+    <?php foreach($events as $event):?>
 
-                    <!-- tombol hapus -->
-                    <a href="events.php?delete_id=<?= $event['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus event ini?')">Hapus</a>
-
-                    <!-- tombol peserta -->
-                     <!-- Tombol Lihat Peserta -->
-                    <a href="peserta.php?event_id=<?= $event['id'] ?>" class="btn btn-sm btn-info">
-                        Lihat Peserta
-                    </a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+<div class="col-md-4">
+    <div class="card">
+        <img src="../uploads/<?=htmlspecialchars($event['poster']) ? htmlspecialchars($studio['foto']) :'default.jpg'?>" alt="Foto Studio" class="mt-3">
+        <div class="card-body"> 
+            <h5 class="card-title">
+                <strong><?=htmlspecialchars($event['title'])?></strong>
+            </h5> <br>
+        <p class="card-text">
+            <strong>Tanggal:</strong>
+            <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                <?php if (!empty($event['end_date'])): ?>
+                    - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                <?php endif; ?> <br>
+            <strong>Tipe Acara:</strong>
+            <?=htmlspecialchars($event['event_type_name'])?> <br>
+            <strong>Lokasi:</strong>
+            <?=htmlspecialchars($event['venue_name'])?> <br>
+            <strong>Status:</strong>
+            <?=htmlspecialchars($event['status'])?> <br>
+        </p>
+    </div>
+        <div class="text-center pb-2 p-3 alert-info">
+            <?php if($_SESSION['role'] == 'admin'): ?>
+                <a href="../update/update_studio.php?studio_id=<?php echo $studio['studio_id'];?>"
+                    class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                <a href="../delete/delete_studio.php?studio_id=<?php echo $studio['studio_id'];?>"
+                    class="btn btn-warning"><i class="fa fa-trash"></i></a>
+            <?php endif;?>
+        </div>
+    </div>
+    </div>
+    <?php endforeach?>
 
 
 <!-- Modal Tambah Event -->
@@ -215,4 +198,4 @@ $events = $stmt->fetchAll();
     });
 </script>
 
-<?php include '../../includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

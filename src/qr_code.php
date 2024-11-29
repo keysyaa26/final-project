@@ -68,11 +68,16 @@ class QRCodeMailer {
 
             // Kirim email
             $this->mail->send();
+            $message = '<p><b>Email dengan QR Code telah dikirim!</b></p>';
+                echo "<body onload='successRegister()'><input type='hidden' id='msg' value='" . $message . "''></input></body>";
+                return false;
             echo 'Email dengan QR Code telah dikirim!';
         } catch (Exception $e) {
             echo "Pesan tidak dapat dikirim. Kesalahan: {$this->mail->ErrorInfo}";
         }
     }
+
+    // fungsi untuk simpan qr code ke event_ticket_assignment
 }
 
 
