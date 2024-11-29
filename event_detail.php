@@ -5,7 +5,11 @@
     $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
     if ($event_id) {
-        $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
+        $query = "SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
+                FROM events
+                JOIN venue ON events.venue_ID = venue.venue_ID
+                WHERE event_ID = :event_id";
+        $stmt = $pdo->prepare($query);
         $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
         $stmt->execute();
         $event = $stmt->fetch();
@@ -68,7 +72,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #2C2C7C;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Home</a> <!-- Link untuk kembali ke Home -->
+            <a class="navbar-brand" href="index.php">Home</a> <!-- Link untuk kembali ke Home -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -76,13 +80,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">HOME</a>
+                        <a class="nav-link active" href="index.php">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="events.html">EVENTS</a>
+                        <a class="nav-link active" href="events.php">EVENTS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">CONTACT</a>
+                        <a class="nav-link active" href="#social-media">CONTACT</a>
                     </li>
                 </ul>
             </div>
@@ -90,25 +94,75 @@
     </nav>
 
      <!-- Content of Events Page -->
-     <div class="container my-5">
-        <h1 class="text-center" style="color: #191970;">Detail Acara</h1>
+     <div class="list-section" style="margin-top:100px; margin-bottom:100px;">
+        <div>
+            <h1 class="text-center" style="color: #191970;">Detail Event</h1>
+        </div>
+    </div>
         <?php if ($event): ?>
-        <div class="card mt-4">
+        <div class="card mx-auto" style="max-width: 800px; margin-bottom: 50px;">
             <!-- Menampilkan gambar acara -->
             <div class='img-container'><img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
             <!-- -->
             <div class="card-body">
-                <h3 class="card-title"><?= htmlspecialchars($event['title']); ?></h3>
-                <p class="card-text"><strong>Lokasi:</strong> Lokasi Acara</p>
-                <p class="card-text"><strong>Tanggal & Waktu:</strong> <?= date('d-m-Y H:i', strtotime($event['date'])); ?></p>
-                <p class="card-text"><?= htmlspecialchars($event['description']); ?></p>
-                <a href="pendaftaran/register.php?id=<?= $event['id'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
+                <h3 class="card-title">
+                    <?= htmlspecialchars($event['title']); ?>
+                </h3>
+                <p class="card-text"><strong>Lokasi:</strong>
+                    <?= htmlspecialchars($event['venue_name']) ?>
+                </p>
+                <p class="card-text"><strong>Tanggal & Waktu:</strong> 
+                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                    <?php if (!empty($event['end_date'])): ?>
+                        - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                    <?php endif; ?>
+                </p>
+
+                <!-- untuk acara berbayar, nanti diisi HTM-->
+
+                <p class="card-text">
+                    <?= htmlspecialchars($event['description']); ?>
+                </p>
+                <a href="register.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
             </div>
         </div>
         <?php else: ?>
             <p>Acara tidak ditemukan.</p>
         <?php endif; ?>
     </div>
+
+    <!-- About and Social Media Section -->
+    <div class="container-fluid py-5" style="background-color: #2C2C7C;">
+        <div class="d-flex justify-content-between align-items-center mx-5">
+            <!-- About Section -->
+            <div class="about-section" style="flex: 1; margin-right: 50px;">
+                <h4 class="mb-3" style="color: #ffffff;">About</h4>
+                <p style="line-height: 1.8; color: #FFFFFF;">
+                    Event Center adalah platform penyelenggaraan acara yang menyediakan berbagai informasi terkini
+                    mengenai event-event menarik yang dapat diikuti. Kami berdedikasi untuk memberikan pengalaman
+                    terbaik
+                    dalam menemukan dan mendaftar acara.
+                </p>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="social-media-section text-center" id="social-media" style="flex: 1;">
+                <h4 class="mb-3" style="color: #FFFFFF;">Follow Us on Social Media</h4>
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="#" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Footer -->
     <footer class="text-center py-4" style="background-color: #191970; color: white;">

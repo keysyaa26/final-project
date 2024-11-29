@@ -5,8 +5,36 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/header.php';
-include '../includes/config.php';
+include '../../includes/header.php';
+include '../../includes/config.php';
+// include '../../includes/get_event_id.php';
+
+$event_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+if ($event_id) {
+    $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
+    $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
+    $stmt->execute();
+    $event = $stmt->fetch();
+} else {
+    echo "Event tidak ditemukan.";
+    exit;
+}
+
+// Pastikan event_id ada dan valid
+if ($event_id) {
+    $stmt = $pdo->prepare("
+        SELECT p.id_peserta, p.nama_peserta, p.email_peserta
+        FROM peserta p
+        JOIN acara_has_peserta ap ON p.id_peserta = ap.id_peserta
+        WHERE ap.id_acara = ?
+    ");
+    $stmt->execute([$event_id]);
+    $participants = $stmt->fetchAll();
+} else {
+    echo "Event tidak ditemukan.";
+    exit;
+}
 
 // Edit Peserta
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['participant_id'])) {
@@ -16,22 +44,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['participant_id'])) {
     $phone = $_POST['phone'];
 
     // Update data peserta
-    $stmt = $pdo->prepare("UPDATE registrations SET name = ?, email = ?, phone = ? WHERE id = ?");
-    $stmt->execute([$name, $email, $phone, $participant_id]);
+    $stmt = $pdo->prepare("UPDATE peserta SET name = ?, email = ?, phone = ?, event_id = ? WHERE id = ?");
+    $stmt->execute([$name, $email, $phone, $event_id, $participant_id]);
     $message = "Data peserta berhasil diperbarui.";
 }
 
 // Hapus Peserta
 if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
-    $stmt = $pdo->prepare("DELETE FROM registrations WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM peserta WHERE id = ?");
     $stmt->execute([$delete_id]);
     $message = "Peserta berhasil dihapus.";
 }
 
 // Pencarian Peserta
 $search = $_GET['search'] ?? '';
-$query = "SELECT * FROM registrations WHERE name LIKE ?";
+$query = "SELECT * FROM peserta WHERE nama_peserta LIKE ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['%' . $search . '%']);
 $participants = $stmt->fetchAll();
@@ -65,23 +93,41 @@ $participants = $stmt->fetchAll();
             </tr>
         </thead>
         <tbody>
+                    <?php foreach ($participants as $participant): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($participant['id_peserta']) ?></td>
+                        <td><?= htmlspecialchars($participant['nama_peserta']) ?></td>
+                        <td><?= htmlspecialchars($participant['email_peserta']) ?></td>
+                        <td><?= htmlspecialchars($participant['no_tlp']) ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>Tidak ada peserta yang terdaftar untuk event ini.</p>
+        <?php endif; ?>
+        
+        <!-- Link Kembali -->
+        <a href="events.php" class="btn btn-primary">Kembali ke Daftar Events</a>
+        <tbody>
             <?php foreach ($participants as $participant): ?>
             <tr>
-                <td><?= $participant['id'] ?></td>
-                <td><?= htmlspecialchars($participant['name']) ?></td>
-                <td><?= htmlspecialchars($participant['email']) ?></td>
-                <td><?= htmlspecialchars($participant['phone']) ?></td>
-                <td><?= htmlspecialchars($participant['event_id']) ?></td>
-                <td><?= htmlspecialchars($participant['attendance_status']) ?></td>
+                <td><?= $participant['id_peserta'] ?></td>
+                <td><?= htmlspecialchars($participant['nama_peserta']) ?></td>
+                <td><?= htmlspecialchars($participant['email_peserta']) ?></td>
+                
+                <!-- <td><?= htmlspecialchars($participant['event_id']) ?></td> -->
+                <!-- <td><?= htmlspecialchars($participant['attendance_status']) ?></td> -->
                 <td>
                     <button 
                         class="btn btn-sm btn-warning editButton" 
                         data-bs-toggle="modal" 
                         data-bs-target="#editPesertaModal" 
-                        data-id="<?= $participant['id'] ?>" 
-                        data-name="<?= htmlspecialchars($participant['name']) ?>" 
-                        data-email="<?= htmlspecialchars($participant['email']) ?>" 
-                        data-phone="<?= htmlspecialchars($participant['phone']) ?>">
+                        data-id="<?= $participant['id_peserta'] ?>" 
+                        data-name="<?= htmlspecialchars($participant['nama_peserta']) ?>" 
+                        data-email="<?= htmlspecialchars($participant['email_peserta']) ?>" 
+                        data-phone="<?= htmlspecialchars($participant['no_tlp']) ?>" 
+                        data-event_id="<?= $participant['event_id'] ?>">
                         Edit
                     </button>
                     <a href="peserta.php?delete_id=<?= $participant['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus peserta ini?')">Hapus</a>

@@ -5,72 +5,37 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/header.php';
-include '../includes/config.php';
-
-$error_message = '';
-$message = '';
+include '../../src/Acara.php';
+include '../../includes/header.php';
+include '../../includes/config.php';
 
 // Tambah atau Edit Event
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $event_id = $_POST['event_id'] ?? null;
     $title = $_POST['title'];
     $description = $_POST['description'];
     $date = $_POST['date'];
     $location = $_POST['location'];
-    $price = $_POST['price'];
-    $event_id = $_POST['event_id'] ?? null;
-
-    // Ambil data gambar lama jika tidak ada gambar baru diunggah
-    $current_image = null;
-    if ($event_id) {
-        $stmt = $pdo->prepare("SELECT image FROM events WHERE id = ?");
-        $stmt->execute([$event_id]);
-        $current_image = $stmt->fetchColumn();
-    }
-
-    // Validasi file upload
-    $image = $current_image;
-    if (!empty($_FILES['image']['name'])) {
-        $valid_extension = ['jpg', 'png', 'jpeg'];  
-        $file_name = $_FILES['image']['name'];
-        $extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $file_size = $_FILES['image']['size'];
-        $max_file_size = 2 * 1024 * 1024;
-
-        if (!in_array($extension, $valid_extension)) {
-            $error_message = "Format gambar tidak valid. Gunakan jpg, png, atau jpeg";
-        } elseif ($file_size > $max_file_size) {
-            $error_message = "Ukuran gambar terlalu besar. Maksimum 2MB";         
-        } else {
-            $new_file_name = uniqid() . '.' . $extension;
-            $image = '../assets/img/' . basename($new_file_name);
-            move_uploaded_file($_FILES['image']['tmp_name'], $image);
-            $image = $new_file_name; // Nama file yang akan disimpan di database
-        }
-    }
-
-    // Proses penyimpanan hanya jika tidak ada error
-    if (empty($error_message)) {
-        if ($event_id) {
-            // Update event
-            $stmt = $pdo->prepare("UPDATE events SET title = ?, description = ?, date = ?, location = ?, image = ?, price = ? WHERE id = ?");
-            $stmt->execute([$title, $description, $date, $location, $image, $price, $event_id]);
-            $message = "Event berhasil diperbarui.";
-        } else {
-            // Tambah event baru
-            $stmt = $pdo->prepare("INSERT INTO events (title, description, date, location, image, price) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$title, $description, $date, $location, $image, $price]);
-            $message = "Event berhasil ditambahkan.";
-        }
+    $status = $_POST['status'] ?? 'upcoming';  // Default status adalah 'upcoming'
+    
+    $acara = new Acara($title, $description, $date, $location);
+    $posterFileName = $acara->uploadPoster('poster');
+    $acaraWithPoster = new Acara($title, $description, $date, $location, $status, $posterFileName);
+    if($event_id) {
+        $acaraWithPoster->setDetailEvent($title, $description, $date, $location, $status, $posterFileName);
+        $acaraWithPoster->editEvent($pdo);
+    } else {
+        $acaraWithPoster->addEvent($pdo);
     }
 }
 
+
 // Hapus Event
 if (isset($_GET['delete_id'])) {
+    // panggil method
     $delete_id = $_GET['delete_id'];
-    $stmt = $pdo->prepare("DELETE FROM events WHERE id = ?");
-    $stmt->execute([$delete_id]);
-    $message = "Event berhasil dihapus.";
+    $acara = new Acara('', '', '', null, '');
+    $acara->deleteEvent($pdo, $delete_id);
 }
 
 // Pencarian Event
@@ -129,6 +94,7 @@ $events = $stmt->fetchAll();
                 </td>
                 <td>Rp<?= $event['price'] ?></td>
                 <td>
+                    <!-- tombol edit -->
                     <button class="btn btn-sm btn-warning" 
                             data-bs-toggle="modal" 
                             data-bs-target="#editEventModal" 
@@ -141,7 +107,15 @@ $events = $stmt->fetchAll();
                             data-price="<?= $event['price'] ?>">
                         Edit
                     </button>
+
+                    <!-- tombol hapus -->
                     <a href="events.php?delete_id=<?= $event['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus event ini?')">Hapus</a>
+
+                    <!-- tombol peserta -->
+                     <!-- Tombol Lihat Peserta -->
+                    <a href="peserta.php?event_id=<?= $event['id'] ?>" class="btn btn-sm btn-info">
+                        Lihat Peserta
+                    </a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -172,15 +146,11 @@ $events = $stmt->fetchAll();
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Lokasi</label>
-                    <input type="text" name="location" class="form-control" required>
+                    <input type="text" name="location" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Gambar Event</label>
-                    <input type="file" name="image" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input type="number" name="price" class="form-control" required>
+                    <label class="form-label">Poster</label>
+                    <input type="file" name="poster" id="poster" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">
@@ -215,15 +185,11 @@ $events = $stmt->fetchAll();
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Lokasi</label>
-                    <input type="text" name="location" id="edit-event-location" class="form-control" required>
+                    <input type="text" name="location" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Gambar Event (kosongkan jika tidak ingin mengganti)</label>
-                    <input type="file" name="image" id="edit-event-image" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input type="number" name="price" id="edit-event-price" class="form-control" required>
+                    <label class="form-label">Poster</label>
+                    <input type="file" name="poster" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">

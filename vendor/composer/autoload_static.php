@@ -41,6 +41,7 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         'M' => 
         array (
             'Mmaaikel\\HtmlQrcodeMaker\\' => 25,
+            'Midtrans\\' => 9,
         ),
         'E' => 
         array (
@@ -53,6 +54,10 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         'B' => 
         array (
             'BaconQrCode\\' => 12,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -93,6 +98,10 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         array (
             0 => __DIR__ . '/..' . '/mmaaikel/html-qrcode-maker/src',
         ),
+        'Midtrans\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans',
+        ),
         'Endroid\\QrCode\\' => 
         array (
             0 => __DIR__ . '/..' . '/endroid/qr-code/src',
@@ -104,6 +113,10 @@ class ComposerStaticInit8c17e538ef34e4bcd63c219e3ea6f72f
         'BaconQrCode\\' => 
         array (
             0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

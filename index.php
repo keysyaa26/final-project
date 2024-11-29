@@ -1,7 +1,16 @@
 <?php
 include 'includes/config.php';
 
-$stmt = $pdo->prepare("SELECT * FROM events WHERE date >= CURDATE() ORDER BY date ASC LIMIT 3");
+//Query untuk upcoming events
+$query ="
+    SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
+    FROM events
+    JOIN venue ON events.venue_ID = venue.venue_ID
+    WHERE events.start_date >= CURDATE()
+    ORDER BY events.start_date ASC
+    LIMIT 3
+";
+$stmt = $pdo->prepare($query);
 $stmt->execute();
 $events = $stmt->fetchAll();
 ?>
@@ -32,10 +41,6 @@ $events = $stmt->fetchAll();
             border-color: #a51b20;
         }
 
-        .card {
-            margin: 15px;
-        }
-
         .row {
             justify-content: center;
             /* Agar card tetap rapi di tengah */
@@ -43,10 +48,39 @@ $events = $stmt->fetchAll();
             /* Menambahkan jarak antar card */
         }
 
+        .card {
+            margin: 15px;
+        }
+
         .custom-card-img {
             width: 100%;
-            height: 200px; /* Tentukan tinggi gambar agar persegi */
-            object-fit: cover; /* Gambar akan tetap terpotong untuk mengisi area */
+            height: 200px;
+            /* Tentukan tinggi gambar agar persegi */
+            object-fit: cover;
+            /* Gambar akan tetap terpotong untuk mengisi area */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* Font Poppins */
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            /* Bisa diubah sesuai kebutuhan */
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            /* Untuk heading bisa lebih tebal */
+        }
+
+        html {
+            scroll-behavior: smooth; /* Efek scroll halus */
         }
 
     </style>
@@ -58,6 +92,7 @@ $events = $stmt->fetchAll();
         <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #2C2C7C;">
             <div class="container-fluid">
                 <!-- Brand -->
+                <img src="assets/img/logo-bprotic.png" alt="" style="height: 40px; width: auto; margin-right: 10px;">
                 <a class="navbar-brand" href="#" style="font-weight: bold;">BPROTIC</a>
                 <!-- Toggler Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -68,13 +103,13 @@ $events = $stmt->fetchAll();
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">HOME</a>
+                            <a class="nav-link active" href="index.php">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">EVENTS</a>
+                            <a class="nav-link active" href="all_events.php">EVENTS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">CONTACT</a>
+                            <a class="nav-link active" href="#social-media">CONTACT</a>
                         </li>
                     </ul>
                 </div>
@@ -83,7 +118,7 @@ $events = $stmt->fetchAll();
     </div>
 
     <!-- Welcome Section -->
-    <div class="welcome-section">
+    <div class="welcome-section" style="margin-top:100px; margin-bottom:100px;">
         <div>
             <h1 class="text-center" style="color: #191970;">Welcome to Event Center</h1>
         </div>
@@ -92,16 +127,26 @@ $events = $stmt->fetchAll();
     <!-- Card Events upcoming -->
     <div class="row m-3">
         <?php foreach ($events as $event): ?>
-            <div class="card col-md-3" style="width: 18rem;">
-                <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
-                <img src="assets/img/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
-                <div class="card-body">
-                    <h5 class="card-title"><?= htmlspecialchars($event['title']) ?></h5>
-                    <p class="card-text">Tempat: <?= htmlspecialchars($event['location']) ?></p>
-                    <p class="card-text">Waktu: <?= date('d M Y, H:i', strtotime($event['date'])) ?></p>
-                    <a href="event_detail.php?id=<?= $event['id'] ?>" class="btn custom-btn">See Details</a>
-                </div>
+        <div class="card col-md-3" style="width: 18rem;">
+            <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
+            <img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="custom-card-img card-img-top"
+                alt="<?= htmlspecialchars($event['title']) ?>">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <?= htmlspecialchars($event['title']) ?>
+                </h5>
+                <p class="card-text">Tempat:
+                    <?= htmlspecialchars($event['venue_name']) ?>
+                </p>
+                <p class="card-text">Waktu: 
+                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                    <?php if (!empty($event['end_date'])): ?>
+                        - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                    <?php endif; ?>
+                </p>
+                <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
             </div>
+        </div>
         <?php endforeach; ?>
     </div>
 
@@ -120,7 +165,7 @@ $events = $stmt->fetchAll();
             </div>
 
             <!-- Social Media Section -->
-            <div class="social-media-section text-center" style="flex: 1;">
+            <div class="social-media-section text-center" id="social-media" style="flex: 1;">
                 <h4 class="mb-3" style="color: #FFFFFF;">Follow Us on Social Media</h4>
                 <div class="d-flex justify-content-center mt-3">
                     <a href="#" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
@@ -134,6 +179,7 @@ $events = $stmt->fetchAll();
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 
