@@ -1,13 +1,12 @@
 <?php
 include 'includes/config.php';
+include 'header-index.php';
 
 //Query untuk upcoming events
 $query ="
-    SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
-    FROM events
-    JOIN venue ON events.venue_ID = venue.venue_ID
-    WHERE events.start_date >= CURDATE()
-    ORDER BY events.start_date ASC
+    SELECT * FROM vw_events_data
+    WHERE vw_events_data.start_date >= CURDATE()
+    ORDER BY vw_events_data.start_date ASC
     LIMIT 3
 ";
 $stmt = $pdo->prepare($query);
@@ -26,96 +25,14 @@ $events = $stmt->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Favicon -->
-    <link rel="icon" href="img/logo-bprotic.png">
+    <link rel="icon" href="img/logo_bprotic.png">
+
+    <link rel="stylesheet" href="assets\css\styles.css">
     <title>Landing Page</title>
 
-    <style>
-        .custom-btn {
-            background-color: #C92127;
-            border-color: #C92127;
-            color: white;
-        }
-
-        .custom-btn:hover {
-            background-color: #a51b20;
-            border-color: #a51b20;
-        }
-
-        .row {
-            justify-content: center;
-            /* Agar card tetap rapi di tengah */
-            gap: 20px;
-            /* Menambahkan jarak antar card */
-        }
-
-        .card {
-            margin: 15px;
-        }
-
-        .custom-card-img {
-            width: 100%;
-            height: 200px;
-            /* Tentukan tinggi gambar agar persegi */
-            object-fit: cover;
-            /* Gambar akan tetap terpotong untuk mengisi area */
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            /* Font Poppins */
-        }
-
-        .navbar-brand {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            /* Bisa diubah sesuai kebutuhan */
-        }
-
-        h1,
-        h2,
-        h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            /* Untuk heading bisa lebih tebal */
-        }
-
-        html {
-            scroll-behavior: smooth; /* Efek scroll halus */
-        }
-
-    </style>
 </head>
 
 <body>
-    <!-- Navbar Section -->
-    <div>
-        <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #2C2C7C;">
-            <div class="container-fluid">
-                <!-- Brand -->
-                <img src="assets/img/logo-bprotic.png" alt="" style="height: 40px; width: auto; margin-right: 10px;">
-                <a class="navbar-brand" href="#" style="font-weight: bold;">BPROTIC</a>
-                <!-- Toggler Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Collapsible Menu -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.php">HOME</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="all_events.php">EVENTS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#social-media">CONTACT</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
 
     <!-- Welcome Section -->
     <div class="welcome-section" style="margin-top:100px; margin-bottom:100px;">
@@ -152,7 +69,7 @@ $events = $stmt->fetchAll();
 
     <!-- About and Social Media Section -->
     <div class="container-fluid py-5" style="background-color: #2C2C7C;">
-        <div class="d-flex justify-content-between align-items-center mx-5">
+        <div class="d-flex justify-content-between align-items-center mx-5 footer-container">
             <!-- About Section -->
             <div class="about-section" style="flex: 1; margin-right: 50px;">
                 <h4 class="mb-3" style="color: #ffffff;">About</h4>

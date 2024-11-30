@@ -204,6 +204,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         showNotification('failed');
     <?php } ?>
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+    function successRegister() {
+      Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        html: document.getElementById("msg").value,
+        showConfirmButton: false,
+        timer: 1500
+      }).then(function() {
+        window.location.href = 'index.php';
+      })
+    }
+</script>
 </body>
 </html>

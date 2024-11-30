@@ -59,67 +59,6 @@ class Peserta{
         return $this->id_peserta = $pdo->lastInsertId();
     }
 
-    public function buatDanKirimQrCode() {
-        // Membuat QR Code
-        $event_id = 1;
-        $qrContent = "{$this->id_peserta}:{event_id}";
-
-        $builder = new Builder(
-            writer: new PNGWriter(),
-            data: $qrContent,
-            encoding: new Encoding('UTF-8'),
-            errorCorrectionLevel: ErrorCorrectionLevel::High,
-            labelText: 'Scan QR di Pintu Masuk',
-            labelAlignment: LabelAlignment::Center
-        );
-
-        $result = $builder->build();
-
-        // Pastikan folder uploads ada
-        if (!is_dir('uploads')) {
-            mkdir('uploads', 0777, true);
-        }
-
-        // Tentukan path QR code
-        $qrPath = "uploads/qr_{$this->id_peserta}.png";
-        $result->saveToFile($qrPath);
-
-        // Kirim email dengan QR code
-        $this->kirimEmailQrCode($qrPath);
-    }
-
-    
-    private function kirimEmailQrCode($qrPath) {
-        $to_email = $this->email;
-        $subject = 'QR code Presensi: Event Anda';
-        $body = 'Terima kasih sudah mendaftar untuk event kami! Silakan temukan QR code Anda terlampir sebagai tiket masuk.';
-
-        $mail = new PHPMailer(true);
-
-        try {
-            // Konfigurasi server email
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'bproticdummy@gmail.com'; // Ganti dengan email Anda
-            $mail->Password = 'hefk xvuq srzg tqsg'; // Ganti dengan password email Anda
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port = 465;
-
-            $mail->setFrom('bproticdummy@gmail.com', 'Event Organizer');
-            $mail->addAddress($to_email, $this->nama);
-            $mail->Subject = $subject;
-            $mail->Body = $body;
-            $mail->addAttachment($qrPath);
-
-            $mail->send();
-            $emailStatus = 'success';
-            } catch (Exception $e) {
-                $emailStatus = 'failed';
-            }
-    }
-
     public function hapusPeserta($pdo, $delete_id) {
             $query= "DELETE FROM peserta WHERE id = ?";
             $stmt = $pdo->prepare($query);
