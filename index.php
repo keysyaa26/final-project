@@ -46,8 +46,8 @@ $events = $stmt->fetchAll();
         <?php foreach ($events as $event): ?>
         <div class="card col-md-3" style="width: 18rem;">
             <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
-            <img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="custom-card-img card-img-top"
-                alt="<?= htmlspecialchars($event['title']) ?>">
+            <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
+
             <div class="card-body">
                 <h5 class="card-title">
                     <strong><?= htmlspecialchars($event['title']) ?></strong>

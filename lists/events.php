@@ -18,11 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $end_date = $_POST['end_date'];
     $description = trim($_POST['description']);
     $status = trim($_POST['status']);
+    $price = trim($_POST['price']);
     $event_id = $_POST['event_id'] ?? null;
     
-    $acara = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date, $description, $status);
+    $acara = new Acara('','','','','','','','');
     $posterFileName = $acara->uploadPoster('poster');
-    $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date, $description, $status);
+    $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date,  $description, $status,$posterFileName, $price);
     $acaraWithPoster->addEvent($pdo);
     // ini untuk edit
     // if($event_id) {
@@ -75,7 +76,7 @@ $events = $stmt->fetchAll();
         <?php if ($event["status_aktif"] == TRUE):?>
         <div class="col-md-4">
             <div class="card">
-                <img src="../uploads/<?=htmlspecialchars($event['poster']) ? htmlspecialchars($studio['foto']) :'default.jpg'?>" alt="Foto Studio" class="mt-3">
+                <img src="../uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
                 <div class="card-body"> 
                     <h5 class="card-title">
                         <strong><?=htmlspecialchars($event['title'])?></strong>

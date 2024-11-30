@@ -11,7 +11,7 @@ class Acara {
     private $event_status;
     private $event_price;
 
-    public function __construct($event_name, $event_type, $event_location, $event_start_date, $event_end_date,  $event_description, $event_poster = null, $event_status = "upcoming", $event_price = 0) {
+    public function __construct($event_name, $event_type, $event_location, $event_start_date, $event_end_date,  $event_description, $event_status, $event_poster = null, $event_price = 0) {
         $this->event_name = $event_name;
         $this->event_type = $event_type;
         $this->event_location = $event_location;
@@ -64,7 +64,7 @@ class Acara {
     
     // method
     public function addEvent($pdo){
-        $query = "INSERT INTO events (title, event_type_ID,venue_ID, start_date, end_date, description, poster, status, price) VALUES (?,?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO events (title, event_type_ID,venue_ID, start_date, end_date, description, poster, status_acara, price) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
         $stmt->bindParam(2, $this->event_type,PDO::PARAM_STR);
@@ -96,17 +96,15 @@ class Acara {
             if ($_FILES[$fileInputName]['size'] > $maxSize) {
                 die("File terlalu besar. Maksimum ukuran file adalah 5MB.");
             }
-    
-            $posterFileName = "poster_" . time() . "." . $fileExtension;
+
+            $posterFileName = "poster_" . ($event_id ?? time()) . "." . $fileExtension;
             $uploadPath = $uploadDir . $posterFileName;
-    
-            // Pindahkan file ke direktori tujuan
             if (!move_uploaded_file($fileTmpPath, $uploadPath)) {
                 die("Gagal mengupload file poster.");
             }
-        }
     
-        return $posterFileName;
+            return $posterFileName;
+        }
     }
 
     // public function setDetailEvent($event_name, $event_description, $event_date, $event_location, $event_poster, $event_status = "upcoming") {
@@ -156,4 +154,5 @@ class Acara {
         return $events;
     }
 }
+
 ?>
