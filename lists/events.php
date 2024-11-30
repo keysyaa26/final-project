@@ -5,8 +5,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../../includes/header.php';
-include '../../includes/config.php';
+include '../includes/header.php';
+include '../includes/config.php';
 
 $error_message = '';
 $message = '';
@@ -280,4 +280,4 @@ editEventModal.addEventListener('show.bs.modal', (event) => {
 </script>
 
 
-<?php include '../../includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
