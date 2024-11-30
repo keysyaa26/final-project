@@ -133,20 +133,18 @@ class Acara {
             
 
     public function deleteEvent($pdo, $delete_id){
-        $query2 = "DELETE FROM acara_has_peserta WHERE id_acara = ?";
+        $query2 = "UPDATE events SET status_aktif = FALSE WHERE event_ID = ?";
         $stmt = $pdo->prepare($query2);
         $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
         $stmt->execute();
-        
-        $query1 = "DELETE FROM events WHERE id = ?";
-        $stmt = $pdo->prepare($query1);
-        $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             return "Event berhasil dihapus.";
+            header("Location: events.php");
+            exit();
         } else {
             $errorInfo = $stmt->errorInfo();
-            return "Gagal menghapus event. Error: " . $errorInfo[2];  // Tampilkan pesan kesalahan
+            return "Gagal menghapus event. Error: " . $errorInfo[2];
         }
     }
 

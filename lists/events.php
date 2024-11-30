@@ -35,10 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Hapus Event
 if (isset($_GET['delete_id'])) {
-    // panggil method
     $delete_id = $_GET['delete_id'];
-    $acara = new Acara('', '', '', null, '');
-    $acara->deleteEvent($pdo, $delete_id);
+
+    if (is_numeric($delete_id)) {
+        $acara = new Acara('', '', '', '', '',''); 
+        $acara->deleteEvent($pdo, $delete_id);
+    } else {
+        echo "ID tidak valid.";
+    }
 }
 
 // Pencarian Event
@@ -68,6 +72,7 @@ $events = $stmt->fetchAll();
     <!-- card events -->
     <div class='row'>
     <?php foreach($events as $event):?>
+        <?php if ($event["status_aktif"] == TRUE):?>
         <div class="col-md-4">
             <div class="card">
                 <img src="../uploads/<?=htmlspecialchars($event['poster']) ? htmlspecialchars($studio['foto']) :'default.jpg'?>" alt="Foto Studio" class="mt-3">
@@ -86,13 +91,15 @@ $events = $stmt->fetchAll();
                     <strong>Lokasi:</strong>
                     <?=htmlspecialchars($event['venue_name'])?> <br>
                     <strong>Status:</strong>
-                    <?=htmlspecialchars($event['status'])?> <br>
+                    <?=htmlspecialchars($event['status_acara'])?> <br>
                 </p>
-                <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
-                <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
+                    <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
+                    <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
+                    <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn btn-primary" onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
                 </div>
             </div>
         </div>
+        <?php endif?>
     <?php endforeach?>
 
 
