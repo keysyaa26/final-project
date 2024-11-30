@@ -11,22 +11,25 @@ include '../includes/config.php';
 
 // Tambah atau Edit Event
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $title = trim($_POST['title']);
+    $event_type_id = intval($_POST['event_type_id']);
+    $venue_id = intval($_POST['venue_id']);
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $description = trim($_POST['description']);
+    $status = trim($_POST['status']);
     $event_id = $_POST['event_id'] ?? null;
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $date = $_POST['date'];
-    $location = $_POST['location'];
-    $status = $_POST['status'] ?? 'upcoming';  // Default status adalah 'upcoming'
     
-    $acara = new Acara($title, $description, $date, $location);
+    $acara = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date, $description, $status);
     $posterFileName = $acara->uploadPoster('poster');
-    $acaraWithPoster = new Acara($title, $description, $date, $location, $status, $posterFileName);
-    if($event_id) {
-        $acaraWithPoster->setDetailEvent($title, $description, $date, $location, $status, $posterFileName);
-        $acaraWithPoster->editEvent($pdo);
-    } else {
-        $acaraWithPoster->addEvent($pdo);
-    }
+    $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date, $description, $status);
+    $acaraWithPoster->addEvent($pdo);
+    // ini untuk edit
+    // if($event_id) {
+    //     $acaraWithPoster->setDetailEvent($title, $description, $date, $location, $status, $posterFileName);
+    //     $acaraWithPoster->editEvent($pdo);
+    // } else {
+    // }
 }
 
 
@@ -65,69 +68,87 @@ $events = $stmt->fetchAll();
     <!-- card events -->
     <div class='row'>
     <?php foreach($events as $event):?>
-
-<div class="col-md-4">
-    <div class="card">
-        <img src="../uploads/<?=htmlspecialchars($event['poster']) ? htmlspecialchars($studio['foto']) :'default.jpg'?>" alt="Foto Studio" class="mt-3">
-        <div class="card-body"> 
-            <h5 class="card-title">
-                <strong><?=htmlspecialchars($event['title'])?></strong>
-            </h5> <br>
-        <p class="card-text">
-            <strong>Tanggal:</strong>
-            <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
-                <?php if (!empty($event['end_date'])): ?>
-                    - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
-                <?php endif; ?> <br>
-            <strong>Tipe Acara:</strong>
-            <?=htmlspecialchars($event['event_type_name'])?> <br>
-            <strong>Lokasi:</strong>
-            <?=htmlspecialchars($event['venue_name'])?> <br>
-            <strong>Status:</strong>
-            <?=htmlspecialchars($event['status'])?> <br>
-        </p>
-        <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="../uploads/<?=htmlspecialchars($event['poster']) ? htmlspecialchars($studio['foto']) :'default.jpg'?>" alt="Foto Studio" class="mt-3">
+                <div class="card-body"> 
+                    <h5 class="card-title">
+                        <strong><?=htmlspecialchars($event['title'])?></strong>
+                    </h5> <br>
+                <p class="card-text">
+                    <strong>Tanggal:</strong>
+                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                        <?php if (!empty($event['end_date'])): ?>
+                            - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                        <?php endif; ?> <br>
+                    <strong>Tipe Acara:</strong>
+                    <?=htmlspecialchars($event['event_type_name'])?> <br>
+                    <strong>Lokasi:</strong>
+                    <?=htmlspecialchars($event['venue_name'])?> <br>
+                    <strong>Status:</strong>
+                    <?=htmlspecialchars($event['status'])?> <br>
+                </p>
+                <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
+                <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     <?php endforeach?>
 
 
 <!-- Modal Tambah Event -->
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form class="modal-content" method="POST" enctype="multipart/form-data"> <!-- Menambahkan enctype untuk upload file -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEventModalLabel">Tambah Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Judul Event</label>
-                    <input type="text" name="title" class="form-control" required>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" required></textarea>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Judul Event</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="event_type_id" class="form-label">Tipe Event</label>
+                        <input type="number" class="form-control" id="event_type_id" name="event_type_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="venue_id" class="form-label">Venue ID</label>
+                        <input type="number" class="form-control" id="venue_id" name="venue_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Tanggal Mulai</label>
+                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">Tanggal Selesai</label>
+                        <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="poster" class="form-label">Poster</label>
+                        <input type="file" class="form-control" id="poster" name="poster">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" id="status" name="status" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">HTM</label>
+                        <input type="text" class="form-control" id="price" name="price" required>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Tanggal</label>
-                    <input type="date" name="date" class="form-control" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Lokasi</label>
-                    <input type="text" name="location" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Poster</label>
-                    <input type="file" name="poster" id="poster" class="form-control">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

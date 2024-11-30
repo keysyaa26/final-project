@@ -50,7 +50,7 @@ $events = $stmt->fetchAll();
                 alt="<?= htmlspecialchars($event['title']) ?>">
             <div class="card-body">
                 <h5 class="card-title">
-                    <?= htmlspecialchars($event['title']) ?>
+                    <strong><?= htmlspecialchars($event['title']) ?></strong>
                 </h5>
                 <p class="card-text">Tempat:
                     <?= htmlspecialchars($event['venue_name']) ?>
@@ -61,6 +61,14 @@ $events = $stmt->fetchAll();
                         - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
                     <?php endif; ?>
                 </p>
+
+                <!-- HTM -->
+                <?php if($event['price'] > 0):?>
+                    <p class="card-text">HTM:
+                        <?= htmlspecialchars($event['price']) ?>
+                    </p>
+                <?php endif; ?>
+                
                 <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
             </div>
         </div>

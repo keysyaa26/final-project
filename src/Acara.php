@@ -2,19 +2,25 @@
 class Acara {
     private $event_id;
     private $event_name;
-    private $event_description;
-    private $event_date;
+    private $event_type;
     private $event_location;
-    private $event_status;
+    private $event_start_date;
+    private $event_end_date;
+    private $event_description;
     private $event_poster;
+    private $event_status;
+    private $event_price;
 
-    public function __construct($event_name, $event_description, $event_date, $event_location= null, $event_status = "upcoming", $event_poster = null) {
+    public function __construct($event_name, $event_type, $event_location, $event_start_date, $event_end_date,  $event_description, $event_poster = null, $event_status = "upcoming", $event_price = 0) {
         $this->event_name = $event_name;
-        $this->event_description = $event_description;
-        $this->event_date = $event_date;
+        $this->event_type = $event_type;
         $this->event_location = $event_location;
-        $this->event_status = $event_status;
+        $this->event_start_date = $event_start_date;
+        $this->event_end_date = $event_end_date;
+        $this->event_description = $event_description;
         $this->event_poster = $event_poster;
+        $this->event_status = $event_status;
+        $this->event_price= $event_price;
     }
 
     // setter dan getter
@@ -36,12 +42,7 @@ class Acara {
     public function setDescription($event_description) {
         $this->event_description = $event_description;
     }
-    public function getDate() {
-        return $this->event_date;
-    }
-    public function setDate($event_date) {
-        $this->event_date = $event_date;
-    }
+
     public function getStatus() {
         return $this->event_status;
     }
@@ -63,14 +64,17 @@ class Acara {
     
     // method
     public function addEvent($pdo){
-        $query = "INSERT INTO events (title, description, date, location, status, poster) VALUES (?,?,?,?,?,?)";
+        $query = "INSERT INTO events (title, event_type_ID,venue_ID, start_date, end_date, description, poster, status, price) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
-        $stmt->bindParam(2, $this->event_description,PDO::PARAM_STR);
-        $stmt->bindParam(3, $this->event_date,PDO::PARAM_STR);
-        $stmt->bindParam(4, $this->event_location,PDO::PARAM_STR);
-        $stmt->bindParam(5, $this->event_status,PDO::PARAM_STR);
-        $stmt->bindParam(6, $this->event_poster,PDO::PARAM_STR);
+        $stmt->bindParam(2, $this->event_type,PDO::PARAM_STR);
+        $stmt->bindParam(3, $this->event_location,PDO::PARAM_STR);
+        $stmt->bindParam(4, $this->event_start_date,PDO::PARAM_STR);
+        $stmt->bindParam(5, $this->event_end_date,PDO::PARAM_STR);
+        $stmt->bindParam(6, $this->event_description,PDO::PARAM_STR);
+        $stmt->bindParam(7, $this->event_poster,PDO::PARAM_STR);
+        $stmt->bindParam(8, $this->event_status,PDO::PARAM_STR);
+        $stmt->bindParam(9, $this->event_price,PDO::PARAM_STR);
         $stmt->execute();
         $this->event_id = $pdo->lastInsertId();
     }
@@ -78,7 +82,7 @@ class Acara {
     public function uploadPoster($fileInputName='poster', $maxSize = 5 * 1024 * 1024, $allowedExtensions = ['jpg', 'jpeg', 'png']) {
         
         $posterFileName = null;
-        $uploadDir = __DIR__ . '/../assets/img/poster/';
+        $uploadDir = __DIR__ . '/../uploads/poster/';
  
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] == 0) {
             $fileTmpPath = $_FILES[$fileInputName]['tmp_name'];
@@ -105,27 +109,27 @@ class Acara {
         return $posterFileName;
     }
 
-    public function setDetailEvent($event_name, $event_description, $event_date, $event_location, $event_poster, $event_status = "upcoming") {
-        $this->setName($event_name);
-        $this->setDescription($event_description);
-        $this->setDate($event_date);
-        $this->setLocation($event_location);
-        $this->setStatus($event_status);
-        $this->setPoster($event_poster);
-    }
+    // public function setDetailEvent($event_name, $event_description, $event_date, $event_location, $event_poster, $event_status = "upcoming") {
+    //     $this->setName($event_name);
+    //     $this->setDescription($event_description);
+    //     $this->setDate($event_date);
+    //     $this->setLocation($event_location);
+    //     $this->setStatus($event_status);
+    //     $this->setPoster($event_poster);
+    // }
     
-    public function editEvent($pdo){
-        $query = "UPDATE events SET title = ?, description = ?, date = ?, location = ?, status = ?, poster = ? WHERE id = ?";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
-        $stmt->bindParam(2, $this->event_description,PDO::PARAM_STR);
-        $stmt->bindParam(3, $this->event_date,PDO::PARAM_STR);
-        $stmt->bindParam(4, $this->event_location,PDO::PARAM_STR);
-        $stmt->bindParam(5, $this->event_status,PDO::PARAM_STR);
-        $stmt->bindParam(6, $this->event_poster,PDO::PARAM_STR);
-        $stmt->bindParam(7, $this->event_id,PDO::PARAM_STR);
-        $stmt->execute();
-    }
+    // public function editEvent($pdo){
+    //     $query = "UPDATE events SET title = ?, description = ?, date = ?, location = ?, status = ?, poster = ? WHERE id = ?";
+    //     $stmt = $pdo->prepare($query);
+    //     $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
+    //     $stmt->bindParam(2, $this->event_description,PDO::PARAM_STR);
+    //     $stmt->bindParam(3, $this->event_date,PDO::PARAM_STR);
+    //     $stmt->bindParam(4, $this->event_location,PDO::PARAM_STR);
+    //     $stmt->bindParam(5, $this->event_status,PDO::PARAM_STR);
+    //     $stmt->bindParam(6, $this->event_poster,PDO::PARAM_STR);
+    //     $stmt->bindParam(7, $this->event_id,PDO::PARAM_STR);
+    //     $stmt->execute();
+    // }
             
 
     public function deleteEvent($pdo, $delete_id){

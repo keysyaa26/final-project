@@ -45,12 +45,12 @@ class QRCodeMailer {
         $result = $builder->build();
 
         // Pastikan folder uploads ada
-        if (!is_dir('uploads')) {
-            mkdir('uploads', 0777, true);
-        }
+        if (!is_dir('../uploads/qr_code')) {
+            mkdir('../uploads/qr_code', 0777, true);
+        }        
 
         // Tentukan path QR code
-        $qrPath = "uploads/qr_{$id_peserta}.png";
+        $qrPath = "../uploads/qr_code/qr_{$id_peserta}.png";
         $result->saveToFile($qrPath);
 
         // Kirim email dengan QR code

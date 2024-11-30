@@ -5,6 +5,13 @@ include 'src/Peserta.php';
 include 'src/qr_code.php';
 include 'includes/config.php';
 
+// Midtrans Configuration
+require_once 'vendor/midtrans/midtrans-php/Midtrans.php';
+\Midtrans\Config::$serverKey = 'SB-Mid-server-LMk3IOcT-CmcBaVt1kVIT93T'; // Ganti dengan server key Midtrans Anda
+\Midtrans\Config::$isProduction = false;
+\Midtrans\Config::$isSanitized = true;
+\Midtrans\Config::$is3ds = true;
+
 $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
 if ($event_id) {
@@ -26,8 +33,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // cek harga acara
     $amount = $event['price'];
     if($amount > 0) {
-        $payment = new Payment();
-    }
+        // Jika harga event lebih besar dari 0, proses pembayaran dengan Midtrans
+            $transactionDetails = [
+                'order_id' => 'ORDER-' . uniqid(),
+                'gross_amount' => $amount,
+            ];
+
+            // Item Details
+            $itemDetails = [
+                [
+                    'id' => 'TICKET-' . $event_id,
+                    'price' => $amount,
+                    'quantity' => 1,
+                    'name' => $event['title'],
+                ],
+            ];
+
+            // Customer Details
+            $customerDetails = [
+                'first_name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+            ];
+
+            // Transaction Parameters
+            $transactionParams = [
+                'transaction_details' => $transactionDetails,
+                'item_details' => $itemDetails,
+                'customer_details' => $customerDetails,
+            ];
+
+            try {
+                // Get Midtrans Snap Token
+                $snapToken = \Midtrans\Snap::getSnapToken($transactionParams);
+                $_SESSION['registration_data'] = [
+                    'event_id' => $event_id,
+                    'name' => $name,
+                    'email' => $email,
+                    'phone' => $phone,
+                    'snap_token' => $snapToken,
+                ];
+            } catch (Exception $e) {
+                die('Error: ' . $e->getMessage());
+            }
+        }
+
+        // Handle Payment Success
+        if (isset($_GET['payment_status']) && $_GET['payment_status'] === 'success') {
+            $registrationData = $_SESSION['registration_data'];
+            if (!$registrationData) {
+                die('Data registrasi tidak ditemukan.');
+            }
+            }
     $peserta = new Peserta($name, $email, $phone);
     $id_attendee = $peserta->Daftar($pdo);
     // method pembayaran

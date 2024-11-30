@@ -60,7 +60,7 @@ class Peserta{
     }
 
     public function hapusPeserta($pdo, $delete_id) {
-            $query= "DELETE FROM peserta WHERE id = ?";
+            $query= "UPDATE event_ticket_assignment SET status = FALSE WHERE attendee_ID = ?";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
     
@@ -70,9 +70,13 @@ class Peserta{
                 $errorInfo = $stmt->errorInfo();
                 return "Gagal menghapus event. Error: " . $errorInfo[2];  // Tampilkan pesan kesalahan
             }
-        }
-    
     }
+    
+    // public function saveRegistrationData() {
+
+    // }
+}
+
 
 
 ?>
