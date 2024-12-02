@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = trim($_POST['price']);
     $event_id = $_POST['event_id'] ?? null;
     
-    $acara = new Acara('','','','','','','','');
+    $acara = new Acara('','','','','','','','', '');
     $posterFileName = $acara->uploadPoster('poster');
     $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date,  $description, $status,$posterFileName, $price);
     $acaraWithPoster->addEvent($pdo);
@@ -39,7 +39,7 @@ if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
 
     if (is_numeric($delete_id)) {
-        $acara = new Acara('', '', '', '', '',''); 
+        $acara = new Acara('','','','','','','','', ''); 
         $acara->deleteEvent($pdo, $delete_id);
     } else {
         echo "ID tidak valid.";

@@ -5,7 +5,7 @@ include 'header-index.php';
 //Query untuk upcoming events
 $query ="
     SELECT * FROM vw_events_data
-    WHERE vw_events_data.start_date >= CURDATE()
+    WHERE vw_events_data.start_date >= CURDATE() AND status_aktif = 1
     ORDER BY vw_events_data.start_date ASC
     LIMIT 3
 ";

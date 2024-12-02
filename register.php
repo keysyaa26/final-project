@@ -31,70 +31,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-    // cek harga acara
+
+    // method pembayaran dan cek harga acara
     $amount = $event['price'];
     if($amount > 0) {
+    
+    }
 
-        echo "ini acara berbayar";
-        $transactionDetails = [
-            'order_id' => 'ORDER-' . uniqid(),
-            'gross_amount' => $amount,
-        ];
-    
-        // Item Details
-        $itemDetails = [
-            [
-                'id' => 'TICKET-' . $event_id,
-                'price' => $amount,
-                'quantity' => 1,
-                'name' => $event['title'],
-            ],
-        ];
-    
-        // Customer Details
-        $customerDetails = [
-            'first_name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-        ];
-    
-        // Transaction Parameters
-        $transactionParams = [
-            'transaction_details' => $transactionDetails,
-            'item_details' => $itemDetails,
-            'customer_details' => $customerDetails,
-        ];
-    
-        try {
-            // Get Midtrans Snap Token
-            $snapToken = \Midtrans\Snap::getSnapToken($transactionParams);
-            $_SESSION['registration_data'] = [
-                'event_id' => $event_id,
-                'name' => $name,
-                'email' => $email,
-                'phone' => $phone,
-                'snap_token' => $snapToken,
-            ];
-        } catch (Exception $e) {
-            die('Error: ' . $e->getMessage());
-        }
-        // Handle Payment Success
-        if (isset($_GET['payment_status']) && $_GET['payment_status'] === 'success') {
-            $registrationData = $_SESSION['registration_data'];
-            if (!$registrationData) {
-                die('Data registrasi tidak ditemukan.');
-            }
-        }
-    
-    } else {
+    // cek data peserta di db attendee
+    $stmt = $pdo->prepare("SELECT email FROM attendee");
+    $stmt->execute();
+    $email_peserta = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($email_peserta && $email_peserta['email'] != $email) {
+        // masuk ke tb attendee
         $peserta = new Peserta($name, $email, $phone);
         $id_attendee = $peserta->Daftar($pdo);
-        // method pembayaran
-    
-        // method kirim email
-        $qrcodeMailer = new QRCodeMailer();
-        $qrCodeFile = $qrcodeMailer->generateQRCode($id_attendee, $event_id, $email);
     }
+    // method kirim email
+    $qrcodeMailer = new QRCodeMailer();
+    $qrCodeFile = $qrcodeMailer->generateQRCode($id_attendee, $event_id, $email);
+
+    // save data regist event
+    $peserta->saveRegistrationData($pdo, $id_attendee, $event_id, $qrCodeFile, $amount);
 }
 ?>
 

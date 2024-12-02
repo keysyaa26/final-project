@@ -50,11 +50,15 @@ class QRCodeMailer {
         }        
 
         // Tentukan path QR code
-        $qrPath = "../uploads/qr_code/qr_{$id_peserta}.png";
+        $qrPath =__DIR__ . "/../uploads/qr_code/qr_{$id_peserta}_{$event_id}.png";
         $result->saveToFile($qrPath);
 
-        // Kirim email dengan QR code
+        $qrFileName = "qr_{$id_peserta}_{$event_id}.png";
+
+        // kirim email + qrcode
         $this->sendQRCodeEmail($email, $qrPath);
+
+        return $qrFileName;
     }
 
     public function sendQRCodeEmail($recipientEmail, $qrCodeFile) {
@@ -77,7 +81,6 @@ class QRCodeMailer {
         }
     }
 
-    // fungsi untuk simpan qr code ke event_ticket_assignment
 }
 
 

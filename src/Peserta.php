@@ -72,9 +72,17 @@ class Peserta{
             }
     }
     
-    // public function saveRegistrationData() {
+    public function saveRegistrationData($pdo, $id_peserta, $id_acara, $qr_code, $price = 0) {
+        $query = "INSERT INTO event_ticket_assignment (attendee_ID, event_ID, price, QR_code) VALUES (:attendee_id, :event_id, :price, :qr_code)";
+        $stmt = $pdo->prepare($query);
 
-    // }
+        $stmt->bindParam(':attendee_id', $id_peserta,  PDO::PARAM_INT);
+        $stmt->bindParam(':event_id', $id_acara,  PDO::PARAM_INT);
+        $stmt->bindParam(':price', $price,  PDO::PARAM_INT);
+        $stmt->bindParam(':qr_code', $qr_code,  PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
 }
 
 
