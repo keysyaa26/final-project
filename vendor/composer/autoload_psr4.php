@@ -16,7 +16,7 @@ return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Mmaaikel\\HtmlQrcodeMaker\\' => array($vendorDir . '/mmaaikel/html-qrcode-maker/src'),
     'Midtrans\\' => array($vendorDir . '/midtrans/midtrans-php/Midtrans'),
-    'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src'),
+    'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src', $vendorDir . '/endroid/qrcode/src'),
     'DASPRiD\\Enum\\' => array($vendorDir . '/dasprid/enum/src'),
     'BaconQrCode\\' => array($vendorDir . '/bacon/bacon-qr-code/src'),
     'App\\' => array($baseDir . '/src'),

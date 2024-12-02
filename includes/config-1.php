@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$db = 'event_db';
+$db = 'bprotic_event_db';
 $user = 'root';
-$pass = 'root';
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
