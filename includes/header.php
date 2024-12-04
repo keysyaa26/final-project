@@ -58,7 +58,7 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <h5 class="text-center">Menu</h5>
-                <a href="dashboard.php">Dashboard</a>
+                <a href="../admin/dashboard.php">Dashboard</a>
                 <a href="../lists/events.php">Events</a>
                 <a href="../list/peserta.php">Peserta</a>
                 <a href="scan_qr.php">Scan QR</a>
