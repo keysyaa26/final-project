@@ -5,7 +5,7 @@ include 'header-index.php';
 //Query untuk upcoming events
 $query ="
     SELECT * FROM vw_events_data
-    WHERE vw_events_data.start_date >= CURDATE()
+    WHERE vw_events_data.start_date >= CURDATE() AND status_aktif = 1
     ORDER BY vw_events_data.start_date ASC
     LIMIT 3
 ";
@@ -46,11 +46,11 @@ $events = $stmt->fetchAll();
         <?php foreach ($events as $event): ?>
         <div class="card col-md-3" style="width: 18rem;">
             <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
-            <img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="custom-card-img card-img-top"
-                alt="<?= htmlspecialchars($event['title']) ?>">
+            <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
+
             <div class="card-body">
                 <h5 class="card-title">
-                    <?= htmlspecialchars($event['title']) ?>
+                    <strong><?= htmlspecialchars($event['title']) ?></strong>
                 </h5>
                 <p class="card-text">Tempat:
                     <?= htmlspecialchars($event['venue_name']) ?>
@@ -61,6 +61,14 @@ $events = $stmt->fetchAll();
                         - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
                     <?php endif; ?>
                 </p>
+
+                <!-- HTM -->
+                <?php if($event['price'] > 0):?>
+                    <p class="card-text">HTM:
+                        <?= htmlspecialchars($event['price']) ?>
+                    </p>
+                <?php endif; ?>
+                
                 <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
             </div>
         </div>

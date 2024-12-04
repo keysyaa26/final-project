@@ -54,7 +54,7 @@ class Payment {
 
     }
 
-    public function handlePaymentSuccess() {
+    public function handlePaymentSuccess($pdo) {
         if (isset($_GET['payment_status']) && $_GET['payment_status'] === 'success') {
             if (!isset($_SESSION['registration_data'])) {
                 die('Data registrasi tidak ditemukan.');
@@ -62,14 +62,14 @@ class Payment {
 
             $registrationData = $_SESSION['registration_data'];
 
-            $this->saveRegistration($registrationData);
+            $this->saveRegistration($pdo, $registrationData);
             echo 'Pembayaran berhasil, terima kasih ' . $registrationData['name'];
         }
 
     }
 
     // simpan ke db
-    private function saveRegistration($registrationData) {
+    private function saveRegistration($pdo, $registrationData) {
         $query = "INSERT INTO event_ticket_assignment (attendee_ID, event_ID, price, snap_token) VALUES (:attendee_id, :event_id, :price, :snap_token)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':attendee_id', $registrationData['attendee_id'], PDO::PARAM_INT);

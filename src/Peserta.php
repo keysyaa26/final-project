@@ -60,7 +60,7 @@ class Peserta{
     }
 
     public function hapusPeserta($pdo, $delete_id) {
-            $query= "DELETE FROM peserta WHERE id = ?";
+            $query= "UPDATE event_ticket_assignment SET status = FALSE WHERE attendee_ID = ?";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
     
@@ -70,9 +70,21 @@ class Peserta{
                 $errorInfo = $stmt->errorInfo();
                 return "Gagal menghapus event. Error: " . $errorInfo[2];  // Tampilkan pesan kesalahan
             }
-        }
-    
     }
+    
+    public function saveRegistrationData($pdo, $id_peserta, $id_acara, $qr_code, $price = 0) {
+        $query = "INSERT INTO event_ticket_assignment (attendee_ID, event_ID, price, QR_code) VALUES (:attendee_id, :event_id, :price, :qr_code)";
+        $stmt = $pdo->prepare($query);
+
+        $stmt->bindParam(':attendee_id', $id_peserta,  PDO::PARAM_INT);
+        $stmt->bindParam(':event_id', $id_acara,  PDO::PARAM_INT);
+        $stmt->bindParam(':price', $price,  PDO::PARAM_INT);
+        $stmt->bindParam(':qr_code', $qr_code,  PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+}
+
 
 
 ?>
