@@ -54,7 +54,27 @@ $stmt->execute(['%' . $search . '%']);
 $events = $stmt->fetchAll();
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN - DAFTAR ACARA</title>
 
+    <style>
+        .custom-card-img {
+            width: 100%;
+            height: 200px;
+            /* Tentukan tinggi gambar agar persegi */
+            object-fit: cover;
+            /* Gambar akan tetap terpotong untuk mengisi area */
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
 <div class="container-fluid">
     <h2 class="text-center mb-4">Manajemen Events</h2>
 
@@ -94,9 +114,11 @@ $events = $stmt->fetchAll();
                     <strong>Status:</strong>
                     <?=htmlspecialchars($event['status_acara'])?> <br>
                 </p>
+                <div class="btn-group-vertical w-100 mt-3">
                     <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
                     <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
-                    <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn btn-primary" onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
+                    <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
+                </div>
                 </div>
             </div>
         </div>

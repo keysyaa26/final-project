@@ -23,15 +23,15 @@ class QRCodeMailer {
         $this->mail->Host = 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
         $this->mail->Username = 'bproticdummy@gmail.com';
-        $this->mail->Password ='hefk xvuq srzg tqsg';
+        $this->mail->Password ='fykj inlz iaiv fnts';
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mail->Port = 465;
 
         $this->mail->setFrom('bproticdummy@gmail.com', 'BPROTIC EVENTS');
     }
 
-    public function generateQRCode($event_id, $id_peserta, $email) {
-        $qrContent = "{$id_peserta}:{$event_id}";
+    public function generateQRCode($event_id, $registration_id, $email) {
+        $qrContent = "{$registration_id}:{$event_id}";
 
         $builder = new Builder(
             writer: new PNGWriter(),
@@ -50,10 +50,10 @@ class QRCodeMailer {
         }        
 
         // Tentukan path QR code
-        $qrPath =__DIR__ . "/../uploads/qr_code/qr_{$id_peserta}_{$event_id}.png";
+        $qrPath =__DIR__ . "/../uploads/qr_code/qr_{$registration_id}.png";
         $result->saveToFile($qrPath);
 
-        $qrFileName = "qr_{$id_peserta}_{$event_id}.png";
+        $qrFileName = "qr_{$registration_id}.png";
 
         // kirim email + qrcode
         $this->sendQRCodeEmail($email, $qrPath);

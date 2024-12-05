@@ -45,7 +45,6 @@ $events = $stmt->fetchAll();
     <div class="row m-3">
         <?php foreach ($events as $event): ?>
         <div class="card col-md-3" style="width: 18rem;">
-            <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
             <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
 
             <div class="card-body">

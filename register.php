@@ -33,21 +33,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // method pembayaran dan cek harga acara
-    $amount = $event['price'];
+    $amount = (int)$event['price'];
+ 
     if($amount > 0) {
-    
-    }
+        
+        // Jika harga event lebih besar dari 0, proses pembayaran dengan Midtrans
+        $transactionDetails = [
+            'order_id' => 'ORDER-' . uniqid(),
+            'gross_amount' => $amount,
+        ];
+
+        // Item Details
+        $itemDetails = [
+            [
+                'id' => 'TICKET-' . $event_id,
+                'price' => $amount,
+                'quantity' => 1,
+                'name' => $event['title'],
+            ],
+        ];
+
+        // Customer Details
+        $customerDetails = [
+            'first_name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+        ];
+
+        // Transaction Parameters
+        $transactionParams = [
+            'transaction_details' => $transactionDetails,
+            'item_details' => $itemDetails,
+            'customer_details' => $customerDetails,
+        ];
+
+        try {
+            // Get Midtrans Snap Token
+            $snapToken = \Midtrans\Snap::getSnapToken($transactionParams);
+            $_SESSION['registration_data'] = [
+                'event_id' => $event_id,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'snap_token' => $snapToken,
+            ];
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+        }
+
+        // Handle Payment Success
+        if (isset($_GET['payment_status']) && $_GET['payment_status'] === 'success') {
+            $registrationData = $_SESSION['registration_data'];
+            if (!$registrationData) {
+                die('Data registrasi tidak ditemukan.');
+            }
+        }
 
     // cek data peserta di db attendee
-    $stmt = $pdo->prepare("SELECT email FROM attendee");
-    $stmt->execute();
-    $email_peserta = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM attendee WHERE email = ?");
+    $stmt->execute([$email]);
+    $existing_user = $stmt->fetch();
 
-    if($email_peserta && $email_peserta['email'] != $email) {
-        // masuk ke tb attendee
-        $peserta = new Peserta($name, $email, $phone);
+    $peserta = new Peserta($name, $email, $phone);
+    
+    // masuk ke tb attendee
+    if($existing_user['email'] != $email) {
         $id_attendee = $peserta->Daftar($pdo);
     }
+
+    $id_attendee = $existing_user['attendee_ID'];
     // method kirim email
     $qrcodeMailer = new QRCodeMailer();
     $qrCodeFile = $qrcodeMailer->generateQRCode($id_attendee, $event_id, $email);
@@ -63,6 +118,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi untuk <?= htmlspecialchars($event['title']) ?></title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-oPc2Fv1z8uUBIT4d"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         /* Reset default styles */
@@ -187,12 +247,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="hidden" name="event_id" value="<?= $event_id ?>">
             <label>Nama: <input type="text" name="name" required></label>
             <label>Email: <input type="email" name="email" required></label>
-            <label>Telepon: <input tyipe="text" name="phone"></label>
+            <label>Telepon: <input type="text" name="phone"></label>
             <button type="submit">Daftar</button>
         </form>
     </div>
 
-    <!-- Notifikasi -->
+<script>
+    <?php if (isset($snapToken)): ?>
+    const snapToken = <?= json_encode($snapToken) ?>;
+    snap.pay(snapToken, {
+        onSuccess: function(result) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Pembayaran Berhasil!',
+                text: 'Terima kasih, pembayaran Anda telah berhasil diproses.',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "?payment_status=success";
+                }
+            });
+        },
+        onPending: function() {
+            alert("Pembayaran tertunda!");
+            },
+        onError: function() {
+            alert("Pembayaran gagal!");
+        }
+    });
+    <?php endif;?>
+</script>
+
+<?php die;?>
+
+<!-- Notifikasi -->
 <div id="notification" class="notification">QR Code berhasil dikirim melalui email!</div>
 
 <script>
@@ -210,19 +298,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         notification.classList.add('show');
         
-        // Setelah 5 detik, sembunyikan notifikasi
-        setTimeout(function() {
-            notification.classList.remove('show');
-        }, 5000); // 5 detik
     }
-
-    // PHP untuk menampilkan status pengiriman email
+    
+    // menampilkan status pengiriman email
     <?php if (isset($emailStatus) && $emailStatus === 'success') { ?>
         showNotification('success');
     <?php } elseif (isset($emailStatus) && $emailStatus === 'failed') { ?>
         showNotification('failed');
     <?php } ?>
+
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     function successRegister() {
@@ -231,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         icon: 'success',
         html: document.getElementById("msg").value,
         showConfirmButton: false,
-        timer: 1500
+        // timer: 1500
       }).then(function() {
         window.location.href = 'index.php';
       })

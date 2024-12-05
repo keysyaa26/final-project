@@ -101,8 +101,7 @@
     </div>
         <?php if ($event): ?>
         <div class="card mx-auto" style="max-width: 800px; margin-bottom: 50px;">
-            <!-- Menampilkan gambar acara -->
-            <div class='img-container'><img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
+            <div class='img-container'><img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
             <!-- -->
             <div class="card-body">
                 <h3 class="card-title">

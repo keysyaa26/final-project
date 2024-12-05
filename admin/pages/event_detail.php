@@ -1,5 +1,5 @@
 <?php
-include '../includes/config.php';
+include '../../includes/config.php';
 
 $id = $_GET['id'];
 $stmt = $pdo->prepare("SELECT * FROM events WHERE id = ?");
