@@ -66,7 +66,7 @@ $participants = $stmt->fetchAll();
 ?>
 
 <div class="container-fluid">
-    <h2 class="text-center mb-4">Manajemen Peserta Acara <?</h2>
+    <h2 class="text-center mb-4">Manajemen Peserta Acara</h2>
 
     <?php if (!empty($message)): ?>
         <div class="alert alert-success"><?= $message ?></div>

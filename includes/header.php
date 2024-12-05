@@ -1,18 +1,27 @@
 <!-- header.php -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Custom styles for sidebar */
+        /* Sidebar Styles */
         .sidebar {
-            min-height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
             background-color: #f8f9fa;
-            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding-top: 80px;
+            /* Jika ada navbar */
         }
+
+
         .sidebar a {
             font-size: 16px;
             color: #333;
@@ -20,15 +29,31 @@
             display: block;
             text-decoration: none;
         }
+
         .sidebar a:hover {
             background-color: #e2e6ea;
             color: #007bff;
         }
+
+        body {
+            padding-left: 280px;
+            /* Atur sesuai kebutuhan */
+            padding-right: 0px;
+        }
+
+        .custom-card-img {
+            width: 100%;
+            height: 250px;
+            /* Tentukan tinggi gambar agar persegi */
+            object-fit: cover;
+            /* Gambar akan tetap terpotong untuk mengisi area */
+        }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <!-- Logo Website -->
             <a class="navbar-brand d-flex align-items-center" href="../index.php">
@@ -36,7 +61,8 @@
                 <span>BPROTIC</span>
             </a>
             <!-- Toggle button untuk mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Menu Navbar -->
@@ -58,7 +84,7 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <h5 class="text-center">Menu</h5>
-                <a href="dashboard.php">Dashboard</a>
+                <a href="../admin/dashboard.php">Dashboard</a>
                 <a href="../lists/events.php">Events</a>
                 <a href="../list/peserta.php">Peserta</a>
                 <a href="scan_qr.php">Scan QR</a>
