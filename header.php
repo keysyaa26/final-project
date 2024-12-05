@@ -96,7 +96,11 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'events.php') ? 'active' : '' ?>"
+<<<<<<< HEAD
                             href="all_events.php">EVENTS</a>
+=======
+                            href="events.php">EVENTS</a>
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#social-media">CONTACT</a>

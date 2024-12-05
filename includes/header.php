@@ -21,7 +21,10 @@
             /* Jika ada navbar */
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
         .sidebar a {
             font-size: 16px;
             color: #333;
@@ -57,7 +60,11 @@
         <div class="container-fluid">
             <!-- Logo Website -->
             <a class="navbar-brand d-flex align-items-center" href="../index.php">
+<<<<<<< HEAD
                 <img src="../assets/img/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
+=======
+                <img src="../assets/img/logo-bprotic.png" alt="Logo" width="25" height="25" class="me-2">
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
                 <span>BPROTIC</span>
             </a>
             <!-- Toggle button untuk mobile -->

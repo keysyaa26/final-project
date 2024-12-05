@@ -2,6 +2,7 @@
 include 'includes/config.php';
 include 'header.php';
 
+<<<<<<< HEAD
 //Query untuk upcoming events
 $query ="
     SELECT * FROM vw_events_data
@@ -10,9 +11,16 @@ $query ="
     LIMIT 3
 ";
 $stmt = $pdo->prepare($query);
+=======
+
+//Query untuk upcoming events
+$stmt = $pdo->prepare("SELECT * FROM events WHERE date >= CURDATE() ORDER BY date ASC LIMIT 3");
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 $stmt->execute();
 $events = $stmt->fetchAll();
+
 ?>
+<<<<<<< HEAD
 
 
 <!DOCTYPE html>
@@ -34,6 +42,8 @@ $events = $stmt->fetchAll();
 
 <body>
 
+=======
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
     <!-- Welcome Section -->
     <div class="welcome-section" style="margin-top:100px; margin-bottom:100px;">
         <div>
@@ -44,6 +54,7 @@ $events = $stmt->fetchAll();
     <!-- Card Events upcoming -->
     <div class="row m-3">
         <?php foreach ($events as $event): ?>
+<<<<<<< HEAD
         <div class="card col-md-3" style="width: 18rem;">
             <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
             <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
@@ -79,3 +90,34 @@ $events = $stmt->fetchAll();
 </html>
 
 <?php include 'footer.php'; ?>
+=======
+            <div class="card col-md-3" style="width: 18rem;">
+                <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
+                <img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>" class="custom-card-img card-img-top"
+                    alt="<?= htmlspecialchars($event['title']) ?>">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <?= htmlspecialchars($event['title']) ?>
+                    </h5>
+                    <p class="card-text">Tempat:
+                        <?= htmlspecialchars($event['location']) ?>
+                    </p>
+                    <p class="card-text">Waktu:
+                        <?= date('d M Y, H:i', strtotime($event['date'])) ?>
+                    </p>
+                    <a href="event_detail.php?id=<?= $event['id'] ?>" class="btn custom-btn">See Details</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+<?php
+include 'footer.php';
+?>
+>>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
