@@ -1,24 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-=======
-if (file_exists('../vendor/autoload.php')) {
-    require_once '../vendor/autoload.php';
-} else {
-    echo "autoload.php not found!";
-}
-
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\Label\LabelAlignment;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
-
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 class Peserta{
     private $id_peserta;
     private $nama;

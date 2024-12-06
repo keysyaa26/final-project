@@ -1,17 +1,10 @@
 <?php
-<<<<<<< HEAD
     session_start();
     include 'includes/config.php';
     include 'header.php';
-=======
-session_start();
-include 'includes/config.php';
-include 'header.php';
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 
 $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
-<<<<<<< HEAD
     if ($event_id) {
         $query = "SELECT events.*, CONCAT(venue.name, ', ', venue.addres_line) AS venue_name
                 FROM events
@@ -25,17 +18,6 @@ $event_id = isset($_GET['id']) ? $_GET['id'] : null;
         echo "Event tidak ditemukan.";
         exit;
     }
-=======
-if ($event_id) {
-    $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
-    $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
-    $stmt->execute();
-    $event = $stmt->fetch();
-} else {
-    echo "Event tidak ditemukan.";
-    exit;
-}
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 ?>
 
 

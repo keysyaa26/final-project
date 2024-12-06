@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 session_start();
 include 'src/Peserta.php';
@@ -19,16 +18,6 @@ $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($event_id) {
     $stmt = $pdo->prepare("SELECT * FROM events WHERE event_ID = :event_id");
     $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
-=======
-include 'src/Peserta.php';
-include 'includes/config.php';
-
-$event_id = isset($_GET['id']) ? $_GET['id'] : null;
-
-if ($event_id) {
-    $stmt = $pdo->prepare("SELECT * FROM events WHERE id = :event_id");
-    $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT); // Bind parameter
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
     $stmt->execute();
     $event = $stmt->fetch();
 } else {
@@ -42,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-<<<<<<< HEAD
 
     // method pembayaran dan cek harga acara
     $amount = (int)$event['price'];
@@ -122,12 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // save data regist event
     $peserta = new Peserta($name, $email, $phone);
     $peserta->saveRegistrationData($pdo, $id_attendee, $event_id, $qrCodeFile, $amount);
-=======
-    $peserta = new Peserta ($name, $email, $phone);
-    $peserta->Daftar($pdo);
-    $peserta->buatDanKirimQrCode();
-    $emailStatus = $peserta->getEmailStatus();
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 }
 ?>
 
@@ -137,14 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi untuk <?= htmlspecialchars($event['title']) ?></title>
-<<<<<<< HEAD
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-oPc2Fv1z8uUBIT4d"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-=======
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 
     <style>
         /* Reset default styles */
@@ -269,17 +248,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="hidden" name="event_id" value="<?= $event_id ?>">
             <label>Nama: <input type="text" name="name" required></label>
             <label>Email: <input type="email" name="email" required></label>
-<<<<<<< HEAD
             <label>Telepon: <input tyipe="text" name="phone"></label>
-=======
-            <label>Telepon: <input type="text" name="phone"></label>
-            <!-- <label>Prodi: <input type="text" name="prodi"></label> -->
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
             <button type="submit">Daftar</button>
         </form>
     </div>
 
-<<<<<<< HEAD
 <script>
     <?php if (isset($snapToken)): ?>
     const snapToken = <?= json_encode($snapToken) ?>;
@@ -309,9 +282,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </script>
 
 <!-- Notifikasi -->
-=======
-    <!-- Notifikasi -->
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 <div id="notification" class="notification">QR Code berhasil dikirim melalui email!</div>
 
 <script>
@@ -329,25 +299,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         notification.classList.add('show');
         
-<<<<<<< HEAD
     }
     
     // menampilkan status pengiriman email
-=======
-        // Setelah 5 detik, sembunyikan notifikasi
-        setTimeout(function() {
-            notification.classList.remove('show');
-        }, 5000); // 5 detik
-    }
-
-    // PHP untuk menampilkan status pengiriman email
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
     <?php if (isset($emailStatus) && $emailStatus === 'success') { ?>
         showNotification('success');
     <?php } elseif (isset($emailStatus) && $emailStatus === 'failed') { ?>
         showNotification('failed');
     <?php } ?>
-<<<<<<< HEAD
 
 </script>
 
@@ -367,9 +326,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       })
     }
 </script>
-=======
-</script>
-
->>>>>>> c19db86db2344600c8e63f19b3ba575329964d3a
 </body>
 </html>
