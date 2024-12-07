@@ -1,6 +1,6 @@
 <?php
 include 'includes/config.php';
-include 'header.php';
+include 'header-index.php';
 
 // Query untuk semua events
 $stmt = $pdo->prepare("SELECT * FROM vw_events_data ORDER BY start_date ASC");
@@ -115,4 +115,4 @@ $events = $stmt->fetchAll();
 
 </html>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer-index.php'; ?>

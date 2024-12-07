@@ -31,9 +31,20 @@ if ($event_id) {
     <title>Details Event Page</title>
 
     <style>
+        .custom-btn {
+            background-color: #C92127;
+            border-color: #C92127;
+            color: white;
+        }
+
+        .custom-btn:hover {
+            background-color: #a51b20;
+            border-color: #a51b20;
+        }
+
         .custom-img {
             width: 200px;
-            /* Anda bisa mengatur ukuran sesuai kebutuhan */
+            /* Mengatur ukuran sesuai kebutuhan */
             height: auto;
         }
 
@@ -62,6 +73,7 @@ if ($event_id) {
         }
     </style>
 </head>
+
 <body>
     <!-- Content of Events Page -->
     <div class="list-section " style="margin-top:100px; margin-bottom:100px;">
@@ -72,13 +84,11 @@ if ($event_id) {
     <?php if ($event): ?>
         <div class="card mx-auto" style="max-width: 1200px; margin-bottom: 50px;">
             <!-- Menampilkan gambar acara -->
-            <div class='img-container'>
-                <img src="../assets/img/poster/<?= htmlspecialchars($event['poster']); ?>"
-                    class="card-img-top custom-img" alt='Foto Acara' class='event-img'>
-            </div>
+            <div class='img-container'><img src="../../uploads/poster/<?= htmlspecialchars($event['poster']); ?>"
+            class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
             <!-- -->
             <div class="card-body">
-                <h3 class="card-title">
+              <h3 class="card-title">
                     <?= htmlspecialchars($event['title']); ?>
                 </h3>
                 <p class="card-text"><strong>Lokasi:</strong>
@@ -98,7 +108,8 @@ if ($event_id) {
                 </p>
                 <a href="../../lists/peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
                 <a href="#<?= $event['event_ID'] ?>" class="btn btn-primary">Edit</a>
-                <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn btn-primary" onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
+                <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn custom-btn"
+                    onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
             </div>
         </div>
     <?php else: ?>

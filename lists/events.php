@@ -25,12 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $posterFileName = $acara->uploadPoster('poster');
     $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date,  $description, $status,$posterFileName, $price);
     $acaraWithPoster->addEvent($pdo);
-    // ini untuk edit
-    // if($event_id) {
-    //     $acaraWithPoster->setDetailEvent($title, $description, $date, $location, $status, $posterFileName);
-    //     $acaraWithPoster->editEvent($pdo);
-    // } else {
-    // }
 }
 
 
@@ -54,7 +48,27 @@ $stmt->execute(['%' . $search . '%']);
 $events = $stmt->fetchAll();
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN - DAFTAR ACARA</title>
 
+    <style>
+        .custom-card-img {
+            width: 100%;
+            height: 200px;
+            /* Tentukan tinggi gambar agar persegi */
+            object-fit: cover;
+            /* Gambar akan tetap terpotong untuk mengisi area */
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
 <div class="container-fluid">
     <h2 class="text-center mb-4">Manajemen Events</h2>
 
@@ -95,8 +109,6 @@ $events = $stmt->fetchAll();
                     <?=htmlspecialchars($event['status_acara'])?> <br>
                 </p>
                     <a href="../admin/pages/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Event</a>
-                    <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
-                    <a href="events.php?delete_id=<?php echo $event['event_ID']; ?>" class="btn btn-primary" onclick="return confirm('Apakah Anda yakin ingin menghapus acara ini?');">Hapus</a>
                 </div>
             </div>
         </div>
@@ -159,65 +171,5 @@ $events = $stmt->fetchAll();
         </div>
     </div>
 </div>
-
-
-<!-- Modal Edit Event -->
-<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form class="modal-content" method="POST">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" name="event_id" id="edit-event-id">
-                <div class="mb-3">
-                    <label class="form-label">Judul Event</label>
-                    <input type="text" name="title" class="form-control" id="edit-event-title" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Deskripsi</label>
-                    <textarea name="description" class="form-control" id="edit-event-description" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Tanggal</label>
-                    <input type="date" name="date" class="form-control" id="edit-event-date" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Lokasi</label>
-                    <input type="text" name="location" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Poster</label>
-                    <input type="file" name="poster" class="form-control">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    // Mengisi data di modal edit event
-    document.addEventListener('DOMContentLoaded', function () {
-        const editEventModal = document.getElementById('editEventModal');
-        editEventModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget; // Tombol yang memicu modal
-            const id = button.getAttribute('data-id');
-            const title = button.getAttribute('data-title');
-            const description = button.getAttribute('data-description');
-            const date = button.getAttribute('data-date');
-
-            // Isi data di modal
-            document.getElementById('edit-event-id').value = id;
-            document.getElementById('edit-event-title').value = title;
-            document.getElementById('edit-event-description').value = description;
-            document.getElementById('edit-event-date').value = date;
-        });
-    });
-</script>
 
 <?php include '../includes/footer.php'; ?>

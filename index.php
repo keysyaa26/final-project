@@ -1,9 +1,9 @@
 <?php
 include 'includes/config.php';
-include 'header.php';
+include 'header-index.php';
 
-//Query untuk upcoming events
-$query ="
+// Query untuk upcoming events
+$query = "
     SELECT * FROM vw_events_data
     WHERE vw_events_data.start_date >= CURDATE() AND status_aktif = 1
     ORDER BY vw_events_data.start_date ASC
@@ -12,9 +12,7 @@ $query ="
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $events = $stmt->fetchAll();
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +25,11 @@ $events = $stmt->fetchAll();
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Favicon -->
     <link rel="icon" href="img/logo_bprotic.png">
-
-    <link rel="stylesheet" href="assets\css\styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <title>Landing Page</title>
-
 </head>
 
 <body>
-
     <!-- Welcome Section -->
     <div class="welcome-section" style="margin-top:100px; margin-bottom:100px;">
         <div>
@@ -45,38 +40,36 @@ $events = $stmt->fetchAll();
     <!-- Card Events upcoming -->
     <div class="row m-3">
         <?php foreach ($events as $event): ?>
-        <div class="card col-md-3" style="width: 18rem;">
-            <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
-            <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
+            <div class="card col-md-3" style="width: 18rem;">
+                <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
+                <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" 
+                     class="custom-card-img card-img-top" 
+                     alt="<?= htmlspecialchars($event['title']) ?>">
 
-            <div class="card-body">
-                <h5 class="card-title">
-                    <strong><?= htmlspecialchars($event['title']) ?></strong>
-                </h5>
-                <p class="card-text">Tempat:
-                    <?= htmlspecialchars($event['venue_name']) ?>
-                </p>
-                <p class="card-text">Waktu: 
-                    <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
-                    <?php if (!empty($event['end_date'])): ?>
-                        - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
-                    <?php endif; ?>
-                </p>
-
-                <!-- HTM -->
-                <?php if($event['price'] > 0):?>
-                    <p class="card-text">HTM:
-                        <?= htmlspecialchars($event['price']) ?>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <strong><?= htmlspecialchars($event['title']) ?></strong>
+                    </h5>
+                    <p class="card-text">Tempat: <?= htmlspecialchars($event['venue_name']) ?></p>
+                    <p class="card-text">Waktu: 
+                        <?= date('l, jS F Y H:i', strtotime($event['start_date'])) ?> 
+                        <?php if (!empty($event['end_date'])): ?>
+                            - <?= date('l, jS F Y H:i', strtotime($event['end_date'])) ?>
+                        <?php endif; ?>
                     </p>
-                <?php endif; ?>
-                
-                <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
+
+                    <!-- HTM -->
+                    <?php if ($event['price'] > 0): ?>
+                        <p class="card-text">HTM: <?= htmlspecialchars($event['price']) ?></p>
+                    <?php endif; ?>
+                    
+                    <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
+                </div>
             </div>
-        </div>
         <?php endforeach; ?>
     </div>
 </body>
 
 </html>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer-index.php'; ?>

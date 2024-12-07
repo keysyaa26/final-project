@@ -1,6 +1,6 @@
 <?php
 include 'includes/config.php'; // Sambungkan ke file konfigurasi database
-include 'header.php'; // Header
+include 'header-index.php'; // Header
 
 // Query untuk semua events
 $stmt = $pdo->prepare("SELECT * FROM events ORDER BY date ASC");
@@ -31,6 +31,4 @@ $events = $stmt->fetchAll();
     <?php endforeach; ?>
 </div>
 
-<?php
-include 'footer.php'; // Footer
-?>
+<?php include 'footer-index.php'; // Footer ?>
