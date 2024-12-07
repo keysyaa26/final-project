@@ -26,7 +26,7 @@ function sendEmail($email, $name, $qrPath) {
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'bproticdummy@gmail.com';
-        $mail->Password = 'hefk xvuq srzg tqsg';
+        $mail->Password = 'fykj inlz iaiv fnts';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
@@ -153,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Proses jika event berbayar
     $transactionDetails = ['order_id' => 'ORDER-' . uniqid(), 'gross_amount' => $amount];
+    $callbacks = ['finish' => 'http://final-project.test/register.php?id=' . $event_id . '&payment_status=success'];
     $itemDetails = [['id' => 'TICKET-' . $event_id, 'price' => $amount, 'quantity' => 1, 'name' => $event['title']]];
     $customerDetails = ['first_name' => $name, 'email' => $email, 'phone' => $phone];
     $transactionParams = [
@@ -178,24 +179,35 @@ if (isset($_GET['payment_status']) && $_GET['payment_status'] === 'success') {
     $registrationData = $_SESSION['registration_data'];
     if (!$registrationData) die('Data registrasi tidak ditemukan.');
 
-    $ticketId = uniqid('TICKET-'); // Generate ticket_ID
-    $purchaseDate = date('Y-m-d H:i:s');
-    
-    // Buat QR Code dengan nama file berdasarkan event_ID dan attendee_ID
-    $qrFilename = createQrCode($ticketId, $registrationData['event_id'], $registrationData['attendee_id']);
+    $transactionStatus = $_GET['transaction_status'];
+    if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+        // Pembayaran berhasil
+        $ticketId = uniqid('TICKET-'); 
+        $purchaseDate = date('Y-m-d H:i:s');
 
-    // Masukkan data ke tabel event_ticket_assignment
-    $stmt = $pdo->prepare("
-        INSERT INTO event_ticket_assignment (ticket_ID, attendee_ID, event_ID, purchase_date, price, QR_code) 
-        VALUES (?, ?, ?, ?, ?, ?)
-    ");
-    $stmt->execute([$ticketId, $registrationData['attendee_id'], $registrationData['event_id'], $purchaseDate, $event['price'], $qrFilename]);
+        // Buat QR Code dengan nama file berdasarkan event_ID dan attendee_ID
+        $qrFilename = createQrCode($ticketId, $registrationData['event_id'], $registrationData['attendee_id']);
 
-    // Kirim email dengan QR code
-    sendEmail($registrationData['email'], $name, "uploads/qr_code/{$qrFilename}");
+        // Masukkan data ke tabel event_ticket_assignment
+        $stmt = $pdo->prepare("
+            INSERT INTO event_ticket_assignment (ticket_ID, attendee_ID, event_ID, purchase_date, price, QR_code) 
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        $stmt->execute([$ticketId, $registrationData['attendee_id'], $registrationData['event_id'], $purchaseDate, $event['price'], $qrFilename]);
 
-    unset($_SESSION['registration_data']);
-    exit;
+        // Kirim email dengan QR code
+        sendEmail($registrationData['email'], $name, "uploads/qr_code/{$qrFilename}");
+
+        unset($_SESSION['registration_data']);
+        
+        // Redirect atau beri informasi bahwa registrasi sukses
+        echo "<h2 class='text-center'>Pembayaran Sukses!</h2>";
+        exit;
+    } else {
+        // Status pembayaran tidak berhasil
+        echo "<h2 class='text-center'>Pembayaran Gagal!</h2>";
+        exit;
+    }
 }
 
 ?>
