@@ -1,87 +1,49 @@
 <?php
+require 'vendor/autoload.php';
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\Label\LabelAlignment;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-class QRCodeMailer {
-    private $mail;
-
-    public function __construct() {
-        // inisialisaasi
-        $this->mail = new PHPMailer(true);
-
-        // Set up email server
-        $this->mail->isSMTP();
-        $this->mail->Host = 'smtp.gmail.com';
-        $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'bproticdummy@gmail.com';
-        $this->mail->Password ='hefk xvuq srzg tqsg';
-        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $this->mail->Port = 465;
-
-        $this->mail->setFrom('bproticdummy@gmail.com', 'BPROTIC EVENTS');
-    }
-
-    public function generateQRCode($event_id, $id_peserta, $email) {
-        $qrContent = "{$id_peserta}:{$event_id}";
-
-        $builder = new Builder(
-            writer: new PNGWriter(),
-            data: $qrContent,
-            encoding: new Encoding('UTF-8'),
-            errorCorrectionLevel: ErrorCorrectionLevel::High,
-            labelText: 'Scan QR di Pintu Masuk',
-            labelAlignment: LabelAlignment::Center
-        );
-        
-        $result = $builder->build();
-
-        // Pastikan folder uploads ada
-        if (!is_dir('../uploads/qr_code')) {
-            mkdir('../uploads/qr_code', 0777, true);
-        }        
-
-        // Tentukan path QR code
-        $qrPath =__DIR__ . "/../uploads/qr_code/qr_{$id_peserta}_{$event_id}.png";
-        $result->saveToFile($qrPath);
-
-        $qrFileName = "qr_{$id_peserta}_{$event_id}.png";
-
-        // kirim email + qrcode
-        $this->sendQRCodeEmail($email, $qrPath);
-
-        return $qrFileName;
-    }
-
-    public function sendQRCodeEmail($recipientEmail, $qrCodeFile) {
-        try {
-            // Penerima email
-            $this->mail->addAddress($recipientEmail);
-
-            $this->mail->Subject = "QR code Presensi: Event Anda";
-            $this->mail->Body    = 'Terima kasih sudah mendaftar untuk event kami! Silakan temukan QR code Anda terlampir sebagai tiket masuk.';
-            $this->mail->addAttachment($qrCodeFile); // QR code sebagai lampiran
-
-            // Kirim email
-            $this->mail->send();
-            $message = '<p><b>Email dengan QR Code telah dikirim!</b></p>';
-                echo "<body onload='successRegister()'><input type='hidden' id='msg' value='" . $message . "''></input></body>";
-                return false;
-            echo 'Email dengan QR Code telah dikirim!';
-        } catch (Exception $e) {
-            echo "Pesan tidak dapat dikirim. Kesalahan: {$this->mail->ErrorInfo}";
-        }
-    }
-
+// Fungsi untuk membuat QR Code
+function generateQRCode($content, $filepath) {
+    $qrCode = new QrCode($content);
+    $writer = new PngWriter();
+    $result = $writer->write($qrCode);
+    $result->saveToFile($filepath);
 }
 
+// Fungsi untuk mengirim email
+function sendEmail($toEmail, $qrCodePath, $eventTitle) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv->load();
 
+    $mail = new PHPMailer(true);
+    try {
+        // Konfigurasi SMTP
+        $mail->isSMTP();
+        $mail->Host = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['SMTP_USER'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = $_ENV['SMTP_PORT'];
+
+        // Detail pengirim dan penerima
+        $mail->setFrom($_ENV['SMTP_USER'], 'BPROTIC');
+        $mail->addAddress($toEmail);
+
+        // Lampiran
+        $mail->addAttachment($qrCodePath, 'QR_Code.png');
+
+        // Konten email
+        $mail->isHTML(true);
+        $mail->Subject = "Tiket untuk Acara: $eventTitle";
+        $mail->Body = "Terima kasih telah mendaftar untuk acara <b>$eventTitle</b>. Silakan temukan QR Code Anda di lampiran.";
+
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Email gagal dikirim: {$mail->ErrorInfo}");
+    }
+}
 ?>
