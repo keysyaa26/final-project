@@ -1,6 +1,6 @@
 <?php
 
-include 'includes/config.php';
+require 'includes/config.php';
 require 'vendor/autoload.php';
 require 'src/qr_code.php';
 require 'midtrans/midtrans_config.php';
