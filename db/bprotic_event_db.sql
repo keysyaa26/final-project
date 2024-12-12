@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 27, 2024 at 05:04 AM
--- Server version: 8.0.40
--- PHP Version: 8.3.13
+-- Waktu pembuatan: 12 Des 2024 pada 07.57
+-- Versi server: 8.0.30
+-- Versi PHP: 8.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,13 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Database: `bprotic_event_db`
 --
-CREATE DATABASE IF NOT EXISTS `bprotic_event_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `bprotic_event_db`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admins`
+-- Struktur dari tabel `admins`
 --
 
 CREATE TABLE `admins` (
@@ -39,7 +37,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `admins`
+-- Dumping data untuk tabel `admins`
 --
 
 INSERT INTO `admins` (`admin_ID`, `admin_role`, `name`, `phone`, `username`, `password`) VALUES
@@ -48,7 +46,7 @@ INSERT INTO `admins` (`admin_ID`, `admin_role`, `name`, `phone`, `username`, `pa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendee`
+-- Struktur dari tabel `attendee`
 --
 
 CREATE TABLE `attendee` (
@@ -59,18 +57,133 @@ CREATE TABLE `attendee` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `attendee`
+-- Dumping data untuk tabel `attendee`
 --
 
 INSERT INTO `attendee` (`attendee_ID`, `name`, `email`, `phone`) VALUES
 (1, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', ''),
 (2, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', ''),
-(3, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '');
+(3, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', ''),
+(4, 'Keysya', 'keysyaulia20@gmail.com', ''),
+(5, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '000'),
+(6, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '0000'),
+(7, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '00'),
+(8, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '00'),
+(9, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '9'),
+(10, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '000'),
+(11, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '000'),
+(12, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '99'),
+(13, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '2'),
+(14, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', '99'),
+(15, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', ''),
+(16, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700'),
+(17, 'adada', 'ariel@gmail.com', '123'),
+(18, 'adada', 'ariel@gmail.com', '123'),
+(19, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700'),
+(20, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700'),
+(21, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700'),
+(22, 'asa', 'filoke4329@luxyss.com', '085771282700'),
+(23, 'qwqw', 'yadepe5831@ikowat.com', '12'),
+(24, 'Muhammad Ariel Ramo', 'janolof858@confmin.com', '1'),
+(25, 'Muhammad Ariel Ramo', 'gidar63863@confmin.com', '085771282700'),
+(26, 'ada', 'ridikek889@kindomd.com', ''),
+(27, 'Muhammad Ariel Ramo', 'cokofos191@jonespal.com', '1'),
+(28, 'amo', 'befaya8696@cantozil.com', '1'),
+(29, 'as', 'woxafa3846@kindomd.com', '1'),
+(30, 'asaa', 'saxani3717@cantozil.com', '1'),
+(31, 'Muhammad Ariel Ramo', 'famey59340@nausard.com', '085771282700'),
+(32, 'Muhammad Ariel Ramo', 'dirisa1397@ikowat.com', '085771282700'),
+(33, 'adadaddadadadadadada', 'betoxo4612@jonespal.com', 'asad'),
+(34, 'ksksk', 'selaxo3064@luxyss.com', '1'),
+(35, 'jjjjjj', 'xibiya4196@jonespal.com', '1'),
+(36, 'Muhammad Ariel Ramo', 'arielradadsa5@gmail.com', '085771282700'),
+(37, 'Muhammad Ariel Ramo', 'adadawdad@gmail.com', '085771282700'),
+(38, 'Muhammad Ariel Ramo', 'ariadda@gmail.com', '085771282700'),
+(39, 'Muhammad Ariel Ramo', 'adadadad2005@gmail.com', '085771282700'),
+(40, 'Muhammad Ariel Ramo', 'arielramosdaa2005@gmail.com', '085771282700'),
+(41, 'Muhammad Ariel Ramo', 'arielramo2005@gmail.com', '085771282700'),
+(42, 'Muhammad Ariel Ramo', 'ariedaasda05@gmail.com', '085771282700'),
+(43, 'Muhammad Ariel Ramo', 'farow99928@kindomd.com', '085771282700'),
+(44, 'amo', 'tegejoc420@luxyss.com', '085771282700'),
+(45, 'Muhammad Ariel Ramo', 'nawiw46660@nausard.com', '085771282700'),
+(46, 'Muhammad Ariel Ramo', 'towaf61564@jonespal.com', '085771282700'),
+(47, 'Muhammad Ariel Ramo', 'adadadawdawdada05@gmail.com', '085771282700'),
+(48, 'Muhammad Ariel Ramo', 'vahip76490@datingel.com', '085771282700'),
+(49, 'Muhammad Ariel Ramo', 'rorocaw802@iminko.com', '085771282700'),
+(50, 'Muhammad Ariel Ramo', 'mayepa8581@ckuer.com', '085771282700'),
+(51, 'Muhammad Ariel Ramo', 'foyena6683@eoilup.com', '085771282700'),
+(52, 'Muhammad Ariel Ramo', 'vagiwam488@bawsny.com', '085771282700'),
+(53, 'Muhammad Ariel Ramo', 'noxepeb593@bawsny.com', '085771282700'),
+(54, 'Muhammad Ariel Ramo', 'mabikaf676@lofiey.com', '085771282700'),
+(55, 'Muhammad Ariel Ramo', 'leponip689@lofiey.com', '085771282700'),
+(56, 'Muhammad Ariel Ramo', 'veyoji9410@rustetic.com', '085771282700'),
+(57, 'Muhammad Ariel Ramo', 'fewapek691@lofiey.com', '085771282700'),
+(58, 'Muhammad Ariel Ramo', 'fewapek691@lofiey.com', '085771282700'),
+(59, 'Muhammad Ariel Ramo', 'rovoj39554@iminko.com', '085771282700'),
+(60, 'Muhammad Ariel Ramo', 'rovoj39554@iminko.com', '085771282700'),
+(61, 'Muhammad Ariel Ramo', 'feleco2205@pokeline.com', '085771282700'),
+(62, 'Muhammad Ariel Ramo', 'vaniyax757@datingel.com', '085771282700'),
+(63, 'Muhammad Ariel Ramo', 'vaniyax757@datingel.com', '085771282700'),
+(64, 'Muhammad Ariel Ramo', 'gibowig288@bawsny.com', '085771282700'),
+(65, 'Muhammad Ariel Ramo', 'padec75359@rustetic.com', '085771282700'),
+(66, 'Muhammad Ariel Ramo', 'padec75359@rustetic.com', '085771282700'),
+(67, 'Muhammad Ariel Ramo', 'padec75359@rustetic.com', '085771282700'),
+(68, 'Muhammad Ariel Ramo', 'fewen46429@rustetic.com', '085771282700'),
+(69, 'Muhammad Ariel Ramo', 'fewen46429@rustetic.com', '085771282700'),
+(70, 'Muhammad Ariel Ramo', 'likise7284@eoilup.com', '085771282700'),
+(71, 'Muhammad Ariel Ramo', 'likise7284@eoilup.com', '085771282700'),
+(72, 'Muhammad Ariel Ramo', 'likise7284@eoilup.com', '085771282700'),
+(73, 'Muhammad Ariel Ramo', 'darata3676@pokeline.com', '085771282700'),
+(74, 'Muhammad Ariel Ramo', 'cajoy83736@bawsny.com', '085771282700'),
+(75, 'Muhammad Ariel Ramo', 'cafode5891@rustetic.com', '085771282700'),
+(76, 'Aulia', 'keysyaa28@gmail.com', ''),
+(77, 'Muhammad Ariel Ramo', 'mipon42214@rustetic.com', '085771282700'),
+(78, 'Muhammad Ariel Ramo', 'bevafe5314@datingel.com', '085771282700'),
+(79, 'Ramo', 'pogebax195@pokeline.com', '085771282700'),
+(80, 'Muhammad Ariel Ramo', 'pixefek334@lofiey.com', '085771282700'),
+(81, 'Muhammad Ariel Ramo', 'hiyaxi1852@bawsny.com', '085771282700'),
+(82, 'Muhammad Ariel Ramo', 'kotofo4682@iminko.com', '085771282700'),
+(83, 'Muhammad Ariel Ramo', 'mevif31808@datingel.com', '085771282700'),
+(84, 'Ramo', 'lipag47582@rustetic.com', '085771282700'),
+(85, 'Muhammad Ariel Ramo', 'miwac81087@lofiey.com', '085771282700'),
+(86, 'Muhammad Ariel Ramo', 'yonahic670@datingel.com', '085771282700'),
+(87, 'Muhammad Ariel Ramo', 'faxoka4614@pokeline.com', '085771282700'),
+(88, 'Muhammad Ariel Ramo', 'ronof13608@ckuer.com', '085771282700'),
+(89, 'Muhammad Ariel Ramo', 'xikef72348@lofiey.com', '085771282700'),
+(90, 'Muhammad Ariel Ramo', 'nason37086@pokeline.com', '085771282700'),
+(91, 'Muhammad Ariel Ramo', 'lirako6203@ckuer.com', '085771282700'),
+(92, 'Muhammad Ariel Ramo', 'arielramo2a005@gmail.com', '085771282700'),
+(93, 'Muhammad Ariel Ramo', 'xinag20271@pokeline.com', '085771282700'),
+(94, 'Muhammad Ariel Ramo', 'wiyoki9143@bawsny.com', '085771282700'),
+(95, 'Muhammad Ariel Ramo', 'hahaw31984@eoilup.com', '085771282700'),
+(96, 'Muhammad Ariel Ramo', 'jaton45104@bawsny.com', '085771282700'),
+(97, 'Muhammad Ariel Ramo', '005@gmail.com', '085771282700'),
+(98, 'Muhammad Ariel Ramo', 'aradawda005@gmail.com', '085771282700'),
+(99, 'Muhammad Ariel Ramo', 'cehen70849@datingel.com', '085771282700'),
+(100, 'Muhammad Ariel Ramo', 'jonedo2351@iminko.com', '085771282700'),
+(101, 'Muhammad Ariel Ramo', 'arielradawawdawdadasdmo2005@gmail.com', '085771282700'),
+(102, 'Muhammad Ariel Ramo', 'xicime6598@ckuer.com', '085771282700'),
+(103, 'Muhammad Ariel Ramo', 'meses42544@rustetic.com', '085771282700'),
+(104, 'Muhammad Ariel Ramo', 'doyepah415@pokeline.com', '085771282700'),
+(105, 'Muhammad Ariel Ramo', 'pewoli1932@datingel.com', '085771282700'),
+(106, 'Muhammad Ariel Ramo', 'bevor56496@datingel.com', '085771282700'),
+(107, 'Muhammad Ariel Ramo', 'wasoho1084@lofiey.com', '085771282700'),
+(108, 'Muhammad Ariel Ramo', 'fimato2710@pokeline.com', '085771282700'),
+(109, 'Muhammad Ariel Ramo', 'satefiw591@iminko.com', '085771282700'),
+(110, 'Muhammad Ariel Ramo', 'xetofa7165@eoilup.com', '085771282700'),
+(111, 'Muhammad Ariel Ramo', 'rahobiy119@ckuer.com', '085771282700'),
+(112, 'Muhammad Ariel Ramo', 'tifimol199@rustetic.com', '085771282700'),
+(113, 'Muhammad Ariel Ramo', 'adad5@gmail.com', '085771282700'),
+(114, 'Muhammad Ariel Ramo', 'adeadawdada05@gmail.com', '085771282700'),
+(115, 'Muhammad Ariel Ramo', 'arieldawdawdadada005@gmail.com', '085771282700'),
+(116, 'Muhammad Ariel Ramo', 'awdadawd05@gmail.com', '085771282700'),
+(117, 'Muhammad Ariel Ramo', 'xomay59690@iminko.com', '085771282700'),
+(118, 'Muhammad Ariel Ramo', 'arielramo200sdadadadadad5@gmail.com', '085771282700');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Struktur dari tabel `events`
 --
 
 CREATE TABLE `events` (
@@ -82,22 +195,41 @@ CREATE TABLE `events` (
   `end_date` datetime NOT NULL,
   `description` text,
   `poster` varchar(255) DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL,
-  `attendance` int DEFAULT '0'
+  `attendance` int DEFAULT '0',
+  `price` decimal(10,2) DEFAULT (0),
+  `status_acara` enum('UPCOMING','ON GOING','COMPLETED') NOT NULL,
+  `status_aktif` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `events`
+-- Dumping data untuk tabel `events`
 --
 
-INSERT INTO `events` (`event_ID`, `title`, `event_type_ID`, `venue_ID`, `start_date`, `end_date`, `description`, `poster`, `status`, `attendance`) VALUES
-(1, 'ACARA CONTOH 1', NULL, 1, '2024-11-30 12:00:00', '2024-11-30 15:00:00', 'Misalnya, Anda memiliki tabel bernama events dengan kolom event_name (string) dan event_date (datetime), dan Anda ingin memasukkan data ke dalam tabel tersebut.', NULL, NULL, 0),
-(2, 'ACARA CONTOH 2', NULL, 2, '2024-11-30 12:00:00', '2024-11-30 15:00:00', 'Misalnya, Anda memiliki tabel bernama events dengan kolom event_name (string) dan event_date (datetime), dan Anda ingin memasukkan data ke dalam tabel tersebut.', NULL, NULL, 0);
+INSERT INTO `events` (`event_ID`, `title`, `event_type_ID`, `venue_ID`, `start_date`, `end_date`, `description`, `poster`, `attendance`, `price`, `status_acara`, `status_aktif`) VALUES
+(1, 'ACARA CONTOH 1', NULL, 1, '2024-11-30 12:00:00', '2024-11-30 15:00:00', 'Misalnya, Anda memiliki tabel bernama events dengan kolom event_name (string) dan event_date (datetime), dan Anda ingin memasukkan data ke dalam tabel tersebut.', NULL, 0, NULL, 'UPCOMING', 1),
+(2, 'ACARA CONTOH 2', NULL, 2, '2024-11-30 12:00:00', '2024-11-30 15:00:00', 'Misalnya, Anda memiliki tabel bernama events dengan kolom event_name (string) dan event_date (datetime), dan Anda ingin memasukkan data ke dalam tabel tersebut.', NULL, 0, NULL, 'UPCOMING', 1),
+(3, 'ACARA CONTOH 3', NULL, 2, '2024-11-30 00:00:00', '2024-11-30 12:00:00', 'Misalnya, Anda memiliki tabel bernama events dengan kolom event_name (string) dan event_date (datetime), dan Anda ingin memasukkan data ke dalam tabel tersebut.', NULL, 0, 0.00, 'UPCOMING', 1),
+(4, 'ini contoh juga', 1, 1, '2024-11-29 12:00:00', '2024-11-20 18:00:00', 'contoh untuk add view', NULL, 0, 0.00, 'UPCOMING', 1),
+(5, 'contoh lain', 1, 2, '2024-11-30 00:00:00', '2024-12-01 00:00:00', 'contoh', NULL, 0, 0.00, 'UPCOMING', 1),
+(6, 'contoj acara berbayar', 1, 1, '2024-12-15 12:00:00', '2024-12-20 00:00:00', NULL, NULL, 0, 20000.00, 'UPCOMING', 1),
+(7, 'judul', 1, 1, '2024-12-03 20:00:00', '2024-12-07 20:00:00', 'ini nyambungin ke database', 'Upcoming', 0, 0.00, 'UPCOMING', 1),
+(8, 'dadada', 1, 1, '2024-12-04 11:27:00', '2024-12-04 17:27:00', 'adada', 'poster_1733286481.png', 0, 0.00, 'UPCOMING', 0),
+(9, 'ada', 1, 1, '2024-12-05 16:44:00', '2025-01-03 15:44:00', 'd', 'poster_1733370286.jpg', 0, 0.00, 'UPCOMING', 0),
+(10, 'ba', 1, 1, '2024-12-06 10:28:00', '2024-12-27 10:28:00', 'dadada', 'poster_1733455753.jpg', 0, 0.00, 'UPCOMING', 0),
+(11, 'qq', 1, 1, '2024-12-06 10:46:00', '2024-12-26 10:46:00', 'ee', 'poster_1733456780.jpg', 0, 1.00, 'UPCOMING', 0),
+(12, 'qq', 1, 1, '2024-12-06 10:46:00', '2024-12-31 10:46:00', 'ee', 'poster_1733456829.jpg', 0, 0.00, 'UPCOMING', 0),
+(13, 'aa', 1, 1, '2024-12-06 10:51:00', '2024-12-31 10:51:00', 'zz', 'poster_1733457095.jpg', 0, 1.00, 'UPCOMING', 0),
+(14, 'gratis', 1, 1, '2024-12-07 07:52:00', '2024-12-31 07:52:00', 'aa', NULL, 0, 0.00, 'UPCOMING', 1),
+(15, 'aa', 1, 1, '2024-12-07 09:15:00', '2024-12-18 09:15:00', 'adwdas', 'poster_1733537739.jpg', 0, 0.00, 'UPCOMING', 1),
+(16, 'test', 1, 1, '2024-12-07 11:40:00', '2025-01-08 11:40:00', 'aaadawda', 'poster_1733546456.jpg', 0, 0.00, 'UPCOMING', 1),
+(17, 'aaaaaa', 1, 1, '2024-12-07 12:41:00', '2024-12-18 12:41:00', 'wdadwadwd', 'poster_1733550083.jpg', 0, 10000.00, 'UPCOMING', 1),
+(18, 'aaaaaa', 1, 1, '2024-12-07 12:41:00', '2024-12-18 12:41:00', 'wdadwadwd', 'poster_1733550085.jpg', 0, 10000.00, 'UPCOMING', 1),
+(19, 'adawdad', 1, 1, '2024-12-07 12:43:00', '2024-12-25 12:43:00', 'adadadadaa', 'poster_1733550203.jpg', 0, 10000.00, 'UPCOMING', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_tickets`
+-- Struktur dari tabel `event_tickets`
 --
 
 CREATE TABLE `event_tickets` (
@@ -109,23 +241,164 @@ CREATE TABLE `event_tickets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_ticket_assignment`
+-- Struktur dari tabel `event_ticket_assignment`
 --
 
 CREATE TABLE `event_ticket_assignment` (
   `ticket_ID` char(36) NOT NULL DEFAULT (uuid()),
+  `order_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `attendee_ID` int DEFAULT NULL,
   `event_ID` int DEFAULT NULL,
-  `purchase_date` datetime DEFAULT NULL,
+  `purchase_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `price` decimal(10,2) DEFAULT NULL,
+  `transaction_status` enum('Unpaid','Pending','Paid') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Unpaid',
   `QR_code` varchar(225) NOT NULL,
-  `attendance_status` enum('Hadir','Absen') DEFAULT 'Absen'
+  `attendance_status` enum('Hadir','Absen') DEFAULT 'Absen',
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data untuk tabel `event_ticket_assignment`
+--
+
+INSERT INTO `event_ticket_assignment` (`ticket_ID`, `order_id`, `attendee_ID`, `event_ID`, `purchase_date`, `price`, `transaction_status`, `QR_code`, `attendance_status`, `status`) VALUES
+('01d4c2ec-b128-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-03 10:38:05', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('161fb8eb-b194-11ef-89fb-a81e848c9657', NULL, NULL, 6, '2024-12-03 23:31:45', NULL, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('169e8ab4-b194-11ef-89fb-a81e848c9657', NULL, NULL, 6, '2024-12-03 23:31:46', NULL, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('18614c39-b194-11ef-89fb-a81e848c9657', NULL, NULL, 6, '2024-12-03 23:31:49', NULL, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('2a75967d-b0bc-11ef-b00b-a81e848c9657', NULL, 27, 6, '2024-12-02 21:46:08', 20000.00, 'Unpaid', 'qr_6_27.png', 'Absen', 1),
+('3d3d0f33-b2b4-11ef-860f-a81e848c9657', NULL, 41, 6, '2024-12-05 09:54:26', 20000.00, 'Unpaid', 'qr_6_41.png', 'Absen', 1),
+('41c5e192-b093-11ef-aa52-a81e848c9657', NULL, 18, 7, '2024-12-02 16:53:18', 0.00, 'Unpaid', 'qr_7_18.png', 'Absen', 1),
+('4da05a2e-b093-11ef-aa52-a81e848c9657', NULL, 19, 7, '2024-12-02 16:53:38', 0.00, 'Unpaid', 'qr_7_19.png', 'Absen', 1),
+('4e7b1660-b2b4-11ef-860f-a81e848c9657', NULL, 42, 6, '2024-12-05 09:54:55', 20000.00, 'Unpaid', 'qr_6_42.png', 'Absen', 1),
+('4efaa4a0-b128-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-03 10:40:15', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('517ccbe5-b0bc-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-02 21:47:13', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('60d9138c-aea5-11ef-9a1b-037233a7ae71', NULL, 4, 5, '2024-11-30 05:57:58', 30000.00, 'Unpaid', 'sasdas231', 'Absen', 1),
+('64e656c9-b1f1-11ef-ac0d-a81e848c9657', NULL, 16, 6, '2024-12-04 10:39:40', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('6d58de2f-b1f1-11ef-ac0d-a81e848c9657', NULL, 16, 6, '2024-12-04 10:39:55', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('76207e24-b1f1-11ef-ac0d-a81e848c9657', NULL, 16, 6, '2024-12-04 10:40:09', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('768a3e5b-aea2-11ef-9a1b-037233a7ae71', NULL, 13, 1, '2024-11-30 05:37:06', 20000.00, 'Unpaid', 'ini wr', 'Hadir', 1),
+('7be221f9-b093-11ef-aa52-a81e848c9657', NULL, 20, 7, '2024-12-02 16:54:55', 0.00, 'Unpaid', 'qr_7_20.png', 'Absen', 1),
+('819fc1f9-b1de-11ef-ac0d-a81e848c9657', NULL, NULL, 6, '2024-12-04 08:24:28', NULL, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('9aaa8d61-b1ef-11ef-ac0d-a81e848c9657', NULL, 16, 6, '2024-12-04 10:26:52', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('a2291293-ae5f-11ef-9a1b-037233a7ae71', NULL, 12, 1, '2024-11-29 21:39:00', 10000.00, 'Unpaid', 'inikekir', 'Absen', 1),
+('b0ba976c-b116-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-03 08:34:08', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('b1bbc642-b1ee-11ef-ac0d-a81e848c9657', NULL, 16, 6, '2024-12-04 10:20:21', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('bcb01ed4-b0b8-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-02 21:21:35', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('c5f5a05c-b1ef-11ef-ac0d-a81e848c9657', NULL, NULL, 6, '2024-12-04 10:28:04', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('df682308-b127-11ef-b00b-a81e848c9657', NULL, 16, 6, '2024-12-03 10:37:08', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('e1f21ca6-b1ef-11ef-ac0d-a81e848c9657', NULL, NULL, 6, '2024-12-04 10:28:51', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('e55234b4-b12d-11ef-b00b-a81e848c9657', NULL, 16, 6, '2024-12-03 11:20:15', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('e672d0a4-b11b-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-03 09:11:26', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('e72c69b8-b127-11ef-b00b-a81e848c9657', NULL, 16, 6, '2024-12-03 10:37:21', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('e893e0ae-b193-11ef-89fb-a81e848c9657', NULL, NULL, NULL, '2024-12-03 23:30:29', NULL, 'Unpaid', 'qr__.png', 'Absen', 1),
+('ea457cf7-b193-11ef-89fb-a81e848c9657', NULL, NULL, NULL, '2024-12-03 23:30:32', NULL, 'Unpaid', 'qr__.png', 'Absen', 1),
+('f26f5fdf-b11c-11ef-b00b-a81e848c9657', NULL, NULL, 6, '2024-12-03 09:18:55', 20000.00, 'Unpaid', 'qr_6_.png', 'Absen', 1),
+('f3832330-b094-11ef-aa52-a81e848c9657', NULL, 21, 6, '2024-12-02 17:05:25', 20000.00, 'Unpaid', 'qr_6_21.png', 'Absen', 1),
+('fc153140-b127-11ef-b00b-a81e848c9657', NULL, 16, 6, '2024-12-03 10:37:56', 20000.00, 'Unpaid', 'qr_6_16.png', 'Absen', 1),
+('ticket_67567065817368.40358030', NULL, 82, 6, '2024-12-09 04:21:57', 20000.00, 'Unpaid', 'qr_6_82.png', 'Absen', 1),
+('ticket_67567176702db4.67870593', NULL, 16, 16, '2024-12-09 04:26:30', NULL, 'Unpaid', 'qr_16_16.png', 'Absen', 1),
+('ticket_675671cff089f5.42134823', NULL, 83, 16, '2024-12-09 04:27:59', NULL, 'Unpaid', 'qr_16_83.png', 'Absen', 1),
+('ticket_675673fd3c9363.75798204', NULL, 83, 19, '2024-12-09 04:37:17', NULL, 'Unpaid', 'qr_19_83.png', 'Absen', 1),
+('ticket_6756bfd22cfc55.33716506', NULL, 84, 19, '2024-12-09 10:00:50', NULL, 'Unpaid', 'qr_19_84.png', 'Absen', 1),
+('ticket_6756c348825203.83254072', NULL, 85, 19, '2024-12-09 10:15:36', NULL, 'Unpaid', 'qr_19_85.png', 'Absen', 1),
+('ticket_6756c36a77f972.19000062', NULL, 85, 16, '2024-12-09 10:16:10', NULL, 'Paid', 'qr_16_85.png', 'Absen', 1),
+('ticket_6756c49d1f4546.55781161', NULL, 86, 16, '2024-12-09 10:21:17', NULL, 'Paid', 'qr_16_86.png', 'Absen', 1),
+('ticket_6756c850729547.84127109', 'order_6756c850803c59.98169682', 86, 15, '2024-12-09 10:37:04', NULL, 'Paid', 'qr_15_86.png', 'Absen', 1),
+('ticket_6756c8765102f8.23774384', 'order_6756c8765cbc58.32620111', 86, 14, '2024-12-09 10:37:42', NULL, 'Paid', 'qr_14_86.png', 'Absen', 1),
+('ticket_67571899ad00c5.53874488', 'order_6757189a96e082.67562086', 27, 14, '2024-12-09 16:19:37', NULL, 'Paid', 'qr_14_27.png', 'Absen', 1),
+('ticket_67571e1287c083.97075744', NULL, 87, 6, '2024-12-09 16:42:58', NULL, 'Unpaid', 'qr_6_87.png', 'Absen', 1),
+('ticket_67571e2e0adff2.45180803', NULL, 88, 6, '2024-12-09 16:43:26', NULL, 'Unpaid', 'qr_6_88.png', 'Absen', 1),
+('ticket_67571ece128370.44590836', NULL, 88, 19, '2024-12-09 16:46:06', NULL, 'Unpaid', 'qr_19_88.png', 'Absen', 1),
+('ticket_67572100be7912.76685204', NULL, 89, 19, '2024-12-09 16:55:28', NULL, 'Unpaid', 'qr_19_89.png', 'Absen', 1),
+('ticket_6757219fb17d15.00266008', NULL, 90, 19, '2024-12-09 16:58:07', NULL, 'Unpaid', 'qr_19_90.png', 'Absen', 1),
+('ticket_6757221cb7a418.06888996', NULL, 91, 19, '2024-12-09 17:00:12', NULL, 'Unpaid', 'qr_19_91.png', 'Absen', 1),
+('ticket_6757224599f779.05256096', NULL, 92, 19, '2024-12-09 17:00:53', NULL, 'Unpaid', 'qr_19_92.png', 'Absen', 1),
+('ticket_67572731122607.21260752', NULL, 93, 19, '2024-12-09 17:21:53', NULL, 'Unpaid', 'qr_19_93.png', 'Absen', 1),
+('ticket_675727d40f4cd1.08820515', NULL, 94, 19, '2024-12-09 17:24:36', NULL, 'Unpaid', 'qr_19_94.png', 'Absen', 1),
+('ticket_675728d3908275.92013847', NULL, 95, 19, '2024-12-09 17:28:51', NULL, 'Unpaid', 'qr_19_95.png', 'Absen', 1),
+('ticket_675729ae70b015.64733738', NULL, 96, 19, '2024-12-09 17:32:30', NULL, 'Unpaid', 'qr_19_96.png', 'Absen', 1),
+('ticket_67572a6283ca03.06899431', NULL, 97, 19, '2024-12-09 17:35:30', NULL, 'Unpaid', 'qr_19_97.png', 'Absen', 1),
+('ticket_67572eb91bd852.42860579', NULL, 98, 6, '2024-12-09 17:54:01', NULL, 'Unpaid', 'qr_6_98.png', 'Absen', 1),
+('ticket_67572fad1a4297.62604475', NULL, 99, 6, '2024-12-09 17:58:05', NULL, 'Unpaid', 'qr_6_99.png', 'Absen', 1),
+('ticket_6757a95917c514.05889781', NULL, 100, 6, '2024-12-10 02:37:13', NULL, 'Unpaid', 'qr_6_100.png', 'Absen', 1),
+('ticket_6757aa3be7bf64.67974335', NULL, 101, 6, '2024-12-10 02:40:59', NULL, 'Unpaid', 'qr_6_101.png', 'Absen', 1),
+('ticket_6757ab3a4f46d8.01186101', NULL, 102, 6, '2024-12-10 02:45:14', NULL, 'Unpaid', 'qr_6_102.png', 'Absen', 1),
+('ticket_6757ad0f65c6e5.87278599', NULL, 103, 6, '2024-12-10 02:53:03', NULL, 'Unpaid', 'qr_6_103.png', 'Absen', 1),
+('ticket_6757b28b4134a7.34924092', NULL, 104, 6, '2024-12-10 03:16:27', 20000.00, 'Unpaid', 'qr_6_104.png', 'Absen', 1),
+('ticket_6757b6c431df58.33765328', 'order_6757b6c4433454.07929246', 105, 6, '2024-12-10 03:34:28', 20000.00, 'Unpaid', 'qr_6_105.png', 'Absen', 1),
+('ticket_6757b74ad5b4b3.90590918', 'order_6757b74aed7b60.71291547', 106, 6, '2024-12-10 03:36:42', 20000.00, 'Unpaid', 'qr_6_106.png', 'Absen', 1),
+('ticket_6757b930a83da4.50172275', 'order_6757b930babae4.62890230', 107, 6, '2024-12-10 03:44:48', 20000.00, 'Unpaid', 'qr_6_107.png', 'Absen', 1),
+('ticket_6757bc6909cf60.90522192', 'order_6757bc69184867.18839918', 108, 6, '2024-12-10 03:58:33', 20000.00, 'Unpaid', 'qr_6_108.png', 'Absen', 1),
+('ticket_6757bda1bbef80.04456732', 'order_6757bda1ca8976.81536962', 109, 6, '2024-12-10 04:03:45', 20000.00, 'Unpaid', 'qr_6_109.png', 'Absen', 1),
+('ticket_6757bfadc9bbb2.15999937', 'order_6757bfadd81627.97606129', 110, 6, '2024-12-10 04:12:29', 20000.00, 'Unpaid', 'qr_6_110.png', 'Absen', 1),
+('ticket_67586bfeeb3bf8.68792082', 'order_67586bff061df0.05884887', 111, 6, '2024-12-10 16:27:42', 20000.00, 'Paid', 'qr_6_111.png', 'Absen', 1),
+('ticket_67586d4d587c17.45583613', 'order_67586d4d6c2018.11679694', 112, 6, '2024-12-10 16:33:17', 20000.00, 'Paid', 'qr_6_112.png', 'Absen', 1),
+('ticket_67586e24941c20.06746970', 'order_67586e24a243e3.12274009', 113, 6, '2024-12-10 16:36:52', 20000.00, 'Paid', 'qr_6_113.png', 'Absen', 1),
+('ticket_67586e6224ec36.28531072', 'order_67586e6232ac74.44312633', 114, 6, '2024-12-10 16:37:54', 20000.00, 'Paid', 'qr_6_114.png', 'Absen', 1),
+('ticket_675871655fcf03.49343797', 'order_675871665f6290.89908897', 115, 6, '2024-12-10 16:50:45', 20000.00, 'Unpaid', 'qr_6_115.png', 'Absen', 1),
+('ticket_6758754f1d3388.11638173', 'order_6758754f30e2a6.82151939', 116, 6, '2024-12-10 17:07:27', 20000.00, 'Pending', 'qr_6_116.png', 'Absen', 1),
+('ticket_6759441e63d2f2.69647000', 'order_6759441f65dc38.71220733', 117, 6, '2024-12-11 07:49:50', 20000.00, 'Paid', 'qr_6_117.png', 'Absen', 1),
+('ticket_675944e785a7d3.67468056', 'order_675944e7a1e401.37755912', 118, 6, '2024-12-11 07:53:11', 20000.00, 'Pending', 'qr_6_118.png', 'Absen', 1),
+('TICKET-675121b72e070', NULL, 16, 9, '2024-12-05 03:44:55', 0.00, 'Unpaid', 'assets/uploads/qr_TICKET-675121b72e070.png', 'Absen', 1),
+('TICKET-6751268edeca9', NULL, 44, 9, '2024-12-05 04:05:34', 0.00, 'Unpaid', 'qr_9_44.png', 'Absen', 1),
+('TICKET-6751282ac2652', NULL, 45, 9, '2024-12-05 04:12:26', 0.00, 'Unpaid', 'uploads/qr_code/', 'Absen', 1),
+('TICKET-6751289436293', NULL, 46, 9, '2024-12-05 04:14:12', 0.00, 'Unpaid', 'qr_9_46.png', 'Absen', 1),
+('TICKET-67512da40747d', NULL, 47, 9, '2024-12-05 04:35:48', 0.00, 'Unpaid', 'qr_9_47.png', 'Absen', 1),
+('TICKET-675270367ef8a', NULL, 48, 10, '2024-12-06 03:32:06', 0.00, 'Unpaid', 'qr_10_48.png', 'Absen', 1),
+('TICKET-675273ca2ac02', NULL, 48, 12, '2024-12-06 03:47:22', 0.00, 'Unpaid', 'qr_12_48.png', 'Absen', 1),
+('TICKET-6752a03e1acba', NULL, 48, 13, '2024-12-06 06:57:02', NULL, 'Unpaid', 'qr_13_48.png', 'Absen', 1),
+('TICKET-6752a2093381a', NULL, 49, 13, '2024-12-06 07:04:41', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2464f5f5', NULL, 49, 13, '2024-12-06 07:05:42', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e4dee98', NULL, 49, 13, '2024-12-06 07:08:20', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e5ed269', NULL, 49, 13, '2024-12-06 07:08:21', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e6b99d7', NULL, 49, 13, '2024-12-06 07:08:22', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e7513c2', NULL, 49, 13, '2024-12-06 07:08:23', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e7cb2fc', NULL, 49, 13, '2024-12-06 07:08:23', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e830c33', NULL, 49, 13, '2024-12-06 07:08:24', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e870b1b', NULL, 49, 13, '2024-12-06 07:08:24', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e8d7014', NULL, 49, 13, '2024-12-06 07:08:24', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a2e93d87b', NULL, 49, 13, '2024-12-06 07:08:25', NULL, 'Unpaid', 'qr_13_49.png', 'Absen', 1),
+('TICKET-6752a34246124', NULL, 50, 13, '2024-12-06 07:09:54', NULL, 'Unpaid', 'qr_13_50.png', 'Absen', 1),
+('TICKET-6752a761365b2', NULL, 52, 13, '2024-12-06 07:27:29', 1.00, 'Unpaid', 'qr_13_52.png', 'Absen', 1),
+('TICKET-6752d5c59a9b4', NULL, 55, 10, '2024-12-06 10:45:25', 0.00, 'Unpaid', 'qr_10_55.png', 'Absen', 1),
+('TICKET-6752d7ac9857e', NULL, 56, 10, '2024-12-06 10:53:32', 0.00, 'Unpaid', 'qr_10_56.png', 'Absen', 1),
+('TICKET-6753a35837f29', NULL, 57, 6, '2024-12-07 01:22:32', 20000.00, 'Unpaid', 'qr_6_57.png', 'Absen', 1),
+('TICKET-6753a3af90fd4', NULL, 58, 14, '2024-12-07 01:23:59', 0.00, 'Unpaid', 'qr_14_58.png', 'Absen', 1),
+('TICKET-6753a3e1a3a2c', NULL, 59, 14, '2024-12-07 01:24:49', 0.00, 'Unpaid', 'qr_14_59.png', 'Absen', 1),
+('TICKET-6753a41c0c44a', NULL, 60, 6, '2024-12-07 01:25:48', 20000.00, 'Unpaid', 'qr_6_60.png', 'Absen', 1),
+('TICKET-6753ad78e1dcc', NULL, 62, 6, '2024-12-07 02:05:44', 20000.00, 'Unpaid', 'qr_6_62.png', 'Absen', 1),
+('TICKET-6753ad99a4cc8', NULL, 63, 14, '2024-12-07 02:06:17', 0.00, 'Unpaid', 'qr_14_63.png', 'Absen', 1),
+('TICKET-6753aeae7fb25', NULL, 64, 6, '2024-12-07 02:10:54', 20000.00, 'Unpaid', 'qr_6_64.png', 'Absen', 1),
+('TICKET-6753af007e3cd', NULL, 65, 6, '2024-12-07 02:12:16', 20000.00, 'Unpaid', 'qr_6_65.png', 'Absen', 1),
+('TICKET-6753af3913a58', NULL, 66, 14, '2024-12-07 02:13:13', 0.00, 'Unpaid', 'qr_14_66.png', 'Absen', 1),
+('TICKET-6753afd729f49', NULL, 67, 15, '2024-12-07 02:15:51', 0.00, 'Unpaid', 'qr_15_67.png', 'Absen', 1),
+('TICKET-6753b74b99deb', NULL, 68, 15, '2024-12-07 02:47:39', 0.00, 'Unpaid', 'qr_15_68.png', 'Absen', 1),
+('TICKET-6753b77583c77', NULL, 69, 14, '2024-12-07 02:48:21', 0.00, 'Unpaid', 'qr_14_69.png', 'Absen', 1),
+('TICKET-6753b8f20bfb6', NULL, 71, 14, '2024-12-07 02:54:42', 0.00, 'Unpaid', 'qr_14_71.png', 'Absen', 1),
+('TICKET-6753b90dbdbe6', NULL, 72, 15, '2024-12-07 02:55:09', 0.00, 'Unpaid', 'qr_15_72.png', 'Absen', 1),
+('TICKET-6753ba3a4bb12', NULL, 73, 15, '2024-12-07 03:00:10', 0.00, 'Unpaid', 'qr_15_73.png', 'Absen', 1),
+('TICKET-6753bace2918d', NULL, 73, 14, '2024-12-07 03:02:38', 0.00, 'Unpaid', 'qr_14_73.png', 'Absen', 1),
+('TICKET-6753df4b98037', NULL, 76, 14, '2024-12-07 05:38:19', 0.00, 'Unpaid', 'qr_14_76.png', 'Absen', 1),
+('TICKET-67564debde8cd', NULL, 79, 16, '2024-12-09 01:54:51', 0.00, 'Paid', 'qr_16_79.png', 'Absen', 1),
+('TICKET-67565854845b9', NULL, 80, 16, '2024-12-09 02:39:16', 0.00, 'Paid', 'qr_16_80.png', 'Absen', 1);
+
+--
+-- Trigger `event_ticket_assignment`
+--
+DELIMITER $$
+CREATE TRIGGER `set_payment_status` BEFORE INSERT ON `event_ticket_assignment` FOR EACH ROW BEGIN
+    IF NEW.price = 0 THEN
+        SET NEW.payment_status = 'Paid';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_type`
+-- Struktur dari tabel `event_type`
 --
 
 CREATE TABLE `event_type` (
@@ -133,10 +406,17 @@ CREATE TABLE `event_type` (
   `event_type_name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data untuk tabel `event_type`
+--
+
+INSERT INTO `event_type` (`event_type_ID`, `event_type_name`) VALUES
+(1, 'Seminar');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `venue`
+-- Struktur dari tabel `venue`
 --
 
 CREATE TABLE `venue` (
@@ -148,31 +428,81 @@ CREATE TABLE `venue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `venue`
+-- Dumping data untuk tabel `venue`
 --
 
 INSERT INTO `venue` (`venue_ID`, `name`, `capacity`, `addres_line`, `city`) VALUES
 (1, 'Aula 1', 100, 'Universitas Buana Perjuangan', 'Karawang'),
 (2, 'Aula 2', 500, 'Universitas Buana Perjuangan', 'Karawang');
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `vw_attendee_data`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `vw_attendee_data` (
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `vw_events_data`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `vw_events_data` (
+`attendance` int
+,`description` text
+,`end_date` datetime
+,`event_ID` int
+,`event_type_ID` int
+,`event_type_name` varchar(50)
+,`poster` varchar(255)
+,`price` decimal(10,2)
+,`start_date` datetime
+,`status_acara` enum('UPCOMING','ON GOING','COMPLETED')
+,`status_aktif` tinyint(1)
+,`title` varchar(100)
+,`venue_ID` int
+,`venue_name` varchar(122)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `vw_attendee_data`
+--
+DROP TABLE IF EXISTS `vw_attendee_data`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_attendee_data`  AS SELECT `attendee`.`attendee_ID` AS `attendee_ID`, `attendee`.`name` AS `name`, `attendee`.`email` AS `email`, `attendee`.`phone` AS `phone`, `events`.`title` AS `nama_acara`, `events`.`event_ID` AS `ID_acara`, `event_ticket_assignment`.`QR_code` AS `QR_code`, `event_ticket_assignment`.`attendance_status` AS `attendance_status`, `event_ticket_assignment`.`snap_token` AS `snap_token` FROM ((`event_ticket_assignment` join `events` on((`event_ticket_assignment`.`event_ID` = `events`.`event_ID`))) join `attendee` on((`event_ticket_assignment`.`attendee_ID` = `attendee`.`attendee_ID`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `vw_events_data`
+--
+DROP TABLE IF EXISTS `vw_events_data`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_events_data`  AS SELECT `events`.`event_ID` AS `event_ID`, `events`.`title` AS `title`, `events`.`event_type_ID` AS `event_type_ID`, `events`.`venue_ID` AS `venue_ID`, `events`.`start_date` AS `start_date`, `events`.`end_date` AS `end_date`, `events`.`description` AS `description`, `events`.`poster` AS `poster`, `events`.`attendance` AS `attendance`, `events`.`price` AS `price`, `events`.`status_acara` AS `status_acara`, `events`.`status_aktif` AS `status_aktif`, `event_type`.`event_type_name` AS `event_type_name`, concat(`venue`.`name`,', ',`venue`.`addres_line`) AS `venue_name` FROM ((`events` join `event_type` on((`events`.`event_type_ID` = `event_type`.`event_type_ID`))) join `venue` on((`events`.`venue_ID` = `venue`.`venue_ID`))) ;
+
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admins`
+-- Indeks untuk tabel `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_ID`);
 
 --
--- Indexes for table `attendee`
+-- Indeks untuk tabel `attendee`
 --
 ALTER TABLE `attendee`
   ADD PRIMARY KEY (`attendee_ID`);
 
 --
--- Indexes for table `events`
+-- Indeks untuk tabel `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`event_ID`),
@@ -180,651 +510,83 @@ ALTER TABLE `events`
   ADD KEY `venue_ID` (`venue_ID`);
 
 --
--- Indexes for table `event_tickets`
+-- Indeks untuk tabel `event_tickets`
 --
 ALTER TABLE `event_tickets`
   ADD PRIMARY KEY (`ticket_ID`);
 
 --
--- Indexes for table `event_ticket_assignment`
+-- Indeks untuk tabel `event_ticket_assignment`
 --
 ALTER TABLE `event_ticket_assignment`
   ADD PRIMARY KEY (`ticket_ID`),
+  ADD UNIQUE KEY `order_id` (`order_id`),
   ADD KEY `event_ID` (`event_ID`),
   ADD KEY `attendee_ID` (`attendee_ID`);
 
 --
--- Indexes for table `event_type`
+-- Indeks untuk tabel `event_type`
 --
 ALTER TABLE `event_type`
   ADD PRIMARY KEY (`event_type_ID`);
 
 --
--- Indexes for table `venue`
+-- Indeks untuk tabel `venue`
 --
 ALTER TABLE `venue`
   ADD PRIMARY KEY (`venue_ID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admins`
+-- AUTO_INCREMENT untuk tabel `admins`
 --
 ALTER TABLE `admins`
   MODIFY `admin_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `attendee`
+-- AUTO_INCREMENT untuk tabel `attendee`
 --
 ALTER TABLE `attendee`
-  MODIFY `attendee_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `attendee_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
--- AUTO_INCREMENT for table `events`
+-- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `event_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `event_type`
+-- AUTO_INCREMENT untuk tabel `event_type`
 --
 ALTER TABLE `event_type`
-  MODIFY `event_type_ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `event_type_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `venue`
+-- AUTO_INCREMENT untuk tabel `venue`
 --
 ALTER TABLE `venue`
   MODIFY `venue_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `events`
+-- Ketidakleluasaan untuk tabel `events`
 --
 ALTER TABLE `events`
   ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`event_type_ID`) REFERENCES `event_type` (`event_type_ID`),
   ADD CONSTRAINT `events_ibfk_2` FOREIGN KEY (`venue_ID`) REFERENCES `venue` (`venue_ID`);
 
 --
--- Constraints for table `event_ticket_assignment`
+-- Ketidakleluasaan untuk tabel `event_ticket_assignment`
 --
 ALTER TABLE `event_ticket_assignment`
   ADD CONSTRAINT `event_ticket_assignment_ibfk_1` FOREIGN KEY (`event_ID`) REFERENCES `events` (`event_ID`),
   ADD CONSTRAINT `event_ticket_assignment_ibfk_2` FOREIGN KEY (`attendee_ID`) REFERENCES `attendee` (`attendee_ID`);
---
--- Database: `event_db`
---
-CREATE DATABASE IF NOT EXISTS `event_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `event_db`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `acara_has_peserta`
---
-
-CREATE TABLE `acara_has_peserta` (
-  `id` int NOT NULL,
-  `id_acara` int NOT NULL,
-  `id_peserta` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$jgsrBjVWuOttsQW9BuE./uQ.H227fZ8Q8KSDmvT9WB2rQeT.HG3we'),
-(2, 'admin1', '$2y$10$f3j4nHLkepkxj08DgKOHI.Cskpb0Gfxug5T4OPE8z3sxzDiXsmIPe');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `attendance`
---
-
-CREATE TABLE `attendance` (
-  `id` int NOT NULL,
-  `registration_id` int DEFAULT NULL,
-  `event_id` int DEFAULT NULL,
-  `attendance_time` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `events`
---
-
-CREATE TABLE `events` (
-  `id` int NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `date` date NOT NULL,
-  `poster` varchar(255) DEFAULT NULL,
-  `location` varchar(100) DEFAULT '-',
-  `status` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `events`
---
-
-INSERT INTO `events` (`id`, `title`, `description`, `date`, `poster`, `location`, `status`) VALUES
-(15, 'conroh ', 'ini contoh', '2024-11-30', 'poster_1732337159.jpg', 'Kab. Karawang, Jawa Barat', 'upcoming');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `peserta`
---
-
-CREATE TABLE `peserta` (
-  `id_peserta` int NOT NULL,
-  `nama_peserta` varchar(50) DEFAULT NULL,
-  `email_peserta` varchar(45) DEFAULT NULL,
-  `prodi_peserta` varchar(45) DEFAULT NULL,
-  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `no_tlp` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `peserta`
---
-
-INSERT INTO `peserta` (`id_peserta`, `nama_peserta`, `email_peserta`, `prodi_peserta`, `create_at`, `no_tlp`) VALUES
-(21, 'Aulia', 'littlefoxxy323@gmail.com', NULL, '2024-11-23 08:17:18', '81314145558'),
-(22, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', NULL, '2024-11-23 09:20:50', '000'),
-(24, 'keysya', 'if23.keysyaaulia+2@mhs.ubpkarawang.ac.id', NULL, '2024-11-23 09:49:01', '0000'),
-(26, 'keysya', 'if23.keysyaaulia+3@mhs.ubpkarawang.ac.id', NULL, '2024-11-23 09:52:51', '0000'),
-(27, 'keysya', 'if23.keysyaaulia+5@mhs.ubpkarawang.ac.id', NULL, '2024-11-23 10:07:09', '0000');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registrations`
---
-
-CREATE TABLE `registrations` (
-  `id` int NOT NULL,
-  `event_id` int DEFAULT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `attendance_status` enum('Belum Hadir','Hadir') DEFAULT 'Belum Hadir'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `venue`
---
-
-CREATE TABLE `venue` (
-  `venue_ID` int NOT NULL,
-  `name` varchar(60) DEFAULT NULL,
-  `capacity` int DEFAULT NULL,
-  `addres_line` varchar(60) DEFAULT NULL,
-  `city` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `acara_has_peserta`
---
-ALTER TABLE `acara_has_peserta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_acara` (`id_acara`),
-  ADD KEY `id_peserta` (`id_peserta`);
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `registration_id` (`registration_id`),
-  ADD KEY `event_id` (`event_id`);
-
---
--- Indexes for table `events`
---
-ALTER TABLE `events`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `title` (`title`);
-
---
--- Indexes for table `peserta`
---
-ALTER TABLE `peserta`
-  ADD PRIMARY KEY (`id_peserta`),
-  ADD UNIQUE KEY `unique_email` (`email_peserta`);
-
---
--- Indexes for table `registrations`
---
-ALTER TABLE `registrations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `event_id` (`event_id`);
-
---
--- Indexes for table `venue`
---
-ALTER TABLE `venue`
-  ADD PRIMARY KEY (`venue_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `acara_has_peserta`
---
-ALTER TABLE `acara_has_peserta`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `attendance`
---
-ALTER TABLE `attendance`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `events`
---
-ALTER TABLE `events`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `peserta`
---
-ALTER TABLE `peserta`
-  MODIFY `id_peserta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `registrations`
---
-ALTER TABLE `registrations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `acara_has_peserta`
---
-ALTER TABLE `acara_has_peserta`
-  ADD CONSTRAINT `acara_has_peserta_ibfk_1` FOREIGN KEY (`id_acara`) REFERENCES `events` (`id`),
-  ADD CONSTRAINT `acara_has_peserta_ibfk_2` FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id_peserta`);
-
---
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`registration_id`) REFERENCES `registrations` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `registrations`
---
-ALTER TABLE `registrations`
-  ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
---
--- Database: `pemweb-db`
---
-CREATE DATABASE IF NOT EXISTS `pemweb-db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `pemweb-db`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `products`
---
-
-CREATE TABLE `products` (
-  `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` int NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `price`, `image`, `created_at`, `updated_at`) VALUES
-(39, 'sabun', 5000, '/upload/WhatsApp Image 2023-11-02 at 19.44.03.jpeg', '2023-11-02 13:30:25', NULL),
-(40, 'detergen', 5000, '/upload/1698932052-WhatsApp Image 2023-11-02 at 19.44.03.jpeg', '2023-11-02 13:34:12', NULL),
-(41, 'detergen', 5000, '/upload/1698932166-2b83cde3f290082bed3f41594bda2383-WhatsApp Image 2023-11-02 at 19.44.03.jpeg', '2023-11-02 13:36:06', NULL),
-(42, 'so klin', 10000, '/upload/1698932550-f83bb0e67d37431c69b06cdccc1a58ca-panduan wisuda 2023-Gladi Mahasiswa.pdf', '2023-11-02 13:42:30', NULL),
-(43, 'contoh1', 20000, '/upload/1731807533-6ea3faaeb603b8dc72152e42506b7342-Screenshot (340).png', '2024-11-17 01:38:53', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `role` enum('admin','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `role`, `password`, `photo`, `created_at`, `updated_at`) VALUES
-(6, 'keysya', 'if23.keysyaaulia@mhs.ubpkarawang.ac.id', 'admin', '$2y$10$5beLm1FLT9/HScCk556mAuV0mpFkssDWv8EUIWLerIrP9CN6YYB2e', NULL, '2024-11-22 01:19:42', NULL),
-(7, 'keysya', 'if23.keysyaaulia+2@mhs.ubpkarawang.ac.id', 'user', '$2y$10$/fHpPOG6raax6aYBafWl8OJAZRRkdvXolOX5jBLMDwGOcPXtBH8N6', NULL, '2024-11-22 01:23:02', NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- Database: `reservasi_studio`
---
-CREATE DATABASE IF NOT EXISTS `reservasi_studio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `reservasi_studio`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `invoices`
---
-
-CREATE TABLE `invoices` (
-  `invoice_id` int NOT NULL,
-  `reservation_id` int DEFAULT NULL,
-  `invoice_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `total_amount` decimal(10,2) DEFAULT NULL,
-  `paid_amount` decimal(10,2) DEFAULT NULL,
-  `status` enum('unpaid','partially_paid','paid') DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `notifications`
---
-
-CREATE TABLE `notifications` (
-  `notification_id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `message` text,
-  `type` enum('reservation','payment') DEFAULT NULL,
-  `status` enum('unread','read') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payments`
---
-
-CREATE TABLE `payments` (
-  `payment_id` int NOT NULL,
-  `reservation_id` int DEFAULT NULL,
-  `payment_method` enum('credit_card','bank_transfer','cash') DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT NULL,
-  `status` enum('pending','paid','failed') DEFAULT NULL,
-  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reservations`
---
-
-CREATE TABLE `reservations` (
-  `reservation_id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `studio_id` int DEFAULT NULL,
-  `reservation_date` date DEFAULT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
-  `duration` int DEFAULT NULL,
-  `extra_requests` text,
-  `booking_notes` text,
-  `total_price` decimal(10,2) DEFAULT NULL,
-  `status` enum('pending','confirmed','completed','canceled','booking') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `studios`
---
-
-CREATE TABLE `studios` (
-  `studio_id` int NOT NULL,
-  `foto` varchar(255) NOT NULL,
-  `studio_name` varchar(100) DEFAULT NULL,
-  `description` text,
-  `facilities` text,
-  `price_per_hour` decimal(10,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `studios`
---
-
-INSERT INTO `studios` (`studio_id`, `foto`, `studio_name`, `description`, `facilities`, `price_per_hour`, `created_at`) VALUES
-(2, 'Designer.png', 'Studio 2', 'Dask Studio 2', 'Fasilitas Studio 2', '50000.00', '2024-10-29 22:08:55'),
-(3, '_d81d8a89-02e1-4471-a326-9cfcbf2108d1.jpeg', 'Studio 3', 'Desk Studio 3', 'Fasilitas Studio 3', '100000.00', '2024-10-29 22:09:40'),
-(4, 'Untitled_design__7_-removebg-preview.png', 'Studio 3', 'Desk Studio 3', 'Fasilitas 3', '55000.00', '2024-10-30 22:47:56');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `user_id` int NOT NULL,
-  `foto` varchar(255) DEFAULT NULL,
-  `nama_lengkap` varchar(100) DEFAULT NULL,
-  `nomor_hp` varchar(15) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `role` enum('user','admin') DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `invoices`
---
-ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`invoice_id`),
-  ADD KEY `reservation_id` (`reservation_id`);
-
---
--- Indexes for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`notification_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `payments`
---
-ALTER TABLE `payments`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `reservation_id` (`reservation_id`);
-
---
--- Indexes for table `reservations`
---
-ALTER TABLE `reservations`
-  ADD PRIMARY KEY (`reservation_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `studio_id` (`studio_id`);
-
---
--- Indexes for table `studios`
---
-ALTER TABLE `studios`
-  ADD PRIMARY KEY (`studio_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `invoices`
---
-ALTER TABLE `invoices`
-  MODIFY `invoice_id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `notification_id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `reservations`
---
-ALTER TABLE `reservations`
-  MODIFY `reservation_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
-
---
--- AUTO_INCREMENT for table `studios`
---
-ALTER TABLE `studios`
-  MODIFY `studio_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `invoices`
---
-ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`reservation_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `payments`
---
-ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`reservation_id`) REFERENCES `reservations` (`reservation_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `reservations`
---
-ALTER TABLE `reservations`
-  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `reservations_ibfk_2` FOREIGN KEY (`studio_id`) REFERENCES `studios` (`studio_id`) ON DELETE CASCADE;
---
--- Database: `sample_db_laragon`
---
-CREATE DATABASE IF NOT EXISTS `sample_db_laragon` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `sample_db_laragon`;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
