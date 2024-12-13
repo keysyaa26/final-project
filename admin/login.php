@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin'] = $admin['admin_ID'];
-        header("Location: dashboard.php");
+        header("Location: index.php");
         exit;
     } else {
         $error = "Username atau password salah";

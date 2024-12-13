@@ -9,8 +9,6 @@ $data = json_decode(file_get_contents("php://input"), true);
 $event_id = (int)$data['event_id'];
 $registration_id = (int)$data['registration_id'];
 
-echo "Registration ID: " . $registration_id . "</br>";
-echo "Event ID: " . $event_id . "</br>";
 
 // die;
 

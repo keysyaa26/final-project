@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/header.php';
+include '../includes/admin/header.php';
 include '../includes/config.php';
 ?>
 
@@ -67,4 +67,4 @@ include '../includes/config.php';
     </script>
 </body>
 </html>
-<?php include '../includes/footer.php'; ?>
+<?php include '../includes/admin/footer.php'; ?>
