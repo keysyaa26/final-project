@@ -5,7 +5,8 @@
         "mmaaikel/html-qrcode-maker": "^0.0.9",
         "midtrans/midtrans-php": "^2.6",
         "endroid/qrcode": "*",
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "mpdf/mpdf": "^8.2"
     },
 
     "autoload": {

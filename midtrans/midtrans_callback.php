@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/qr_code.php';
+require_once __DIR__ . '/../src/invoices.php';
+
 require 'midtrans_config.php';
 
 use Midtrans\Notification;
@@ -82,6 +84,27 @@ try {
             'qr_code' => null,
             'attendance_status' => 'Absen'
         ]);
+
+        // Generate PDF Invoice
+        $invoiceData = [
+            'order_id' => $order_id,
+            'transaction_date' => $purchase_date,
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'event_name' => $title,
+            'subtotal' => $price,
+            'payment_url' => $notif->pdf_url // URL pembayaran dari Midtrans
+        ];
+
+        // Log sebelum mengirim invoice
+        file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Generating invoice for Order ID: $order_id\n", FILE_APPEND);
+
+        // Kirim invoice dengan opsi "Bayar Sekarang"
+        generate_and_send_invoice($order_id, $email, $invoiceData, true);
+
+        // Log setelah mengirim invoice
+        file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Invoice sent to: $email\n", FILE_APPEND);
     } elseif (in_array($transaction, ["settlement", "capture"])) {
         // Generate QR Code
         $qr_code_filename = "qr_{$event_id}_{$attendee_id}.png";
@@ -107,6 +130,26 @@ try {
             'purchase_date' => $purchase_date,
             'qr_code' => $qr_code_filename,
         ]);
+        
+        // Generate PDF Invoice
+        $invoiceData = [
+            'order_id' => $order_id,
+            'transaction_date' => $purchase_date,
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'event_name' => $title,
+            'subtotal' => $price
+        ];
+
+        // Log sebelum mengirim invoice
+        file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Generating invoice for Order ID: $order_id\n", FILE_APPEND);
+
+        // Kirim invoice tanpa opsi "Bayar Sekarang"
+        generate_and_send_invoice($order_id, $email, $invoiceData, false);
+
+        // Log setelah mengirim invoice
+        file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Invoice sent to: $email\n", FILE_APPEND);
     } elseif (in_array($transaction, ['deny', 'cancel', 'expire', 'failure'])) {
         // Hapus data dari event_ticket_assignment dan attendee
         $delete_ticket_stmt = $pdo->prepare("DELETE FROM event_ticket_assignment WHERE order_ID = :order_id");

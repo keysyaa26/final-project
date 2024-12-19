@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Kirim email tiket
         sendQRCode($email, $qr_code_path, $title);
 
-        header('Location: register_event.php?id=' . $event_id . '&notification=success');
+        header("Location: viewinvoice.php?order_id=$order_id");
         exit;
     } else {
         // Proses pembayaran dengan Midtrans jika harga > 0
@@ -134,10 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             $snap_token = \Midtrans\Snap::getSnapToken($payload);
-
-            // Redirect ke halaman yang sama untuk mencegah refresh
-            header('Location: register_event.php?id=' . $event_id . '&notification=pending');
-            exit;
         } catch (Exception $e) {
             error_log("Error registering event: " . $e->getMessage());
             $error_message = $e->getMessage();
@@ -316,48 +312,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($snap_token)): ?>
         <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function() {
+                const order_id = '<?= $order_id ?>';
+
                 snap.pay('<?= $snap_token ?>', {
                     onSuccess: function(result) {
-                        // Simpan metode pembayaran ke database melalui AJAX
                         fetch('register_event.php', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                action: 'save_payment_method',
-                                payment_type: result.payment_type
+                                order_id: order_id,
+                                status: 'success'
                             })
                         });
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Registrasi Berhasil!',
-                            text: 'Tiket telah dikirim ke email Anda.',
-                            confirmButtonText: 'Kembali ke Halaman Utama',
-                            confirmButtonColor: '#3085d6',
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                        }).then(() => {
-                            window.location.href = 'index.php';
-                        });
+                        // Redirect ke halaman invoice
+                        window.location.href = 'viewinvoice.php?order_id=' + order_id;
                     },
                     onPending: function(result) {
                         fetch('register_event.php', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                action: 'save_payment_method',
-                                payment_type: result.payment_type
+                                order_id: order_id,
+                                status: 'pending'
                             })
                         });
 
                         Swal.fire({
                             icon: 'info',
                             title: 'Transaksi Menunggu Pembayaran',
-                            text: 'Silakan selesaikan pembayaran Anda. Refresh untuk menampilkan kembali halaman pembayaran.',
-                            confirmButtonText: 'Oke',
+                            text: 'Invoice telah dikirim ke email Anda. Anda dapat membayar sekarang atau klik lewat tautan di email.',
+                            showCancelButton: true,
+                            confirmButtonText: 'Bayar Sekarang',
+                            cancelButtonText: 'Tutup',
                             confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
                             allowOutsideClick: false,
                             allowEscapeKey: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                snap.pay('<?= $snap_token ?>');
+                            }
                         });
                     },
                     onError: function(result) {
