@@ -27,6 +27,8 @@ try {
     $order_id = $notif->order_id;
     $price = $notif->gross_amount;
     $purchase_date = $notif->transaction_time;
+    // $payment_url = $notif->custom_field3 ?? 'null';
+
 
     // Pastikan order_id diterima
     if (!$order_id) {
@@ -43,7 +45,7 @@ try {
     if (!$custom_field1 || !$custom_field2) {
         throw new Exception("Custom fields tidak ditemukan atau formatnya tidak valid.");
     }
-
+    
     $name = $custom_field1['extra_field1'] ?? null;
     $email = $custom_field1['extra_field2'] ?? null;
     $phone = $custom_field1['extra_field3'] ?? null;
@@ -92,9 +94,9 @@ try {
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
-            'event_name' => $title,
+            'title' => $title,
             'subtotal' => $price,
-            'payment_url' => $notif->pdf_url // URL pembayaran dari Midtrans
+            'payment_url' => $payment_url
         ];
 
         // Log sebelum mengirim invoice
@@ -102,6 +104,13 @@ try {
 
         // Kirim invoice dengan opsi "Bayar Sekarang"
         generate_and_send_invoice($order_id, $email, $invoiceData, true);
+
+        // Log pembayaran tertunda
+        file_put_contents(
+            __DIR__ . '/../midtrans/debug_sql.log',
+            date('Y-m-d H:i:s') . " Payment pending for Order ID: $order_id. Payment URL: $payment_url\n",
+            FILE_APPEND
+        );        
 
         // Log setelah mengirim invoice
         file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Invoice sent to: $email\n", FILE_APPEND);
@@ -138,7 +147,7 @@ try {
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
-            'event_name' => $title,
+            'title' => $title,
             'subtotal' => $price
         ];
 

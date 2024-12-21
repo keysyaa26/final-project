@@ -22,6 +22,10 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
         $subtotal = $invoiceData['subtotal'];
         $payment_url = $isPending ? $invoiceData['payment_url'] : null;
 
+        // Status transaksi
+        $transaction = $isPending ? 'Pending' : 'Success';
+        $status_color = $isPending ? '#ffc107' : '#28a745';
+
         // Membuat PDF dengan mPDF
         $mpdf = new Mpdf();
 
@@ -35,6 +39,7 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
                 .header { text-align: center; margin-bottom: 20px; }
                 .header h1 { margin: 0; font-size: 24px; }
                 .header p { margin: 0; font-size: 14px; color: #555; }
+                .status { text-align: center; margin: 20px 0; padding: 10px; color: #fff; font-size: 18px; font-weight: bold; border-radius: 4px; background-color: {$status_color}; }
                 .section { margin-bottom: 20px; }
                 .section h3 { margin: 0; font-size: 18px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
                 .details-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -50,6 +55,9 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
                 <div class='header'>
                     <h1>Invoice</h1>
                     <p>BPROTIC Event Management</p>
+                </div>
+                <div class='status'>
+                    Transaction Status: {$transaction}
                 </div>
                 <div class='section'>
                     <h3>Invoice Details</h3>
@@ -95,7 +103,7 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
         if ($isPending && $payment_url) {
             $html .= "
                 <div class='payment-button'>
-                    <a href='{$payment_url}' target='_blank'>Bayar Sekarang</a>
+                    <a href='{$payment_url}' target='_blank' rel='noopener noreferrer'>Bayar Sekarang</a>
                 </div>";
         }
 

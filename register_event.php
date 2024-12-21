@@ -104,7 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payload = [
             'transaction_details' => [
                 'order_id' => $order_id,
-                'gross_amount' => $price
+                'gross_amount' => $price,
+                'payment_link_id' => "paylink-" . $order_id
             ],
             'customer_details' => [
                 'first_name' => $name,
@@ -129,14 +130,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'extra_field4' => $ticket_id,
                 'extra_field5' => $event_id,
                 'extra_field6' => $event['title']
-            ])
+            ]),
         ];
-
+        
+        
         try {
             $snap_token = \Midtrans\Snap::getSnapToken($payload);
+
+            // Create transaction to get the payment URL
+            $response = \Midtrans\Snap::createTransaction($payload);
+            $payment_url = $response->redirect_url;
+
+            // Now, include the payment URL into the payload
+            $payload['custom_field3'] = $payment_url;
+            file_put_contents(__DIR__ . '/midtrans/debug_sql.log', "Payload with custom_field3: " . json_encode($payload) . "\n", FILE_APPEND);
+            file_put_contents(__DIR__ . '/midtrans/debug_sql.log', "Payment iafbaibiURL: " . $payment_url . "\n", FILE_APPEND);
+
         } catch (Exception $e) {
             error_log("Error registering event: " . $e->getMessage());
             $error_message = $e->getMessage();
+            file_put_contents(__DIR__ . '/midtrans/debug_sql.log', "Error: " . $e->getMessage() . "\n", FILE_APPEND);
             header('Location: register_event.php?id=' . $event_id . '&notification=error');
             exit;
         }
