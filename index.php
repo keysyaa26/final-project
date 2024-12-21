@@ -1,6 +1,6 @@
 <?php
 require 'includes/config.php';
-require 'header-index.php';
+require 'includes/index/header-index.php';
 
 // Query untuk upcoming events
 $query = "
@@ -42,7 +42,7 @@ $events = $stmt->fetchAll();
         <?php foreach ($events as $event): ?>
             <div class="card col-md-3" style="width: 18rem;">
                 <!-- Cek apakah poster ada, jika tidak, tampilkan gambar default -->
-                <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" 
+                <img src="assets/uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>" 
                      class="custom-card-img card-img-top" 
                      alt="<?= htmlspecialchars($event['title']) ?>">
 
@@ -63,7 +63,7 @@ $events = $stmt->fetchAll();
                         <p class="card-text">HTM: <?= htmlspecialchars($event['price']) ?></p>
                     <?php endif; ?>
                     
-                    <a href="event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
+                    <a href="user/event_detail.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">See Details</a>
                 </div>
             </div>
         <?php endforeach; ?>
@@ -72,4 +72,4 @@ $events = $stmt->fetchAll();
 
 </html>
 
-<?php include 'footer-index.php'; ?>
+<?php include 'includes/index/footer-index.php'; ?>

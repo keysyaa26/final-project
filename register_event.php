@@ -4,6 +4,7 @@ require 'includes/config.php';
 require 'vendor/autoload.php';
 require 'src/qr_code.php';
 require 'midtrans/midtrans_config.php';
+require __DIR__ . '/includes/index/header-index.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -76,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }      
         // Buat tiket dan QR Code
         $qr_code_filename = "qr_{$event_id}_{$attendee_id}.png";
-        $qr_code_path = "uploads/qr_code/$qr_code_filename";
-        generateQRCode($ticket_id, $qr_code_path);
+        $qr_code_path = "assets/uploads/qr_code/$qr_code_filename";
+        generateQRCode($event_id, $attendee_id, $qr_code_path);
 
         // Simpan ke tabel event_ticket_assignment
         $insert_ticket_stmt = $pdo->prepare("INSERT INTO event_ticket_assignment (ticket_ID, order_id, attendee_ID, event_ID, price, purchase_date, transaction_status, QR_Code, attendance_status) 
@@ -198,31 +199,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="assets/images/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
-                BPROTIC
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php#events">Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php#footer">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Registration Section -->
     <section class="py-5">
@@ -247,43 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
-    <!-- About and Social Media Section -->
-    <section>
-        <div class="container-fluid py-5" style="background-color: #2C2C7C;">
-            <div class="d-flex justify-content-between align-items-center mx-5">
-                <!-- About Section -->
-                <div class="about-section" style="flex: 1; margin-right: 50px;">
-                    <h4 class="mb-3" style="color: #ffffff;">About</h4>
-                    <p style="line-height: 1.8; color: #FFFFFF;">
-                        Event Center adalah platform penyelenggaraan acara yang menyediakan berbagai informasi terkini
-                        mengenai event-event menarik yang dapat diikuti. Kami berdedikasi untuk memberikan pengalaman
-                        terbaik dalam menemukan dan mendaftar acara.
-                    </p>
-                </div>
 
-                <!-- Social Media Section -->
-                <div class="social-media-section text-center" style="flex: 1;">
-                    <h4 class="mb-3" style="color: #FFFFFF;">Follow Us on Social Media</h4>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="https://www.facebook.com" target="_blank" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-                        <a href="https://www.x.com" target="_blank" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
-                            <i class="bi bi-twitter"></i>
-                        </a>
-                        <a href="https://www.instagram.com" target="_blank" class="text-decoration-none mx-3" style="color: #FFF000; font-size: 1.5rem;">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center py-4" style="background-color: #191970; color: white;">
-        <p class="mb-0">&copy; 2024 Event Center. All Rights Reserved.</p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -409,3 +349,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 </html>
 
+<?php require __DIR__ .  '/includes/index/footer-index.php'; ?>

@@ -55,8 +55,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <!-- Logo Website -->
-            <a class="navbar-brand d-flex align-items-center" href="../index.php">
-                <img src="../assets/img/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
+            <a class="navbar-brand d-flex align-items-center" href="https://116c-120-188-33-1.ngrok-free.app/final-project/admin/dashboard.php">
+                <img src="https://116c-120-188-33-1.ngrok-free.app/final-project/assets/img/logo-bprotic.png" alt="Logo" width="40" height="40" class="me-2">
                 <span>BPROTIC</span>
             </a>
             <!-- Toggle button untuk mobile -->
@@ -83,10 +83,9 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <h5 class="text-center">Menu</h5>
-                <a href="../admin/dashboard.php">Dashboard</a>
-                <a href="../lists/events.php">Events</a>
-                <a href="../list/peserta.php">Peserta</a>
-                <a href="scan_qr.php">Scan QR</a>
+                <a href="https://116c-120-188-33-1.ngrok-free.app/final-project/admin/dashboard.php">Dashboard</a>
+                <a href="https://116c-120-188-33-1.ngrok-free.app/final-project/admin/lists/events.php">Events</a>
+                <a href="https://116c-120-188-33-1.ngrok-free.app/final-project/admin/scan_qr.php">Scan QR</a>
             </div>
 
             <!-- Konten Utama -->

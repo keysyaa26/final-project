@@ -117,8 +117,8 @@ try {
     } elseif (in_array($transaction, ["settlement", "capture"])) {
         // Generate QR Code
         $qr_code_filename = "qr_{$event_id}_{$attendee_id}.png";
-        $qr_code_path = __DIR__ . "/../uploads/qr_code/$qr_code_filename";
-        generateQRCode($ticket_id, $qr_code_path);
+        $qr_code_path = __DIR__ . "/../assets/uploads/qr_code/$qr_code_filename";
+        generateQRCode($event_id, $attendee_id, $qr_code_path);
 
         // Send Email with QR Code
         sendQRCode($email, $qr_code_path, $title);

@@ -5,9 +5,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/admin/header.php';
-include '../includes/config.php';
-include '../src/Acara.php';
+require __DIR__ .  '/../includes/admin/header.php';
+require __DIR__ . '/../includes/config.php';
+require __DIR__ . '/../src/Acara.php';
 
 // ambil untuk upcoming event
 $acara = new Acara();
@@ -282,4 +282,4 @@ $venue_capacity = $stmt->fetchColumn();
 </html>
 
 
-<?php include '../includes/footer.php'; ?>
+<?php require __DIR__ .  '/../includes/admin/footer.php'; ?>

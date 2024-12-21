@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) {
-    header("Location: ../admin/login.php");
+    header("Location: ../login.php");
     exit;
 }
 
-include '../includes/config.php';
-include '../includes/header.php';
+require __DIR__ . '/../../includes/config.php';
+require __DIR__ . '/../../includes/admin/header.php';
 
 $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
@@ -20,10 +20,10 @@ if ($event_id) {
     exit;
 }
 
-$search = $_GET['search'] ?? '';
-$query = "SELECT * FROM vw_attendee_data WHERE name LIKE ?";
+$search = trim($_GET['search'] ?? '');
+$query = "SELECT * FROM vw_attendee_data WHERE LOWER(name) LIKE LOWER(?)";
 $stmt = $pdo->prepare($query);
-$stmt->execute(['%' . $search . '%']);
+$stmt->execute(['%' . strtolower($search) . '%']);
 $participants = $stmt->fetchAll();
 
 ?>
@@ -38,14 +38,11 @@ $participants = $stmt->fetchAll();
     <!-- Form Pencarian -->
     <div class="d-flex justify-content-between mb-3">
         <form method="GET" class="d-flex" style="flex-grow: 1;">
-            <input type="text" name="search" class="form-control me-2" placeholder="Cari peserta..." value="<?= htmlspecialchars($search) ?>">
+        <input type="text" name="search" autofocus="true" class="form-control me-2" placeholder="Cari peserta..." value="<?= htmlspecialchars($search) ?>">
         </form>
 
         <!-- Link Kembali -->
         <a href="events.php" class="btn btn-primary" style="margin: 5px">Back</a>
-
-        <!-- Link hapus data peserta -->
-        <a href="events.php" class="btn btn-primary" style="margin: 5px">Delete Data</a>
     </div>
 
     <!-- Tabel Daftar Peserta -->
@@ -58,19 +55,17 @@ $participants = $stmt->fetchAll();
                     <th>Telepon</th>
                     <th>QR Code</th>
                     <th>Status Kehadiran</th>
-                    <th>Snap Token</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($participants as $participant): ?>
-                    <?php if ($participant['ID_acara'] == $event_id) :?>
+                    <?php if ($participant['event_ID'] == $event_id) :?>
                         <tr>
                             <td><?= htmlspecialchars($participant['name']) ?></td>
                             <td><?= htmlspecialchars($participant['email']) ?></td>
                             <td><?= htmlspecialchars($participant['phone']) ?></td>
                             <td><a href="../uploads/qr_code/<?= $participant['QR_code'] ? $participant['QR_code']: 'default.jpg' ?>">Lihat QR Code</a></td>
                             <td><?= htmlspecialchars($participant['attendance_status']) ?></td>
-                            <td><?= htmlspecialchars($participant['snap_token']) ?></td>
                         </tr>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -80,3 +75,5 @@ $participants = $stmt->fetchAll();
                 <?php endif; ?>
     </table>
 </div>
+
+<?php require __DIR__ . '/../../includes/admin/footer.php'; ?>

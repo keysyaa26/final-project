@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'includes/config.php';
-include 'header-index.php';
+require __DIR__ . '/../includes/config.php';
+require __DIR__ . '/../includes/index/header-index.php';
 
 $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
@@ -94,7 +94,7 @@ if ($event_id) {
     <?php if ($event): ?>
         <div class="card mx-auto" style="max-width: 800px; margin-bottom: 50px;">
             <!-- Menampilkan gambar acara -->
-            <div class='img-container'><img src="assets/img/poster/<?= htmlspecialchars($event['poster']); ?>"
+            <div class='img-container'><img src="../assets/uploads/poster/<?= htmlspecialchars($event['poster']); ?>"
                     class="card-img-top custom-img" alt='Foto Acara' class='event-img'></div>
             <!-- -->
             <div class="card-body">
@@ -116,7 +116,7 @@ if ($event_id) {
                 <p class="card-text">
                     <?= htmlspecialchars($event['description']); ?>
                 </p>
-                <a href="register_event.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
+                <a href="https://116c-120-188-33-1.ngrok-free.app/final-project/register_event.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
             </div>
         <?php else: ?>
             <p>Acara tidak ditemukan.</p>
@@ -126,4 +126,4 @@ if ($event_id) {
 
 </html>
 
-<?php include 'footer-index.php'; ?>
+<?php require __DIR__ .  '/../includes/index/footer-index.php'; ?>

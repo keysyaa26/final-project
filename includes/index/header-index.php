@@ -1,3 +1,4 @@
+<!--HEADER -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,39 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Favicon -->
-    <link rel="icon" href="img/logo_bprotic.png">
+    <link rel="icon" href="https://116c-120-188-33-1.ngrok-free.app/final-project/assets/img/logo-bprotic.png">
     <title>Landing Page</title>
     <style>
-        .custom-btn {
-            background-color: #C92127;
-            border-color: #C92127;
-            color: white;
-        }
-
-        .custom-btn:hover {
-            background-color: #a51b20;
-            border-color: #a51b20;
-        }
-
-        .row {
-            justify-content: center;
-            /* Agar card tetap rapi di tengah */
-            gap: 20px;
-            /* Menambahkan jarak antar card */
-        }
-
-        .card {
-            margin: 15px;
-        }
-
-        .custom-card-img {
-            width: 100%;
-            height: 250px;
-            /* Tentukan tinggi gambar agar persegi */
-            object-fit: cover;
-            /* Gambar akan tetap terpotong untuk mengisi area */
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
             /* Font Poppins */
@@ -79,7 +50,7 @@
     <nav class="navbar navbar-dark navbar-expand-lg fixed-top" style="background-color: #2C2C7C;">
         <div class="container-fluid">
             <!-- Brand -->
-            <img src="assets/img/logo-bprotic.png" alt="BPROTIC Logo"
+            <img src="https://116c-120-188-33-1.ngrok-free.app/final-project/assets/img/logo-bprotic.png" alt="BPROTIC Logo"
                 style="height: 40px; width: auto; margin-right: 10px;">
             <a class="navbar-brand" href="#" style="font-weight: bold;">BPROTIC</a>
             <!-- Toggler Button -->
@@ -92,11 +63,12 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'index.php') ? 'active' : '' ?>"
-                            href="index.php">HOME</a>
+                            href="https://116c-120-188-33-1.ngrok-free.app/final-project/index.php">HOME</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= ($current_page == 'events.php') ? 'active' : '' ?>"
-                            href="events.php">EVENTS</a>
+
+                            href="https://116c-120-188-33-1.ngrok-free.app/final-project/user/all_events.php">EVENTS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#social-media">CONTACT</a>

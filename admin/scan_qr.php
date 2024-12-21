@@ -5,8 +5,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include '../includes/header.php';
-include '../includes/config.php';
+require __DIR__ .  '/../includes/admin/header.php';
+require __DIR__ . '/../includes/config.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -67,4 +68,4 @@ include '../includes/config.php';
     </script>
 </body>
 </html>
-<?php include '../includes/footer.php'; ?>
+<?php require __DIR__ .  '/../includes/admin/header.php'; ?>
