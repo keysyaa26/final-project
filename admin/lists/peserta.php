@@ -64,7 +64,7 @@ $participants = $stmt->fetchAll();
                             <td><?= htmlspecialchars($participant['name']) ?></td>
                             <td><?= htmlspecialchars($participant['email']) ?></td>
                             <td><?= htmlspecialchars($participant['phone']) ?></td>
-                            <td><a href="../uploads/qr_code/<?= $participant['QR_code'] ? $participant['QR_code']: 'default.jpg' ?>">Lihat QR Code</a></td>
+                            <td><a href="../../assets/uploads/qr_code/<?= $participant['QR_code'] ? $participant['QR_code']: 'default.jpg' ?>">Lihat QR Code</a></td>
                             <td><?= htmlspecialchars($participant['attendance_status']) ?></td>
                         </tr>
                     <?php endif; ?>

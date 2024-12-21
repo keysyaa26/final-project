@@ -136,6 +136,10 @@ $venue_capacity = $stmt->fetchColumn();
             margin-bottom: 30px;
             /* Jarak bawah */
         }
+        .no-underline {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -167,7 +171,7 @@ $venue_capacity = $stmt->fetchColumn();
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-lg">
                         <div class="card-header text-center">
-                            <h5><a href="lists/peserta.php?id=<?=$event_id?>">Jumlah Peserta Terdaftar </a></h5>
+                            <h5><a href="lists/peserta.php?id=<?=$event_id?>" class="no-underline">Jumlah Peserta Terdaftar </a></h5>
                         </div>
                         <div class="card-body text-center">
                             <div class="fs-4 fw-bold"><?php if ($venue_capacity > 0) { 
