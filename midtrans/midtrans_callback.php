@@ -38,11 +38,15 @@ try {
     // Decode custom_field
     $custom_field1 = json_decode($notif->custom_field1, true);
     $custom_field2 = json_decode($notif->custom_field2, true);
+    $custom_field3 = json_decode($notif->custom_field3, true);
+
 
     file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Decoded custom_field1: " . print_r($custom_field1, true) . "\n", FILE_APPEND);
     file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Decoded custom_field2: " . print_r($custom_field2, true) . "\n", FILE_APPEND);
+    file_put_contents(__DIR__ . '/../midtrans/debug_sql.log', date('Y-m-d H:i:s') . " Decoded custom_field2: " . print_r($custom_field3, true) . "\n", FILE_APPEND);
 
-    if (!$custom_field1 || !$custom_field2) {
+
+    if (!$custom_field1 || !$custom_field2 || !$custom_field3) {
         throw new Exception("Custom fields tidak ditemukan atau formatnya tidak valid.");
     }
     
@@ -52,6 +56,7 @@ try {
     $ticket_id = $custom_field2['extra_field4'] ?? null;
     $event_id = $custom_field2['extra_field5'] ?? null;
     $title = $custom_field2['extra_field6'] ?? null;
+    $attendee_id = $custom_field3['extra_field7'] ?? null;
 
     if ($transaction === "pending") {
 

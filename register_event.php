@@ -4,7 +4,6 @@ require 'includes/config.php';
 require 'vendor/autoload.php';
 require 'src/qr_code.php';
 require 'midtrans/midtrans_config.php';
-require __DIR__ . '/includes/index/header-index.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -26,16 +25,22 @@ if (!$event) {
     die("Event tidak ditemukan.");
 }
 
+// Jika bukan permintaan AJAX, sertakan file header
+if (!isset($_GET['validate_email'])) {
+    require __DIR__ . '/includes/index/header-index.php';
+}
+
 // Validasi email dengan AJAX
-if (isset($_GET['validate_email']) && !empty($_GET['email'])) {
+if (isset($_GET['validate_email']) && !empty($_GET['email'])) {        
     $email = trim($_GET['email']);
     $check_email_stmt = $pdo->prepare("SELECT * FROM attendee a 
-                                       JOIN event_ticket_assignment e ON a.attendee_ID = e.attendee_ID 
-                                       WHERE a.email = :email AND e.event_ID = :event_id");
+                                    JOIN event_ticket_assignment e ON a.attendee_ID = e.attendee_ID 
+                                    WHERE a.email = :email AND e.event_ID = :event_id");
     $check_email_stmt->execute(['email' => $email, 'event_id' => $event_id]);
 
     echo json_encode(['exists' => $check_email_stmt->rowCount() > 0]);
     exit;
+
 }
 
 // Validasi input
@@ -54,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $check_attendee_stmt = $pdo->prepare("SELECT * FROM attendee WHERE name = :name AND email = :email");
     $check_attendee_stmt->execute(['name' => $name, 'email' => $email]);
     $attendee = $check_attendee_stmt->fetch(PDO::FETCH_ASSOC);
+
+    $attendee_id = $attendee['attendee_ID'];
 
     if ($price <= 0) {
         // Proses untuk event gratis 
@@ -132,20 +139,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'extra_field5' => $event_id,
                 'extra_field6' => $event['title']
             ]),
+            'custom_field3' => json_encode([
+                'extra_field7' => $attendee_id,
+            ]),
         ];
         
         
         try {
             $snap_token = \Midtrans\Snap::getSnapToken($payload);
 
-            // Create transaction to get the payment URL
-            $response = \Midtrans\Snap::createTransaction($payload);
-            $payment_url = $response->redirect_url;
-
-            // Now, include the payment URL into the payload
-            $payload['custom_field3'] = $payment_url;
-            file_put_contents(__DIR__ . '/midtrans/debug_sql.log', "Payload with custom_field3: " . json_encode($payload) . "\n", FILE_APPEND);
-            file_put_contents(__DIR__ . '/midtrans/debug_sql.log', "Payment iafbaibiURL: " . $payment_url . "\n", FILE_APPEND);
 
         } catch (Exception $e) {
             error_log("Error registering event: " . $e->getMessage());
@@ -171,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             src="https://app.sandbox.midtrans.com/snap/snap.js" 
             data-client-key="<?= htmlspecialchars($_ENV['MIDTRANS_CLIENT_KEY']) ?>">
     </script>
-        <script>
+    <script>
         async function validateEmail(input) {
             const email = input.value;
             const response = await fetch(`register_event.php?id=<?= $event_id ?>&validate_email=true&email=${email}`);
@@ -222,8 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </section>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

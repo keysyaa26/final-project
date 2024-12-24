@@ -6,15 +6,17 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Fungsi untuk membuat QR Code
-function generateQRCode($content, $filepath) {
-    $qrCode = new QrCode($content);
+function generateQRCode($event_id, $attendee_id, $filepath) {
+    $qrContent = "{$event_id}:{$attendee_id}";
+
+    $qrCode = new QrCode($qrContent);
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
     $result->saveToFile($filepath);
 }
 
 // Fungsi untuk mengirim email
-function sendEmail($toEmail, $qrCodePath, $eventTitle) {
+function sendQRCode($toEmail, $qrCodePath, $eventTitle) {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
     $dotenv->load();
 

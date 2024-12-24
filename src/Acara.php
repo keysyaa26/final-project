@@ -1,5 +1,7 @@
 <?php
-class Acara {
+include 'Admin.php';
+
+class Acara extends Admin {
     private $event_id;
     private $event_name;
     private $event_type;
@@ -11,7 +13,17 @@ class Acara {
     private $event_status;
     private $event_price;
 
-    public function __construct($event_name, $event_type, $event_location, $event_start_date, $event_end_date,  $event_description, $event_status, $event_poster = null, $event_price = 0) {
+    public function __construct(
+            $event_name = "Default Event", 
+            $event_type = "Default Type", 
+            $event_location = "Default Location", 
+            $event_start_date = "2024-01-01", 
+            $event_end_date = "2024-01-02",  
+            $event_description = "Default Description", 
+            $event_status = 1, 
+            $event_poster = null, 
+            $event_price = 0) 
+        {
         $this->event_name = $event_name;
         $this->event_type = $event_type;
         $this->event_location = $event_location;
@@ -22,48 +34,10 @@ class Acara {
         $this->event_status = $event_status;
         $this->event_price= $event_price;
     }
-
-    // setter dan getter
-    public function getIdAcara() {
-        return $this->event_id;
-    }
-    public function setId($event_id) {
-        $this->event_id = $event_id;
-    }
-    public function getName() {
-        return $this->event_name;
-    }
-    public function setName($event_name) {
-        $this->event_name = $event_name;
-    }
-    public function getDescription() {
-        return $this->event_description;
-    }
-    public function setDescription($event_description) {
-        $this->event_description = $event_description;
-    }
-
-    public function getStatus() {
-        return $this->event_status;
-    }
-    public function setStatus($event_status) {
-        $this->event_status = $event_status;
-    }
-    public function getPoster() {
-        return $this->event_poster;
-    }
-    public function setPoster($event_poster) {
-        $this->event_poster = $event_poster;
-    }
-    public function getLocation() {
-        return $this->event_location;
-    }
-    public function setLocation($event_location) {
-        $this->event_location = $event_location;
-    }
     
-    // method
-    public function addEvent($pdo){
+  
+    public function tambahAcara($pdo = null)
+    {
         $query = "INSERT INTO events (title, event_type_ID,venue_ID, start_date, end_date, description, poster, status_acara, price) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
@@ -79,10 +53,57 @@ class Acara {
         $this->event_id = $pdo->lastInsertId();
     }
 
+    public function hapusAcara($pdo, $delete_id)
+    {
+        $query = "UPDATE events SET is_deleted = TRUE WHERE event_ID = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->execute()) {
+            return "Event berhasil dihapus.";
+            header("Location: events.php");
+            exit();
+        } else {
+            $errorInfo = $stmt->errorInfo();
+            return "Gagal menghapus event. Error: " . $errorInfo[2];
+        }
+    }
+
+    public function tampilkanAcara($pdo, $limit = null, $all = true)
+    {
+        $query = "SELECT * FROM vw_events_data WHERE status_aktif = 1 ";
+
+        if(!$all) {
+            $query .= "AND vw_events_data.start_date >= CURDATE() ";
+        }
+
+        $query .= " ORDER BY vw_events_data.start_date ASC ";
+
+        if ($limit !== null) {
+            $query .= " LIMIT :limit ";
+        }
+        
+        $stmt = $pdo->prepare($query);
+
+        if ($limit !== null) {
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function showDetailAcara ($pdo, $event_id) {
+        $stmt = $pdo->prepare("SELECT * FROM events WHERE event_ID = :event_id");
+        $stmt->execute(['event_id' => $event_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function uploadPoster($fileInputName='poster', $maxSize = 5 * 1024 * 1024, $allowedExtensions = ['jpg', 'jpeg', 'png']) {
         
         $posterFileName = null;
-        $uploadDir = __DIR__ . '/../uploads/poster/';
+        $uploadDir = __DIR__ . '/../assets/uploads/poster/';
  
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] == 0) {
             $fileTmpPath = $_FILES[$fileInputName]['tmp_name'];
@@ -107,51 +128,21 @@ class Acara {
         }
     }
 
-    // public function setDetailEvent($event_name, $event_description, $event_date, $event_location, $event_poster, $event_status = "upcoming") {
-    //     $this->setName($event_name);
-    //     $this->setDescription($event_description);
-    //     $this->setDate($event_date);
-    //     $this->setLocation($event_location);
-    //     $this->setStatus($event_status);
-    //     $this->setPoster($event_poster);
-    // }
-    
-    // public function editEvent($pdo){
-    //     $query = "UPDATE events SET title = ?, description = ?, date = ?, location = ?, status = ?, poster = ? WHERE id = ?";
-    //     $stmt = $pdo->prepare($query);
-    //     $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
-    //     $stmt->bindParam(2, $this->event_description,PDO::PARAM_STR);
-    //     $stmt->bindParam(3, $this->event_date,PDO::PARAM_STR);
-    //     $stmt->bindParam(4, $this->event_location,PDO::PARAM_STR);
-    //     $stmt->bindParam(5, $this->event_status,PDO::PARAM_STR);
-    //     $stmt->bindParam(6, $this->event_poster,PDO::PARAM_STR);
-    //     $stmt->bindParam(7, $this->event_id,PDO::PARAM_STR);
-    //     $stmt->execute();
-    // }
-            
-
-    public function deleteEvent($pdo, $delete_id){
-        $query2 = "UPDATE events SET status_aktif = FALSE WHERE event_ID = ?";
-        $stmt = $pdo->prepare($query2);
-        $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        if ($stmt->execute()) {
-            return "Event berhasil dihapus.";
-            header("Location: events.php");
-            exit();
-        } else {
-            $errorInfo = $stmt->errorInfo();
-            return "Gagal menghapus event. Error: " . $errorInfo[2];
-        }
-    }
-
     public function searchEvent($pdo, $search) {
         $query = "SELECT * FROM events WHERE title LIKE ?";
         $stmt = $pdo->prepare($query);
         $stmt->execute(['%' . $search . '%']);
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $events;
+    }
+
+    public function hitungPeserta($pdo, $event_id) {
+        $query = "SELECT COUNT(attendee_ID) FROM event_ticket_assignment WHERE event_ID = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(1, $event_id, PDO::PARAM_INT);
+        $attendee_row = $stmt->execute();
+
+        
     }
 }
 
