@@ -81,7 +81,7 @@ $events = $stmt->fetchAll();
         <?php foreach ($events as $event): ?>
             <?php if ($event["status_aktif"] == TRUE): ?>
                 <div class="card col-md-3" style="width: 18rem;">
-                    <img src="uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>"
+                    <img src="../assets/uploads/poster/<?= $event['poster'] ? $event['poster'] : 'default-image.jpg' ?>"
                         class="custom-card-img card-img-top" alt="<?= htmlspecialchars($event['title']) ?>">
 
                     <div class="card-body">
