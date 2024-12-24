@@ -25,7 +25,7 @@ if (isset($_GET['delete_id'])) {
 
     if (is_numeric($delete_id)) {
         $acara = new Acara('','','','','','','','', ''); 
-        $acara->deleteEvent($pdo, $delete_id);
+        $acara->hapusAcara($pdo, $delete_id);
     } else {
         echo "ID tidak valid.";
     }
