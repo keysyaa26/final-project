@@ -21,9 +21,9 @@ if ($event_id) {
 }
 
 $search = trim($_GET['search'] ?? '');
-$query = "SELECT * FROM vw_attendee_data WHERE LOWER(name) LIKE LOWER(?)";
+$query = "SELECT * FROM vw_attendee_data WHERE LOWER(name) LIKE LOWER(?) AND transaction_status = 'Success' AND event_ID = ?";
 $stmt = $pdo->prepare($query);
-$stmt->execute(['%' . strtolower($search) . '%']);
+$stmt->execute(['%' . strtolower($search) . '%', $event_id]);
 $participants = $stmt->fetchAll();
 
 ?>

@@ -4,6 +4,8 @@ require 'includes/config.php';
 require 'vendor/autoload.php';
 require 'src/qr_code.php';
 require 'midtrans/midtrans_config.php';
+require 'src/invoices.php';
+
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -104,6 +106,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Kirim email tiket
         sendQRCode($email, $qr_code_path, $title);
+
+        // Generate PDF Invoice
+        $invoiceData = [
+            'order_id' => $order_id,
+            'transaction_date' => $purchase_date,
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'title' => $title,
+            'subtotal' => $price,
+        ];
+        
+        generate_and_send_invoice($order_id, $email, $invoiceData, false);
 
         header("Location: viewinvoice.php?order_id=$order_id");
         exit;

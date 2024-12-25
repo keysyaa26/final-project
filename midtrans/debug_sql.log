@@ -2255,3 +2255,52 @@ Payment iafbaibiURL: https://app.sandbox.midtrans.com/snap/v4/redirection/a9a0aa
 2024-12-23 14:08:17 Generating invoice for Order ID: order_67696eb966c860.26321619
 2024-12-23 14:08:20 Invoice sent successfully to arietimate@gmail.com
 2024-12-23 14:08:20 Invoice sent to: arietimate@gmail.com
+2024-12-24 08:32:13 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-24 08:33:18 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-24 09:12:52 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-24 09:12:52 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676a7b0e432f16.02024243
+    [extra_field5] => 38
+    [extra_field6] => bayar2
+)
+
+2024-12-24 09:12:52 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-24 09:12:52 Generating invoice for Order ID: order_676a7b0e4331b4.86260198
+2024-12-24 09:12:56 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-24 09:12:56 Payment pending for Order ID: order_676a7b0e4331b4.86260198. Payment URL: 
+2024-12-24 09:12:56 Invoice sent to: arielramo2005@gmail.com
+2024-12-24 09:13:02 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-24 09:13:02 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676a7b0e432f16.02024243
+    [extra_field5] => 38
+    [extra_field6] => bayar2
+)
+
+2024-12-24 09:13:02 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-24 09:13:06 QR Code generated: C:\laragon\www\final-project\midtrans/../assets/uploads/qr_code/qr_38_16.png
+2024-12-24 09:13:06 Email sent to: arielramo2005@gmail.com with QR Code
+2024-12-24 09:13:06 Generating invoice for Order ID: order_676a7b0e4331b4.86260198
+2024-12-24 09:13:11 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-24 09:13:11 Invoice sent to: arielramo2005@gmail.com
