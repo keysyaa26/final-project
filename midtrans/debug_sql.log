@@ -2304,3 +2304,4 @@ Payment iafbaibiURL: https://app.sandbox.midtrans.com/snap/v4/redirection/a9a0aa
 2024-12-24 09:13:06 Generating invoice for Order ID: order_676a7b0e4331b4.86260198
 2024-12-24 09:13:11 Invoice sent successfully to arielramo2005@gmail.com
 2024-12-24 09:13:11 Invoice sent to: arielramo2005@gmail.com
+2024-12-25 16:21:02Midtrans API is returning API error. HTTP status code: 404 API response: {"status_code":"404","status_message":"Transaction doesn't exist.","id":"fc262fd2-bc85-428e-ab29-c08983927aa1"}

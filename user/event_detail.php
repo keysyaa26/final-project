@@ -117,7 +117,7 @@ if ($event_id) {
                     <?= htmlspecialchars($event['description']); ?>
                 </p>
                 <?php if (empty($event['end_date']) || strtotime($event['end_date']) > time()): ?>
-                    <a href="https://116c-120-188-33-1.ngrok-free.app/final-project/register_event.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
+                    <a href="https://1378-182-253-128-32.ngrok-free.app/final-project/register_event.php?id=<?= $event['event_ID'] ?>" class="btn custom-btn">Daftar Sekarang!</a>
                 <?php endif; ?>
             </div>
         <?php else: ?>

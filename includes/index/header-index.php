@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Favicon -->
-    <link rel="icon" href="https://116c-120-188-33-1.ngrok-free.app/final-project/assets/img/logo-bprotic.png">
+    <link rel="icon" href="https://1378-182-253-128-32.ngrok-free.app/final-project/assets/img/logo-bprotic.png">
     <title>Landing Page</title>
     <style>
         body {
