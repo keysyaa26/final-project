@@ -69,7 +69,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <!-- Logout button -->
-                        <form action="../admin/logout.php" method="POST">
+                        <form action="https://1378-182-253-128-32.ngrok-free.app/final-project/admin/logout.php" method="POST">
                             <button type="submit" class="btn btn-danger">Logout</button>
                         </form>
                     </li>

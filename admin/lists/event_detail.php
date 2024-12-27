@@ -125,10 +125,13 @@ if (isset($_GET['delete_id'])) {
                     <?= htmlspecialchars($event['description']); ?>
                 </p>
 
-
-                
+                <!-- Tombol Peserta dan Edit -->
                 <a href="peserta.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Lihat Peserta</a>
                 <a href="update_event.php?id=<?= $event['event_ID'] ?>" class="btn btn-primary">Edit</a>
+
+                <!-- Tombol Kembali -->
+                <a href="events.php" class="btn btn-primary" style="margin: 5px; float: right;">Back</a>
+                
             </div>
         </div>
     <?php else: ?>

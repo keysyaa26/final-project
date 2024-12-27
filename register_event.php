@@ -213,6 +213,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-color: #a51b20;
             color: white;
         }
+        .text-center {
+            margin-top: 100px; 
+            margin-bottom: 100px;
+        }
     </style>
 </head>
 <body>
@@ -220,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Registration Section -->
     <section class="py-5">
         <div class="container">
-            <h2 class="text-center mb-4" style="color: #191970;">Registrasi untuk Event <?php echo $event['title']; ?></h2>
+            <h2 class="text-center" style="color: #191970;">Registrasi untuk Event <?php echo $event['title']; ?></h2>
             <form method="POST" class="w-50 mx-auto">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama</label>

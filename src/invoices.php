@@ -99,13 +99,6 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
                     <p class='total'>Total: Rp " . number_format($subtotal, 2, ',', '.') . "</p>
                 </div>";
 
-        // Menambahkan tombol pembayaran untuk status pending
-        if ($isPending && $payment_url) {
-            $html .= "
-                <div class='payment-button'>
-                    <a href='{$payment_url}' target='_blank' rel='noopener noreferrer'>Bayar Sekarang</a>
-                </div>";
-        }
 
         $html .= "
             </div>
@@ -143,8 +136,7 @@ function generate_and_send_invoice($order_id, $toEmail, $invoiceData, $isPending
 
         if ($isPending) {
             $mail->Body .= "
-                <p>Your order is currently <strong>Pending</strong>. Please click the link below to complete your payment:</p>
-                <p><a href='{$invoiceData['payment_url']}' style='padding: 10px 15px; background: #007bff; color: white; text-decoration: none;'>Bayar Sekarang</a></p>";
+                <p>Your order is currently <strong>Pending</strong>.</p>";
         } else {
             $mail->Body .= "<p>Your payment has been successfully processed. Thank you!</p>";
         }

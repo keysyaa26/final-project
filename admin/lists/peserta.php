@@ -42,7 +42,7 @@ $participants = $stmt->fetchAll();
         </form>
 
         <!-- Link Kembali -->
-        <a href="events.php" class="btn btn-primary" style="margin: 5px">Back</a>
+        <a href="../dashboard.php" class="btn btn-primary" style="margin: 5px">Back</a>
     </div>
 
     <!-- Tabel Daftar Peserta -->

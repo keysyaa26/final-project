@@ -9,28 +9,53 @@ require __DIR__ . '/../../src/Acara.php';
 require __DIR__ . '/../../includes/admin/header.php';
 require __DIR__ . '/../../includes/config.php';
 
+// Menangkap pesan dari URL jika ada
+$message = $_GET['message'] ?? '';
+
 // Tambah acara
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = trim($_POST['title']);
-    $event_type_id = intval($_POST['event_type_id']);
-    $venue_id = intval($_POST['venue_id']);
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-    $description = trim($_POST['description']);
-    $status = trim($_POST['status']);
-    $price = trim($_POST['price']);
-    $event_id = $_POST['event_id'] ?? null;
-    
-    $acara = new Acara();
-    $posterFileName = $acara->uploadPoster('poster');
-    $acaraWithPoster = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date,  $description, $status,$posterFileName, $price);
-    $acaraWithPoster->tambahAcara($pdo);
+    try {
+        $title = trim($_POST['title']);
+        $event_type_id = intval($_POST['event_type_id']);
+        $venue_id = intval($_POST['venue_id']);
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+        $description = trim($_POST['description']);
+        $status = trim($_POST['status']);
+        $price = trim($_POST['price']);
+
+        $acara = new Acara();
+        $posterFileName = $acara->uploadPoster('poster'); // Proses upload poster
+
+        $acaraWithPoster = new Acara(
+            $title,
+            $event_type_id,
+            $venue_id,
+            $start_date,
+            $end_date,
+            $description,
+            $status,
+            $posterFileName,
+            $price
+        );
+
+        $acaraWithPoster->tambahAcara($pdo);
+        $message = "Event berhasil ditambahkan!";
+    } catch (Exception $e) {
+        $message = "Gagal menambahkan event: " . $e->getMessage();
+    }
+
+    // Redirect menggunakan PRG
+    header("Location: events.php?message=" . urlencode($message));
+    exit;
 }
+
 
 if (isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
 
     if (is_numeric($delete_id)) {
+        $acara = new Acara();
         $acara->hapusAcara($pdo, $delete_id);
     } else {
         echo "ID tidak valid.";
@@ -68,15 +93,16 @@ $events = $stmt->fetchAll();
 </html>
 <div class="container-fluid">
     <h2 class="text-center mb-4">Manajemen Events</h2>
-
+        
+    <!-- Menampilkan pesan jika ada -->
     <?php if (!empty($message)): ?>
-        <div class="alert alert-success"><?= $message ?></div>
+        <div class="alert alert-warning"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
     <!-- Form Pencarian dan Tombol Tambah -->
     <div class="d-flex justify-content-between mb-3">
         <form method="GET" class="d-flex" style="flex-grow: 1;">
-            <input type="text" name="search" autofocus="true" class="form-control me-2" placeholder="Cari event..." value="<?= htmlspecialchars($search) ?>">
+            <input type="text" name="search" class="form-control me-2" placeholder="Cari event..." value="<?= htmlspecialchars($search) ?>">
         </form>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">Tambah Event</button>
     </div>

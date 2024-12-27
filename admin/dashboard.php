@@ -46,6 +46,18 @@ $stmt->bindParam(1, $venue_id, PDO::PARAM_INT);
 $stmt->execute();
 $venue_capacity = $stmt->fetchColumn();
 
+// Query untuk agenda acara (hanya menampilkan yang status aktif dan upcoming)
+$queryAgenda = "SELECT event_ID, title, start_date 
+                FROM events 
+                WHERE start_date > NOW() 
+                  AND status_acara = 'UPCOMING' 
+                  AND status_aktif = 1 
+                ORDER BY start_date ASC";
+
+$stmtAgenda = $pdo->prepare($queryAgenda);
+$stmtAgenda->execute();
+$agendaAcara = $stmtAgenda->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -136,6 +148,7 @@ $venue_capacity = $stmt->fetchColumn();
             margin-bottom: 30px;
             /* Jarak bawah */
         }
+
         .no-underline {
             color: white;
             text-decoration: none;
@@ -153,7 +166,7 @@ $venue_capacity = $stmt->fetchColumn();
         <hr>
         <div class="container">
             <h3 class="text-center mt-5 text-primary">Acara yang akan datang</h3>
-            <h2 class="text-center"> <?php echo htmlspecialchars($events[0]["title"])?> </h2>
+            <h2 class="text-center"> <?php echo htmlspecialchars($events[0]["title"]) ?> </h2>
             <div class="row justify-content-center">
                 <!-- Countdown -->
                 <div class="col-md-6 mb-3">
@@ -171,21 +184,22 @@ $venue_capacity = $stmt->fetchColumn();
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-lg">
                         <div class="card-header text-center">
-                            <h5><a href="lists/peserta.php?id=<?=$event_id?>" class="no-underline">Jumlah Peserta Terdaftar </a></h5>
+                            <h5><a href="lists/peserta.php?id=<?= $event_id ?>" class="no-underline">Jumlah Peserta Terdaftar </a></h5>
                         </div>
                         <div class="card-body text-center">
-                            <div class="fs-4 fw-bold"><?php if ($venue_capacity > 0) { 
-                                    $percentage = ($attendee_row / $venue_capacity) * 100;
-                                    $percentage = number_format($percentage, 2); 
-                                ?>
+                            <div class="fs-4 fw-bold"><?php if ($venue_capacity > 0) {
+                                                            $percentage = ($attendee_row / $venue_capacity) * 100;
+                                                            $percentage = number_format($percentage, 2);
+                                                        ?>
                                     <div id="participant-count" class="participant-count">
-                                        <?php echo htmlspecialchars($percentage);?>%
+                                        <?php echo htmlspecialchars($percentage); ?>%
                                     </div>
                                 <?php } else { ?>
                                     <div id="participant-count" class="participant-count">
                                         <?php echo htmlspecialchars($attendee_row); ?>
                                     </div>
-                                <?php } ?></div>
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,18 +209,20 @@ $venue_capacity = $stmt->fetchColumn();
             <div class="mt-5">
                 <h3 class="text-center text-primary">Agenda Acara</h3>
                 <div class="agenda-calendar">
-                    <div class="agenda-item">
-                        <strong>Acara 1 - Seminar Pengenalan Teknologi</strong><br>
-                        <span class="text-muted">Tanggal: 15 Desember 2024</span>
-                    </div>
-                    <div class="agenda-item">
-                        <strong>Acara 2 - Workshop Pemrograman Web</strong><br>
-                        <span class="text-muted">Tanggal: 20 Desember 2024</span>
-                    </div>
-                    <div class="agenda-item">
-                        <strong>Acara 3 - Sesi Tanya Jawab & Penutupan</strong><br>
-                        <span class="text-muted">Tanggal: 25 Desember 2024</span>
-                    </div>
+                    <?php if (!empty($agendaAcara)) { ?>
+                        <?php foreach ($agendaAcara as $agenda) { ?>
+                            <div class="agenda-item">
+                                <strong><?php echo htmlspecialchars($agenda['title']); ?></strong><br>
+                                <span class="text-muted">Tanggal:
+                                    <?php echo htmlspecialchars(date('d F Y, H:i', strtotime($agenda['start_date']))); ?>
+                                </span>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="text-center text-muted">
+                            <p>Tidak ada acara mendatang.</p>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -222,18 +238,7 @@ $venue_capacity = $stmt->fetchColumn();
                     <div class="card-body">
                         <h5 class="card-title">Acara</h5>
                         <p class="card-text">Lihat dan kelola daftar acara.</p>
-                        <a href="../lists/events.php" class="btn btn-primary">Go to Events</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Peserta Menu -->
-            <div class="col-md-4">
-                <div class="card text-center mb-4 shadow-lg">
-                    <div class="card-body">
-                        <h5 class="card-title">Peserta</h5>
-                        <p class="card-text">Lihat dan kelola daftar peserta.</p>
-                        <a href="../lists/peserta.php" class="btn btn-primary">Go to Peserta</a>
+                        <a href="lists/events.php" class="btn btn-primary">Go to Events</a>
                     </div>
                 </div>
             </div>

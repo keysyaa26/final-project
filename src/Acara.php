@@ -55,7 +55,7 @@ class Acara extends Admin {
 
     public function hapusAcara($pdo, $delete_id)
     {
-        $query = "UPDATE events SET is_deleted = TRUE WHERE event_ID = ?";
+        $query = "UPDATE events SET status_aktif = FALSE WHERE event_ID = ?";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(1, $delete_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -111,21 +111,22 @@ class Acara extends Admin {
             $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
  
             if (!in_array($fileExtension, $allowedExtensions)) {
-                die("Ekstensi file tidak diizinkan. Harap upload file gambar (JPG, PNG, JPEG).");
+                throw new Exception("Ekstensi file tidak diizinkan. Harap upload file gambar (JPG, PNG, JPEG).");
             }
 
             if ($_FILES[$fileInputName]['size'] > $maxSize) {
-                die("File terlalu besar. Maksimum ukuran file adalah 5MB.");
+                throw new Exception("File terlalu besar. Maksimum ukuran file adalah 5MB.");
             }
 
             $posterFileName = "poster_" . ($event_id ?? time()) . "." . $fileExtension;
             $uploadPath = $uploadDir . $posterFileName;
             if (!move_uploaded_file($fileTmpPath, $uploadPath)) {
-                die("Gagal mengupload file poster.");
+                throw new Exception("Gagal mengupload file poster.");
             }
     
             return $posterFileName;
         }
+        throw new Exception("File poster tidak ditemukan atau terjadi kesalahan saat upload.");
     }
 
     public function searchEvent($pdo, $search) {

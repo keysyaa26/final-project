@@ -2304,4 +2304,275 @@ Payment iafbaibiURL: https://app.sandbox.midtrans.com/snap/v4/redirection/a9a0aa
 2024-12-24 09:13:06 Generating invoice for Order ID: order_676a7b0e4331b4.86260198
 2024-12-24 09:13:11 Invoice sent successfully to arielramo2005@gmail.com
 2024-12-24 09:13:11 Invoice sent to: arielramo2005@gmail.com
-2024-12-25 16:21:02Midtrans API is returning API error. HTTP status code: 404 API response: {"status_code":"404","status_message":"Transaction doesn't exist.","id":"fc262fd2-bc85-428e-ab29-c08983927aa1"}
+2024-12-25 16:21:02Midtrans API is returning API error. HTTP status code: 404 API response: {"status_code":"404","status_message":"Transaction doesn't exist.","id":"fc262fd2-bc85-428e-ab29-c08983927aa1"}2024-12-27 01:55:25 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 01:55:25 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e0902b4e928.74392495
+    [extra_field5] => 26
+    [extra_field6] => bayar 2
+)
+
+2024-12-27 01:55:25 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 01:55:25 Generating invoice for Order ID: order_676e0902b4e9d6.71968774
+2024-12-27 01:55:34 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 01:55:34 Payment pending for Order ID: order_676e0902b4e9d6.71968774. Payment URL: 
+2024-12-27 01:55:34 Invoice sent to: arielramo2005@gmail.com
+2024-12-27 01:58:34 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 01:58:34 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e09c6c6d130.81353679
+    [extra_field5] => 26
+    [extra_field6] => bayar 2
+)
+
+2024-12-27 01:58:34 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 01:58:34 Generating invoice for Order ID: order_676e09c6c6d410.97053506
+2024-12-27 01:58:37 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 01:58:37 Payment pending for Order ID: order_676e09c6c6d410.97053506. Payment URL: 
+2024-12-27 01:58:37 Invoice sent to: arielramo2005@gmail.com
+2024-12-27 02:11:25 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 02:11:25 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e0902b4e928.74392495
+    [extra_field5] => 26
+    [extra_field6] => bayar 2
+)
+
+2024-12-27 02:11:25 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 02:14:36 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 02:14:36 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e09c6c6d130.81353679
+    [extra_field5] => 26
+    [extra_field6] => bayar 2
+)
+
+2024-12-27 02:14:36 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 09:18:47 Decoded custom_field1: Array
+(
+    [extra_field1] => Ariel
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 09:18:47 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e70ede54e56.42721119
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:18:47 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:18:47 Generating invoice for Order ID: order_676e70ede54f84.78593615
+2024-12-27 09:18:51 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 09:18:51 Payment pending for Order ID: order_676e70ede54f84.78593615. Payment URL: 
+2024-12-27 09:18:51 Invoice sent to: arielramo2005@gmail.com
+2024-12-27 09:18:57 Decoded custom_field1: Array
+(
+    [extra_field1] => Ariel
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 09:18:57 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e70ede54e56.42721119
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:18:57 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:19:02 QR Code generated: C:\laragon\www\final-project\midtrans/../assets/uploads/qr_code/qr_40_.png
+2024-12-27 09:19:02 Email sent to: arielramo2005@gmail.com with QR Code
+2024-12-27 09:19:02 Generating invoice for Order ID: order_676e70ede54f84.78593615
+2024-12-27 09:19:05 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 09:19:05 Invoice sent to: arielramo2005@gmail.com
+2024-12-27 09:20:03 Decoded custom_field1: Array
+(
+    [extra_field1] => Zahrah Annisa
+    [extra_field2] => zahrahannisa@gmail.com
+    [extra_field3] => 08534243242
+)
+
+2024-12-27 09:20:03 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e713fb512b9.17466185
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:20:03 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:20:03 Generating invoice for Order ID: order_676e713fb513b9.13973907
+2024-12-27 09:20:07 Invoice sent successfully to zahrahannisa@gmail.com
+2024-12-27 09:20:07 Payment pending for Order ID: order_676e713fb513b9.13973907. Payment URL: 
+2024-12-27 09:20:07 Invoice sent to: zahrahannisa@gmail.com
+2024-12-27 09:20:12 Decoded custom_field1: Array
+(
+    [extra_field1] => Zahrah Annisa
+    [extra_field2] => zahrahannisa@gmail.com
+    [extra_field3] => 08534243242
+)
+
+2024-12-27 09:20:12 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e713fb512b9.17466185
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:20:12 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:20:15 QR Code generated: C:\laragon\www\final-project\midtrans/../assets/uploads/qr_code/qr_40_.png
+2024-12-27 09:20:15 Email sent to: zahrahannisa@gmail.com with QR Code
+2024-12-27 09:20:15 Generating invoice for Order ID: order_676e713fb513b9.13973907
+2024-12-27 09:20:19 Invoice sent successfully to zahrahannisa@gmail.com
+2024-12-27 09:20:19 Invoice sent to: zahrahannisa@gmail.com
+2024-12-27 09:20:57 Decoded custom_field1: Array
+(
+    [extra_field1] => Keysya Aulia
+    [extra_field2] => keysyaa28@gmail.com
+    [extra_field3] => 085281828222
+)
+
+2024-12-27 09:20:57 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e7172a7c5c1.65982043
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:20:57 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:20:57 Generating invoice for Order ID: order_676e7172a7c646.94572172
+2024-12-27 09:21:01 Invoice sent successfully to keysyaa28@gmail.com
+2024-12-27 09:21:01 Payment pending for Order ID: order_676e7172a7c646.94572172. Payment URL: 
+2024-12-27 09:21:01 Invoice sent to: keysyaa28@gmail.com
+2024-12-27 09:21:10 Decoded custom_field1: Array
+(
+    [extra_field1] => Keysya Aulia
+    [extra_field2] => keysyaa28@gmail.com
+    [extra_field3] => 085281828222
+)
+
+2024-12-27 09:21:10 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e7172a7c5c1.65982043
+    [extra_field5] => 40
+    [extra_field6] => Workshop Robotic Internet of Things "Smart Home"
+)
+
+2024-12-27 09:21:10 Decoded custom_field2: Array
+(
+    [extra_field7] => 
+)
+
+2024-12-27 09:21:13 QR Code generated: C:\laragon\www\final-project\midtrans/../assets/uploads/qr_code/qr_40_.png
+2024-12-27 09:21:13 Email sent to: keysyaa28@gmail.com with QR Code
+2024-12-27 09:21:13 Generating invoice for Order ID: order_676e7172a7c646.94572172
+2024-12-27 09:21:17 Invoice sent successfully to keysyaa28@gmail.com
+2024-12-27 09:21:17 Invoice sent to: keysyaa28@gmail.com
+2024-12-27 10:56:00 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 10:56:00 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e87ba25cef3.03303499
+    [extra_field5] => 39
+    [extra_field6] => Seminar "Recognize Artificial Intelligence and Machine Learning" 
+)
+
+2024-12-27 10:56:00 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 10:56:00 Generating invoice for Order ID: order_676e87ba25d3b6.12123677
+2024-12-27 10:56:05 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 10:56:05 Payment pending for Order ID: order_676e87ba25d3b6.12123677. Payment URL: 
+2024-12-27 10:56:05 Invoice sent to: arielramo2005@gmail.com
+2024-12-27 10:56:10 Decoded custom_field1: Array
+(
+    [extra_field1] => Muhammad Ariel Ramo
+    [extra_field2] => arielramo2005@gmail.com
+    [extra_field3] => 085771282700
+)
+
+2024-12-27 10:56:10 Decoded custom_field2: Array
+(
+    [extra_field4] => ticket_676e87ba25cef3.03303499
+    [extra_field5] => 39
+    [extra_field6] => Seminar "Recognize Artificial Intelligence and Machine Learning" 
+)
+
+2024-12-27 10:56:10 Decoded custom_field2: Array
+(
+    [extra_field7] => 16
+)
+
+2024-12-27 10:56:14 QR Code generated: C:\laragon\www\final-project\midtrans/../assets/uploads/qr_code/qr_39_16.png
+2024-12-27 10:56:14 Email sent to: arielramo2005@gmail.com with QR Code
+2024-12-27 10:56:14 Generating invoice for Order ID: order_676e87ba25d3b6.12123677
+2024-12-27 10:56:19 Invoice sent successfully to arielramo2005@gmail.com
+2024-12-27 10:56:19 Invoice sent to: arielramo2005@gmail.com
