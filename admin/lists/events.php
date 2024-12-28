@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $start_date = $_POST['start_date'];
         $end_date = $_POST['end_date'];
         $description = trim($_POST['description']);
-        $status = trim($_POST['status']);
         $price = trim($_POST['price']);
 
         $acara = new Acara();
+        $status = $acara->tentukanStatusAcara($start_date, $end_date); // Status otomatis
         $posterFileName = $acara->uploadPoster('poster'); // Proses upload poster
 
         $acaraWithPoster = new Acara(
@@ -92,6 +92,29 @@ $query = "SELECT * FROM vw_events_data WHERE title LIKE ?";
 $stmt = $pdo->prepare($query);
 $stmt->execute(['%' . $search . '%']);
 $events = $stmt->fetchAll();
+
+// Memperbarui status acara jika perlu
+foreach ($events as $event) {
+    // Tentukan status berdasarkan waktu saat ini
+    $current_time = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+    $start_time = new DateTime($event['start_date'], new DateTimeZone('Asia/Jakarta'));
+    $end_time = new DateTime($event['end_date'], new DateTimeZone('Asia/Jakarta'));
+
+    $new_status = '';
+    if ($current_time < $start_time) {
+        $new_status = 'UPCOMING';
+    } elseif ($current_time >= $start_time && $current_time <= $end_time) {
+        $new_status = 'ON GOING';
+    } else {
+        $new_status = 'COMPLETED';
+    }
+
+    // Jika status berubah, perbarui di database
+    if ($new_status !== $event['status_acara']) {
+        $updateStmt = $pdo->prepare("UPDATE events SET status_acara = :new_status WHERE event_ID = :event_id");
+        $updateStmt->execute(['new_status' => $new_status, 'event_id' => $event['event_ID']]);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -211,15 +234,6 @@ $events = $stmt->fetchAll();
                     <div class="mb-3">
                         <label for="poster" class="form-label">Poster</label>
                         <input type="file" class="form-control" id="poster" name="poster">
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-control" id="status" name="status" required>
-                            <option value="" disabled selected>Pilih Status</option>
-                            <?php foreach ($statusOptions as $status): ?>
-                                <option value="<?= $status ?>"><?= htmlspecialchars($status) ?></option>
-                            <?php endforeach; ?>
-                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">HTM</label>

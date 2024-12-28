@@ -7,6 +7,7 @@ if (!isset($_SESSION['admin'])) {
 
 require __DIR__ . '/../../includes/config.php';
 require __DIR__ . '/../../includes/admin/header.php';
+require __DIR__ . '/../../src/Peserta.php';
 
 $event_id = isset($_GET['id']) ? $_GET['id'] : null;
 
@@ -26,6 +27,7 @@ $stmt = $pdo->prepare($query);
 $stmt->execute(['%' . strtolower($search) . '%', $event_id]);
 $participants = $stmt->fetchAll();
 
+
 ?>
 
 <div class="container-fluid">
@@ -35,14 +37,60 @@ $participants = $stmt->fetchAll();
         <div class="alert alert-success"><?= $message ?></div>
     <?php endif; ?>
 
+    <!-- Statistik Peserta -->
+    <div class="row my-5 d-flex justify-content-center align-items-center">
+        <div class="col-md-3">
+            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-body p-2 bg-primary text-white">
+                    <h5>Total Peserta</h5>
+                </div>
+                <div>
+                    <?php
+                    $peserta = new Peserta('', '', '');
+                    $total_peserta = $peserta->hitungPeserta($pdo, $event_id);
+                    ?>
+                    <p class="fs-4" style="background-color: transparent;"><?php echo htmlspecialchars($total_peserta); ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-body p-2 bg-success text-white">
+                    <h5>Peserta Hadir</h5>
+                </div>
+                <div>
+                    <?php
+                    $peserta = new Peserta('', '', '');
+                    $total_peserta = $peserta->hitungPeserta($pdo, $event_id, 'Hadir');
+                    ?>
+                    <p class="fs-4" style="background-color: transparent;"><?php echo htmlspecialchars($total_peserta); ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-body p-2 bg-danger text-white">
+                    <h5>Peserta Belum Hadir</h5>
+                </div>
+                <div>
+                <?php
+                    $peserta = new Peserta('', '', '');
+                    $total_peserta = $peserta->hitungPeserta($pdo, $event_id, 'Absen');
+                    ?>
+                    <p class="fs-4" style="background-color: transparent;"><?php echo htmlspecialchars($total_peserta); ?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Form Pencarian -->
     <div class="d-flex justify-content-between mb-3">
         <form method="GET" class="d-flex" style="flex-grow: 1;">
-        <input type="text" name="search" autofocus="true" class="form-control me-2" placeholder="Cari peserta..." value="<?= htmlspecialchars($search) ?>">
+            <input type="text" name="search" autofocus="true" class="form-control me-2" placeholder="Cari peserta..." value="<?= htmlspecialchars($search) ?>">
         </form>
 
         <!-- Link Kembali -->
-        <a href="../dashboard.php" class="btn btn-primary" style="margin: 5px">Back</a>
+        <a href="events.php" class="btn btn-primary" style="margin: 5px">Back</a>
     </div>
 
     <!-- Tabel Daftar Peserta -->
@@ -59,20 +107,20 @@ $participants = $stmt->fetchAll();
             </thead>
             <tbody>
                 <?php foreach ($participants as $participant): ?>
-                    <?php if ($participant['event_ID'] == $event_id) :?>
+                    <?php if ($participant['event_ID'] == $event_id) : ?>
                         <tr>
                             <td><?= htmlspecialchars($participant['name']) ?></td>
                             <td><?= htmlspecialchars($participant['email']) ?></td>
                             <td><?= htmlspecialchars($participant['phone']) ?></td>
-                            <td><a href="../../assets/uploads/qr_code/<?= $participant['QR_code'] ? $participant['QR_code']: 'default.jpg' ?>">Lihat QR Code</a></td>
+                            <td><a href="../../assets/uploads/qr_code/<?= $participant['QR_code'] ? $participant['QR_code'] : 'default.jpg' ?>">Lihat QR Code</a></td>
                             <td><?= htmlspecialchars($participant['attendance_status']) ?></td>
                         </tr>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </tbody>
-                <?php else: ?>
-                    <p>Tidak ada peserta yang terdaftar untuk event ini.</p>
-                <?php endif; ?>
+        <?php else: ?>
+            <p>Tidak ada peserta yang terdaftar untuk event ini.</p>
+        <?php endif; ?>
     </table>
 </div>
 

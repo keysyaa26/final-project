@@ -28,15 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $description = $_POST['description'];
-    $status = $_POST['status'];
     $price = $_POST['price'];
 
-    $stmt = $pdo->prepare("UPDATE events SET title = ?, event_type_ID = ?, venue_ID = ?, start_date =?, end_date =?, description =?, price=?, status_acara =? WHERE event_ID = ?");
-    
-    if ($stmt->execute([$title, $event_type_id, $venue_id, $start_date, $end_date,  $description, $price, $status, $event_id]))
-    {
-    $updateSuccess = true; // Set flag to true if update is successful
-        }
+    // Membuat instance dari kelas Acara
+    $acara = new Acara($title, $event_type_id, $venue_id, $start_date, $end_date, $description, null, $price);
+
+    // Tentukan status acara dengan memanggil tentukanStatusAcara() setelah tanggal mulai dan selesai diset
+    $status = $acara->tentukanStatusAcara(); // Tentukan status berdasarkan tanggal
+
+    // Update query untuk menyimpan perubahan acara
+    $stmt = $pdo->prepare("UPDATE events SET title = ?, event_type_ID = ?, venue_ID = ?, start_date = ?, end_date = ?, description = ?, price = ?, status_acara = ? WHERE event_ID = ?");
+
+    if ($stmt->execute([$title, $event_type_id, $venue_id, $start_date, $end_date, $description, $price, $status, $event_id])) {
+        $updateSuccess = true; // Set flag to true if update is successful
+    }
 
     header("Location: event_detail.php?id=" . $event_id);
     exit;
@@ -124,24 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mb-3">
             <label for="description" class="form-label">Deskripsi Acara</label>
             <textarea class="form-control" id="description" name="description" rows="4" required><?= htmlspecialchars($event['description'])?></textarea>
-        </div>
-
-        <!-- Status -->
-        <div class="mb-3">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" name="status" required>
-                <?php
-                // Array enum status
-                $statusOptions = ['UPCOMING', 'ON GOING', 'COMPLETED'];
-
-                foreach ($statusOptions as $status):
-                ?>
-                    <option value="<?= $status ?>" 
-                        <?= $event['status_acara'] == $status ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($status) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
         </div>
 
         <!-- Price -->

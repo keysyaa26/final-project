@@ -35,9 +35,24 @@ class Acara extends Admin {
         $this->event_price= $event_price;
     }
     
-  
+    public function tentukanStatusAcara() {
+        $currentTime = new DateTime('now', new DateTimeZone('Asia/Jakarta')); // Waktu sekarang
+        $startTime = new DateTime($this->event_start_date, new DateTimeZone('Asia/Jakarta'));
+        $endTime = new DateTime($this->event_end_date, new DateTimeZone('Asia/Jakarta'));
+    
+        if ($currentTime < $startTime) {
+            return 'UPCOMING';
+        } elseif ($currentTime >= $startTime && $currentTime <= $endTime) {
+            return 'ON GOING';
+        } else {
+            return 'COMPLETED';
+        }
+    }
+    
     public function tambahAcara($pdo = null)
-    {
+    {   
+        $this->event_status = $this->tentukanStatusAcara(); // Tentukan status secara otomatis
+
         $query = "INSERT INTO events (title, event_type_ID,venue_ID, start_date, end_date, description, poster, status_acara, price) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(1, $this->event_name,PDO::PARAM_STR);
