@@ -129,7 +129,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Status -->
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
-            <input type="text" class="form-control" id="status" name="status" value="<?php echo htmlspecialchars($event['status_acara']); ?>" required>
+            <select class="form-select" id="status" name="status" required>
+                <?php
+                // Array enum status
+                $statusOptions = ['UPCOMING', 'ON GOING', 'COMPLETED'];
+
+                foreach ($statusOptions as $status):
+                ?>
+                    <option value="<?= $status ?>" 
+                        <?= $event['status_acara'] == $status ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($status) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
 

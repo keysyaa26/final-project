@@ -12,6 +12,16 @@ require __DIR__ . '/../../includes/config.php';
 // Menangkap pesan dari URL jika ada
 $message = $_GET['message'] ?? '';
 
+// Fetch data untuk dropdown
+$stmtEventType = $pdo->query("SELECT event_type_ID, event_type_name FROM event_type");
+$eventTypes = $stmtEventType->fetchAll();
+
+$stmtVenue = $pdo->query("SELECT venue_ID, name FROM venue");
+$venues = $stmtVenue->fetchAll();
+
+// Enum Status
+$statusOptions = ['UPCOMING', 'ON GOING', 'COMPLETED'];
+
 // Tambah acara
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -52,14 +62,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 if (isset($_GET['delete_id'])) {
-    $delete_id = $_GET['delete_id'];
+    $delete_id = intval($_GET['delete_id']);
 
     if (is_numeric($delete_id)) {
-        $acara = new Acara();
-        $acara->hapusAcara($pdo, $delete_id);
+        // Periksa status event sebelum menghapus
+        $stmtCheckStatus = $pdo->prepare("SELECT status_acara FROM events WHERE event_ID = ?");
+        $stmtCheckStatus->execute([$delete_id]);
+        $event = $stmtCheckStatus->fetch();
+
+        if ($event && $event['status_acara'] === 'ON GOING') {
+            $message = "Event dengan status ON GOING tidak dapat dihapus.";
+        } else {
+            $acara = new Acara();
+            $acara->hapusAcara($pdo, $delete_id);
+            $message = "Event berhasil dihapus.";
+        }
     } else {
-        echo "ID tidak valid.";
+        $message = "ID tidak valid.";
     }
+
+    // Redirect dengan pesan
+    header("Location: events.php?message=" . urlencode($message));
+    exit;
 }
 
 // Pencarian Event
@@ -156,11 +180,21 @@ $events = $stmt->fetchAll();
                     </div>
                     <div class="mb-3">
                         <label for="event_type_id" class="form-label">Tipe Event</label>
-                        <input type="number" class="form-control" id="event_type_id" name="event_type_id" required>
+                        <select class="form-control" id="event_type_id" name="event_type_id" required>
+                            <option value="" disabled selected>Pilih Tipe Event</option>
+                            <?php foreach ($eventTypes as $type): ?>
+                                <option value="<?= $type['event_type_ID'] ?>"><?= htmlspecialchars($type['event_type_name']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="venue_id" class="form-label">Venue ID</label>
-                        <input type="number" class="form-control" id="venue_id" name="venue_id" required>
+                        <label for="venue_id" class="form-label">Venue</label>
+                        <select class="form-control" id="venue_id" name="venue_id" required>
+                            <option value="" disabled selected>Pilih Venue</option>
+                            <?php foreach ($venues as $venue): ?>
+                                <option value="<?= $venue['venue_ID'] ?>"><?= htmlspecialchars($venue['name']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="start_date" class="form-label">Tanggal Mulai</label>
@@ -180,7 +214,12 @@ $events = $stmt->fetchAll();
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
-                        <input type="text" class="form-control" id="status" name="status" required>
+                        <select class="form-control" id="status" name="status" required>
+                            <option value="" disabled selected>Pilih Status</option>
+                            <?php foreach ($statusOptions as $status): ?>
+                                <option value="<?= $status ?>"><?= htmlspecialchars($status) ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">HTM</label>

@@ -184,22 +184,22 @@ $agendaAcara = $stmtAgenda->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-6 mb-3">
                     <div class="card shadow-lg">
                         <div class="card-header text-center">
-                            <h5><a href="lists/peserta.php?id=<?= $event_id ?>" class="no-underline">Jumlah Peserta Terdaftar </a></h5>
+                            <h5><a href="lists/peserta.php?id=<?= $event_id ?>" class="no-underline">Jumlah Peserta Terdaftar</a></h5>
                         </div>
                         <div class="card-body text-center">
-                            <div class="fs-4 fw-bold"><?php if ($venue_capacity > 0) {
-                                                            $percentage = ($attendee_row / $venue_capacity) * 100;
-                                                            $percentage = number_format($percentage, 2);
-                                                        ?>
-                                    <div id="participant-count" class="participant-count">
-                                        <?php echo htmlspecialchars($percentage); ?>%
-                                    </div>
-                                <?php } else { ?>
-                                    <div id="participant-count" class="participant-count">
-                                        <?php echo htmlspecialchars($attendee_row); ?>
-                                    </div>
-                                <?php } ?>
-                            </div>
+                            <?php if ($venue_capacity > 0) { 
+                                $percentage = ($attendee_row / $venue_capacity) * 100;
+                                $percentage = number_format($percentage, 2);
+                            ?>
+                                <div id="participant-count" class="participant-count">
+                                    <?= $percentage; ?>%
+                                    <small class="text-muted">(<?= htmlspecialchars($attendee_row); ?>/<?= htmlspecialchars($venue_capacity); ?>)</small>
+                                </div>
+                            <?php } else { ?>
+                                <div id="participant-count" class="participant-count">
+                                    <?= htmlspecialchars($attendee_row); ?> peserta
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
